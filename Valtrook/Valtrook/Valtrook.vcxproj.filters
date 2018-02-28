@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{d07d6a6c-d546-478c-b312-7436aed0f55b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility\Structure">
+      <UniqueIdentifier>{02e6e87a-c725-4d5f-9091-865bdb8669d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility\Math">
+      <UniqueIdentifier>{ef865642-f518-4959-a193-e045bb0604e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{82c3b20e-8375-458e-9805-1696ab1a4ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Rendering">
+      <UniqueIdentifier>{0ed55bcd-ff97-4156-be31-399de780b788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{4d8b0342-4d18-4fbc-a0c6-f431f335612e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{0f365897-f76d-4468-b89a-8c03342139e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Rendering">
+      <UniqueIdentifier>{22c23070-fe93-47e3-a2ba-02a45bb75f7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Math">
+      <UniqueIdentifier>{db9ccb99-f85b-409d-87da-06480143d043}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Colour.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="UV.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Clamp.h">
+      <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="ProportionList.h">
+      <Filter>Header Files\Utility\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="UV.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Colour.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

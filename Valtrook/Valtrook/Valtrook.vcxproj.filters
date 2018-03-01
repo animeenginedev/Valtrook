@@ -40,6 +40,24 @@
     <Filter Include="Source Files\Utility\Math">
       <UniqueIdentifier>{db9ccb99-f85b-409d-87da-06480143d043}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility\Noise">
+      <UniqueIdentifier>{96740516-849b-4218-a76e-bb9ca38329b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Noise">
+      <UniqueIdentifier>{be41ae05-e24d-4877-8a3e-573d50cb70e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Timing">
+      <UniqueIdentifier>{4a51236a-828d-4d57-af70-ffb122f3b1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility\Timing">
+      <UniqueIdentifier>{b35f3ab1-2c87-428d-89b7-f2135d1c6a8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Resource">
+      <UniqueIdentifier>{0912b43d-ea35-4d23-833b-e0daa0b0bd8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Resource">
+      <UniqueIdentifier>{c9832b0d-894c-48d3-b346-cfc7c2ecaeba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,6 +71,21 @@
     </ClCompile>
     <ClCompile Include="UV.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexNoise.cpp">
+      <Filter>Source Files\Utility\Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise.cpp">
+      <Filter>Source Files\Utility\Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="GateTimer.cpp">
+      <Filter>Source Files\Utility\Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWriter.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +103,39 @@
     </ClInclude>
     <ClInclude Include="Colour.h">
       <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise.h">
+      <Filter>Header Files\Utility\Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexNoise.h">
+      <Filter>Header Files\Utility\Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="Max.h">
+      <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Min.h">
+      <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="GateTimer.h">
+      <Filter>Header Files\Utility\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="StopWatch.h">
+      <Filter>Header Files\Utility\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="FileReader.h">
+      <Filter>Header Files\Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWriter.h">
+      <Filter>Header Files\Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Distance.h">
+      <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Lerp.h">
+      <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Angle.h">
+      <Filter>Header Files\Utility\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

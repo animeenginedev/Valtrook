@@ -17,8 +17,9 @@ public:
 		current = std::chrono::high_resolution_clock::now();
 	};
 
-	float getCurrentDeltaSecond() {
-		return std::chrono::duration<float>(current - last).count();
+	template<typename Real>
+	Real getCurrentDeltaSecond() {
+		return std::chrono::duration<Real>(current - last).count();
 	}
 private:
 	std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> last; //< last time.

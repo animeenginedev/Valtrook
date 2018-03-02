@@ -58,6 +58,9 @@
     <Filter Include="Source Files\Engine\Resource">
       <UniqueIdentifier>{c9832b0d-894c-48d3-b346-cfc7c2ecaeba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility\Pointer">
+      <UniqueIdentifier>{1c05dca3-1d1e-49b6-9fb0-6545e0dd4ef0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="FileWriter.cpp">
       <Filter>Source Files\Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeConstants.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +145,21 @@
     </ClInclude>
     <ClInclude Include="Angle.h">
       <Filter>Header Files\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Owner.h">
+      <Filter>Header Files\Utility\Pointer</Filter>
+    </ClInclude>
+    <ClInclude Include="Not_Null.h">
+      <Filter>Header Files\Utility\Pointer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Notify.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

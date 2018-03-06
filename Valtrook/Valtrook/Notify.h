@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <array>
+#include <functional>
 
 namespace Val {
 	//forward dec...
@@ -14,11 +15,11 @@ namespace Val {
 	public:
 		Notify<T>* Source;
 
-		virtual void NotifyChanged() = 0;
-		virtual void NotifyDestroyed() = 0;
+		virtual void notifyChanged() = 0;
+		virtual void notifyDestroyed() = 0;
 	};
 
-	//Create this to recieve multiple types of changes, but only when you check
+	//Create a delegate, easiest way to work with it is to pass a lambda of some sort to funcOn<X> if you don't pass a lambda it will update bHas<changed/destroyed> and you can work from that if you really want...
 	template<typename T>
 	class NotifyDelegate : public NotifyReciever<T> {
 	public:
@@ -29,12 +30,18 @@ namespace Val {
 
 		bool hasBeenDestroyed() const;
 		void resetHasBeenDestroyed();
+
+		void funcOnChange(std::function<void(T)> OnChange);
+		void funcOnDestroy(std::function<void(T)> OnDestroy);
 	protected:
 		bool bHasChanged;
 		bool bHasBeenDestroyed;
 
-		virtual void NotifyChanged();
-		virtual void NotifyDestroyed();
+		std::function<void(T)> OnChange;
+		std::function<void(T)> OnDestroy;
+
+		virtual void notifyChanged();
+		virtual void notifyDestroyed();
 	};
 
 	//The core thing
@@ -68,7 +75,7 @@ namespace Val {
 	template<typename T>
 	inline Notify<T>::~Notify() {
 		for (unsigned int i = 0; i < Recievers.size(); ++i) {
-			Recievers[i]->NotifyDestroyed();
+			Recievers[i]->notifyDestroyed();
 		}
 	}
 
@@ -77,7 +84,7 @@ namespace Val {
 		Data = data;
 
 		for (unsigned int i = 0; i < Recievers.size(); ++i) {
-			Recievers[i]->NotifyChanged();
+			Recievers[i]->notifyChanged();
 		}
 	}
 
@@ -96,7 +103,7 @@ namespace Val {
 	inline void Notify<T>::removeReciever(NotifyReciever<T>* Type) {
 		for (auto iter = Recievers.begin(); iter != Recievers.end(); iter++) {
 			if (iter == Type) {
-				iter->NotifyDestroyed();
+				iter->notifyDestroyed();
 				Recievers.erase(iter);
 				break;
 			}
@@ -111,7 +118,7 @@ namespace Val {
 	template<typename T>
 	inline void Notify<T>::clearRecievers() {
 		for (unsigned int i = 0; i < Recievers.size(); ++i) {
-			Recievers[i]->NotifyDestroyed();
+			Recievers[i]->notifyDestroyed();
 		}
 		Recievers.clear();
 	}
@@ -132,11 +139,29 @@ namespace Val {
 		bHasBeenDestroyed = false;
 	}
 	template<typename T>
-	inline void NotifyDelegate<T>::NotifyChanged() {
+	inline void NotifyDelegate<T>::funcOnChange(std::function<void(T)> OnChange) {
+		this->OnChange = OnChange;
+	}
+	template<typename T>
+	inline void NotifyDelegate<T>::funcOnDestroy(std::function<void(T)> OnDestroy) {
+		this->OnDestroy = OnDestroy;
+	}
+	template<typename T>
+	inline void NotifyDelegate<T>::notifyChanged() {
+		if (OnChange) {
+			OnChange(Source->get());
+			return;
+		}
+
 		bHasChanged = true;
 	}
 	template<typename T>
-	inline void NotifyDelegate<T>::NotifyDestroyed() {
+	inline void NotifyDelegate<T>::notifyDestroyed() {
+		if (OnDestroy) {
+			OnDestroy(Source->get());
+			return;
+		}
+
 		bHasBeenDestroyed = true;
 	}
 }

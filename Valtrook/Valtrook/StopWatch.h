@@ -1,6 +1,7 @@
 #pragma once
 
 #include <chrono>
+#include <type_traits>
 
 //High accuracy repeating time keeper
 class StopWatch {
@@ -17,7 +18,7 @@ public:
 		current = std::chrono::high_resolution_clock::now();
 	};
 
-	template<typename Real>
+	template<typename Real, typename = std::enable_if_t<std::is_floating_point<Real>::value>>
 	Real getCurrentDeltaSecond() {
 		return std::chrono::duration<Real>(current - last).count();
 	}

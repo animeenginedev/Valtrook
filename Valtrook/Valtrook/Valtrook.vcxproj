@@ -77,6 +77,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;freetype26.lib;SDL2_ttf.lib;SDL2_image.lib;Box2DDebug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,6 +102,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;freetype26.lib;SDL2_ttf.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -118,20 +120,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GLBlendMode.cpp" />
     <ClCompile Include="Colour.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
-    <ClCompile Include="GateTimer.cpp" />
+    <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="ResourceLocation.cpp" />
     <ClCompile Include="RuntimeConstants.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
     <ClCompile Include="UV.cpp" />
+    <ClCompile Include="VBO.cpp" />
+    <ClCompile Include="VBOBatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Angle.h" />
+    <ClInclude Include="GLBlendMode.h" />
     <ClInclude Include="Clamp.h" />
     <ClInclude Include="Colour.h" />
     <ClInclude Include="Distance.h" />
@@ -139,6 +146,8 @@
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="FileWriter.h" />
     <ClInclude Include="GateTimer.h" />
+    <ClInclude Include="GLTexture.h" />
+    <ClInclude Include="Glyph.h" />
     <ClInclude Include="Lerp.h" />
     <ClInclude Include="Max.h" />
     <ClInclude Include="Min.h" />
@@ -148,10 +157,14 @@
     <ClInclude Include="Owner.h" />
     <ClInclude Include="ProportionList.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="ResourceLocation.h" />
     <ClInclude Include="RuntimeConstants.h" />
     <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="UV.h" />
+    <ClInclude Include="VBO.h" />
+    <ClInclude Include="VBOBatcher.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

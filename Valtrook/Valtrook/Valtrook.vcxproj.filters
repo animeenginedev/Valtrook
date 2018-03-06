@@ -81,9 +81,6 @@
     <ClCompile Include="Noise.cpp">
       <Filter>Source Files\Utility\Noise</Filter>
     </ClCompile>
-    <ClCompile Include="GateTimer.cpp">
-      <Filter>Source Files\Utility\Timing</Filter>
-    </ClCompile>
     <ClCompile Include="FileReader.cpp">
       <Filter>Source Files\Engine\Resource</Filter>
     </ClCompile>
@@ -94,6 +91,21 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="RuntimeConstants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceLocation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLBlendMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VBOBatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,11 +167,32 @@
     <ClInclude Include="Engine.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="RuntimeConstants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Notify.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceLocation.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeConstants.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Glyph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLBlendMode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VBOBatcher.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

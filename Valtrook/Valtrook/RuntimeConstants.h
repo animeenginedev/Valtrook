@@ -7,12 +7,7 @@ namespace Val {
 	class RuntimeConstants {
 	public:
 		static RuntimeConstants* Instance;
-
-		RuntimeConstants();
-		~RuntimeConstants();
-
-
-
+		
 		//Usefull chanable constants
 		Notify<std::string> WindowName = Notify<std::string>("Valtrook Engine");
 

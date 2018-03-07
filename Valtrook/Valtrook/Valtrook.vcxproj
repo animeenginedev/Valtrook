@@ -120,24 +120,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GenericShaderObject.cpp" />
     <ClCompile Include="GLBlendMode.cpp" />
     <ClCompile Include="Colour.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="JsonReadWriter.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="RenderingEngine.cpp" />
     <ClCompile Include="ResourceLocation.cpp" />
     <ClCompile Include="RuntimeConstants.cpp" />
+    <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureAsset.cpp" />
+    <ClCompile Include="TextureSheet.cpp" />
     <ClCompile Include="UV.cpp" />
     <ClCompile Include="VBO.cpp" />
     <ClCompile Include="VBOBatcher.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Angle.h" />
+    <ClInclude Include="Conversion.h" />
+    <ClInclude Include="Exit.h" />
+    <ClInclude Include="GenericShaderObject.h" />
     <ClInclude Include="GLBlendMode.h" />
     <ClInclude Include="Clamp.h" />
     <ClInclude Include="Colour.h" />
@@ -148,7 +161,10 @@
     <ClInclude Include="GateTimer.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Glyph.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="JsonReadWriter.h" />
     <ClInclude Include="Lerp.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Max.h" />
     <ClInclude Include="Min.h" />
     <ClInclude Include="Noise.h" />
@@ -157,14 +173,20 @@
     <ClInclude Include="Owner.h" />
     <ClInclude Include="ProportionList.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="RenderingEngine.h" />
     <ClInclude Include="ResourceLocation.h" />
     <ClInclude Include="RuntimeConstants.h" />
+    <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="StopWatch.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureAsset.h" />
+    <ClInclude Include="TextureSheet.h" />
     <ClInclude Include="UV.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBOBatcher.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

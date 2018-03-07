@@ -1,6 +1,6 @@
 #include "VBOBatcher.h"
 
-Val::VBOBatcher::VBOBatcher() {
+Val::VBOBatcher::VBOBatcher() : lastBlendMode(0, 0, 0, 0, INT32_MAX) {
 }
 
 Val::VBOBatcher::~VBOBatcher() {
@@ -94,8 +94,10 @@ void Val::VBOBatcher::add(std::vector<TriangleGlyph> glyph) {
 }
 
 void Val::VBOBatcher::prepare() {
-	if (glyphs.size() == 0 && lineGlyphs.glyphs.size() == 0)
+	if (glyphs.size() == 0 && lineGlyphs.glyphs.size() == 0) {
+		bPrepared = true;
 		return;
+	}
 
 	verticies.resize(0);
 	verticies.resize(vertexCount);
@@ -146,13 +148,8 @@ bool Val::VBOBatcher::isPrepared() const {
 
 void Val::VBOBatcher::render() {
 	vbo.bindVertexArray();
-	static GLBlendMode* blendMode = &GLBlendMode::Blend_Default;
-	glBlendFuncSeparate((*blendMode).SrcColour, (*blendMode).DstColour, (*blendMode).SrcAlpha, (*blendMode).DstAlpha);
 	for (RenderBatch batch : batches) {
-		if (blendMode != batch.BlendMode) {
-			blendMode = batch.BlendMode;
-			glBlendFuncSeparate((*blendMode).SrcColour, (*blendMode).DstColour, (*blendMode).SrcAlpha, (*blendMode).DstAlpha);
-		}
+		updateBlendMode(*batch.BlendMode);
 		glBindTexture(GL_TEXTURE_2D, batch.texture);
 
 		vbo.render(batch.offset, batch.size, batch.renderMode);
@@ -161,7 +158,7 @@ void Val::VBOBatcher::render() {
 
 void Val::VBOBatcher::render(const GLBlendMode & forceBlendMode) {
 	vbo.bindVertexArray();
-	glBlendFuncSeparate((forceBlendMode).SrcColour, (forceBlendMode).DstColour, (forceBlendMode).SrcAlpha, (forceBlendMode).DstAlpha);
+	updateBlendMode(forceBlendMode);
 	for (RenderBatch batch : batches) {
 		glBindTexture(GL_TEXTURE_2D, batch.texture);
 
@@ -170,20 +167,18 @@ void Val::VBOBatcher::render(const GLBlendMode & forceBlendMode) {
 }
 
 void Val::VBOBatcher::renderLines() {
-	GLBlendMode blendMode = GLBlendMode::Blend_Default;
 	if (lineBatch.size != 0) {
-		blendMode = *lineBatch.BlendMode;
-		glBlendFuncSeparate(blendMode.SrcColour, blendMode.DstColour, blendMode.SrcAlpha, blendMode.DstAlpha);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		updateBlendMode(*lineBatch.BlendMode);
 		vbo.bindVertexArray();
 		vbo.render(lineBatch.offset, lineBatch.size, GL_LINES);
 	}
 }
 
 void Val::VBOBatcher::renderLines(const GLBlendMode & forceBlendMode) {
-	glBlendFuncSeparate((forceBlendMode).SrcColour, (forceBlendMode).DstColour, (forceBlendMode).SrcAlpha, (forceBlendMode).DstAlpha);
 	if (lineBatch.size != 0) {
 		glBindTexture(GL_TEXTURE_2D, 0);
+		updateBlendMode(forceBlendMode);
 		vbo.bindVertexArray();
 		vbo.render(lineBatch.offset, lineBatch.size, GL_LINES);
 	}
@@ -197,4 +192,11 @@ void Val::VBOBatcher::clear() {
 	batches.clear();
 	vertexCount = 0;
 	bPrepared = false;
+}
+
+void Val::VBOBatcher::updateBlendMode(const GLBlendMode & mode) {
+	if (mode != lastBlendMode) {
+		glBlendFuncSeparate((mode).SrcColour, (mode).DstColour, (mode).SrcAlpha, (mode).DstAlpha);
+		lastBlendMode = mode;
+	}
 }

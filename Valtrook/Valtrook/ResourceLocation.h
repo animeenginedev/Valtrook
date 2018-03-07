@@ -4,10 +4,10 @@
 #include <type_traits>
 namespace Val {
 	struct ResourceLocation final {
-		template<typename Name, typename Extension, typename Path,
-			std::enable_if_t<std::is_convertible<Name, std::string>::value>,
-			std::enable_if_t<std::is_convertible<Extension, std::string>::value>,
-			std::enable_if_t<std::is_convertible<Path, std::string>::value>  >
+		template<typename Name = std::string, typename Extension = std::string, typename Path = std::string,
+			typename = std::enable_if_t<std::is_convertible<Name, std::string>::value>,
+			typename = std::enable_if_t<std::is_convertible<Extension, std::string>::value>,
+			typename = std::enable_if_t<std::is_convertible<Path, std::string>::value>  >
 		ResourceLocation(Name name, Extension ext, Path path) :
 		name(std::forward<Name>(name)), extension(std::forward<Extension>(ext)), path(std::forward<Path>(path)),
 		location(this->path + this->name + this->extension) {
@@ -31,5 +31,15 @@ namespace Val {
 		std::string extension;
 
 		std::string location;
+	};
+}
+
+//Resource Locations are used in unordered_maps for organizing textures.
+namespace std {
+	template<>
+	struct hash<Val::ResourceLocation> {
+		size_t operator()(const Val::ResourceLocation& rl) const {
+			return hash<string>()(rl.getLocation());
+		}
 	};
 }

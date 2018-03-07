@@ -9,22 +9,22 @@ namespace Val {
 		static RuntimeConstants* Instance;
 		
 		//Usefull chanable constants
-		Notify<std::string> WindowName = Notify<std::string>("Valtrook Engine");
 
-		Notify<unsigned int> Window_Width = Notify<unsigned int>(1080);
-		Notify<unsigned int> Window_Height = Notify<unsigned int>(720); 
+		//These are linked to any created window. (Windows can be set to ignore delegates at runtime with .SetIgnoreDelegate(true))
+		Notify<std::string> WindowName = Notify<std::string>("Valtrook Engine");
+		Notify<std::pair<unsigned int, unsigned int>> Window_Size = Notify<std::pair<unsigned int, unsigned int>>(std::make_pair(1080, 720));
+		Notify<std::pair<unsigned int, unsigned int>> Window_Size_Min = Notify<std::pair<unsigned int, unsigned int>>(std::make_pair(320, 320));
 
 
 		//True constants
 		const std::string AssetPath = "assets\\";
 
+		const std::string ShaderPath = AssetPath + "shaders\\";
 		const std::string TexturePath = AssetPath + "textures\\";
 		const std::string FontPath = AssetPath + "fonts\\";
 		const std::string SoundPath = AssetPath + "audio\\";
 		const std::string SettingPath = AssetPath + "settings\\";
 
-		
-		const unsigned int Min_Window_Width = 320; //Arbitrary numbers
-		const unsigned int Min_Window_Height = 320;
+		const std::string TextureSheetPath = TexturePath + "sheets\\";
 	};
 }

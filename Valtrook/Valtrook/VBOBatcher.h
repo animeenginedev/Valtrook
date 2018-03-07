@@ -76,7 +76,14 @@ namespace Val {
 		void renderLines(const GLBlendMode& forceBlendMode);
 
 		void clear();
+
+		unsigned int VertexCount() {
+			return verticies.size();
+		}
 	private:
+		GLBlendMode lastBlendMode;
+		void updateBlendMode(const GLBlendMode& mode);
+
 		VBO vbo;
 		std::vector<Vertex> verticies;
 		

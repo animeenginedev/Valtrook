@@ -9,7 +9,7 @@ namespace Val {
 	template<unsigned int Vertexes>
 	struct Glyph {
 		Glyph(unsigned int text, std::array<Vertex, Vertexes> verts) : texture(text), vertexes(verts) {};
-		Glyph(unsigned int text, std::array<Vertex, Vertexes> verts, GLBlendMode* customBlend) : texture(text), vertexes(verts), blendeMode(customBlend) {};
+		Glyph(unsigned int text, std::array<Vertex, Vertexes> verts, GLBlendMode* customBlend) : textureId(text), vertexes(verts), blendMode(customBlend) {};
 
 		unsigned int textureId;
 		std::array<Vertex, Vertexes> vertexes;

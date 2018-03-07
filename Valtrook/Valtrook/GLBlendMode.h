@@ -14,5 +14,18 @@ namespace Val {
 		GLenum SrcColour, SrcAlpha;
 		GLenum DstColour, DstAlpha;
 		unsigned int BlendOrder;
+		
+		bool operator==(const GLBlendMode& rhs) const {
+			return SrcColour == rhs.SrcColour && SrcAlpha == rhs.SrcAlpha &&
+				DstColour == rhs.DstColour && DstAlpha == rhs.DstAlpha &&
+				BlendOrder == rhs.BlendOrder;
+		}
+
+
+		bool operator!=(const GLBlendMode& rhs) const {
+			return SrcColour != rhs.SrcColour || SrcAlpha != rhs.SrcAlpha ||
+				DstColour != rhs.DstColour || DstAlpha != rhs.DstAlpha ||
+				BlendOrder != rhs.BlendOrder;
+		}
 	};
 }

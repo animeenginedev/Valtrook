@@ -9,6 +9,10 @@ Val::GLTexture::GLTexture(GLuint id, unsigned int width, unsigned int height) : 
 Val::GLTexture::GLTexture(GLuint id, std::array<unsigned int, 2> size) : id(id), size(size) {
 }
 
+GLuint & Val::GLTexture::getTextureIDForGL() {
+	return id;
+}
+
 GLuint Val::GLTexture::getTextureID() const {
 	return id;
 }

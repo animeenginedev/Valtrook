@@ -13,6 +13,7 @@ namespace Val {
 	class Texture;
 
 	struct TextureResource {
+		TextureResource() : resourceName("", "", "") {};
 		TextureResource(Texture* texture, ResourceLocation resourceName);
 		void reinitialize(Texture* texture, ResourceLocation resourceName);
 

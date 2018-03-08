@@ -8,20 +8,21 @@
 namespace Val {
 	template<unsigned int Vertexes>
 	struct Glyph {
-		Glyph(unsigned int text, std::array<Vertex, Vertexes> verts) : texture(text), vertexes(verts) {};
-		Glyph(unsigned int text, std::array<Vertex, Vertexes> verts, GLBlendMode* customBlend) : textureId(text), vertexes(verts), blendMode(customBlend) {};
+		Glyph(GLuint text, std::array<Vertex, Vertexes> verts) : textureId(text), vertexes(verts) {};
+		Glyph(GLuint text, std::array<Vertex, Vertexes> verts, GLBlendMode* customBlend) : textureId(text), vertexes(verts), blendMode(customBlend) {};
 
-		unsigned int textureId;
+		GLuint textureId;
 		std::array<Vertex, Vertexes> vertexes;
 		GLBlendMode* blendMode = &GLBlendMode::Blend_Default;
 	};
 
 	struct TriangleGlyph : public Glyph<3> {
-		TriangleGlyph(unsigned int text, std::array<Vertex, 3> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
+		TriangleGlyph() : Glyph(0, { Vertex(), Vertex(), Vertex() }) {};
+		TriangleGlyph(GLuint text, std::array<Vertex, 3> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
 	};
 	struct RectangleGlyph : public Glyph<6> {
-		RectangleGlyph(unsigned int text, std::array<Vertex, 4> verts, GLBlendMode* customBlend) : Glyph(text, { verts[0], verts[1], verts[2], verts[2], verts[3], verts[1] }, customBlend) {};
-		RectangleGlyph(unsigned int text, std::array<Vertex, 6> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
+		RectangleGlyph(GLuint text, std::array<Vertex, 4> verts, GLBlendMode* customBlend) : Glyph(text, { verts[0], verts[1], verts[2], verts[2], verts[3], verts[1] }, customBlend) {};
+		RectangleGlyph(GLuint text, std::array<Vertex, 6> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
 
 		std::array<TriangleGlyph, 2> dispose() {
 			return std::array<TriangleGlyph, 2>({ TriangleGlyph(textureId, std::array<Vertex, 3>({ vertexes[0], vertexes[1], vertexes[2] }), blendMode),
@@ -29,6 +30,6 @@ namespace Val {
 		}
 	};
 	struct LineGlyph : public Glyph<2> {
-		LineGlyph(unsigned int text, std::array<Vertex, 2> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
+		LineGlyph(GLuint text, std::array<Vertex, 2> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
 	};
 }

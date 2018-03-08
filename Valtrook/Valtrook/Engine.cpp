@@ -13,6 +13,7 @@ static void CreateDirectoryIfItDoesNotExist(std::string directory) {
 	CreateDirectory(directory.c_str(), NULL);
 }
 
+#include "Angle.h"
 namespace Val {
 	Engine::Engine() : running(false) {
 
@@ -68,8 +69,8 @@ namespace Val {
 	}
 
 	void Engine::initialise() {
-		setTargetFrameRate(120);
-		setTargetUpdateRate(60);
+		setTargetFrameRate(240);
+		setTargetUpdateRate(120);
 		setPerformanceOutputRate(10);
 
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->AssetPath); 
@@ -83,17 +84,24 @@ namespace Val {
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->TextureSheetPath);
 
 
+		camera.initialise(PixelToWorld<int, float>(RuntimeConstants::Instance->Window_Size.get().first), PixelToWorld<int, float>(RuntimeConstants::Instance->Window_Size.get().second));
+		camera.update(0.0f);
+		camera.getMatrix();
+
 		RenderingEngine::InitWindow();
 		renderer = new RenderingEngine();
 		renderer->initialise();
-	}
+		renderer->currentCamera = &camera;
 
+		test.initialise(TextureAsset::getTexture(ResourceLocation("Raven", ".png", RuntimeConstants::Instance->TexturePath), false), 0, 0, 0.0f, PixelToWorld<int, float>(150), PixelToWorld<int, float>(150), 0.0f);
+	}
 	void Engine::run() {
 		StopWatch updateTimer, renderingTimer, secondTimer;
 		updateTimer.update();
 		renderingTimer.update();
 		secondTimer.update();
 		TimingType updateAccumlation = TimingType(), renderAccumlation = TimingType(), secondAccumlation = TimingType();
+		TimingType updateDelta, renderDelta;
 		unsigned int secondCounter = 0u, updateCounter = 0u, renderCounter = 0u, performanceCounter = performanceOutputRate;
 		SDL_Event e;
 		while (running) {
@@ -111,7 +119,8 @@ namespace Val {
 			}
 
 			updateTimer.update();
-			updateAccumlation += updateTimer.getCurrentDeltaSecond<TimingType>();
+			updateDelta = updateTimer.getCurrentDeltaSecond<TimingType>();
+			updateAccumlation += updateDelta;
 			if (updateAccumlation >= accumlateUpdateRate) {
 				updateAccumlation -= accumlateUpdateRate;
 				++updateCounter;
@@ -121,11 +130,17 @@ namespace Val {
 			}
 
 			renderingTimer.update();
-			renderAccumlation += renderingTimer.getCurrentDeltaSecond<TimingType>();
+			renderDelta = renderingTimer.getCurrentDeltaSecond<TimingType>();
+			renderAccumlation += renderDelta;
 			if (renderAccumlation >= accumlateFrameRate) {
 				renderAccumlation -= accumlateFrameRate;
 				++renderCounter;
 				//Render Here
+				float deg15 = Radians<float>(35.0f * renderDelta);
+				test.setRotation(test.getRotation() + deg15);
+
+				test.sendRenderInformation(renderer);
+				camera.update(renderDelta);
 
 				renderer->render();
 			}

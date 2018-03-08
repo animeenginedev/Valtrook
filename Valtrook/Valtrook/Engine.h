@@ -2,6 +2,9 @@
 
 #include <string>
 
+#include "OrthographicCamera.h"
+#include "Rectangle.h"
+
 namespace Val {
 	class RenderingEngine;
 
@@ -23,8 +26,11 @@ namespace Val {
 		unsigned int getTargetUpdateRate() const;
 		unsigned int getPerformanceOutputRate() const;
 	protected:
+		Rectangle test;
+
 		bool running;
 
+		OrthographicCamera camera;
 		RenderingEngine* renderer;
 
 		//Raw numbers of how many times you want to update

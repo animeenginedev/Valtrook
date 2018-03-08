@@ -3,6 +3,7 @@
 #include "VBOBatcher.h"
 #include "Window.h"
 
+#include "OrthographicCamera.h"
 #include "GenericShaderObject.h"
 
 namespace Val {
@@ -17,6 +18,8 @@ namespace Val {
 		virtual void render();
 
 		GenericShaderObject* shaderObject;
+
+		OrthographicCamera* currentCamera;
 
 		VBOBatcher* getRenderer();
 		VBOBatcher* getGUIRenderer();

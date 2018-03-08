@@ -39,6 +39,7 @@ namespace Val {
 		while (!renderer.isPrepared() && !GUIRenderer.isPrepared()) {
 		}
 
+		shaderObject->updateShader(GenericShaderObjectUniform(&currentCamera->getMatrix(), false));
 		shaderObject->attach();
 		renderer.render();
 		shaderObject->setLineMode(true);

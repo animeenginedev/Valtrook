@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 namespace Val {
 	template<typename T>
 	inline T lerp(const T& a, const T& b, const T& percent) {
@@ -10,4 +12,5 @@ namespace Val {
 	inline Real lerp(const In& a, const In& b, const Real& percent) {
 		return static_cast<Real>(a + ((b - a)) * percent);
 	}
+
 }

@@ -150,6 +150,7 @@ void Val::VBOBatcher::render() {
 	vbo.bindVertexArray();
 	for (RenderBatch batch : batches) {
 		updateBlendMode(*batch.BlendMode);
+		glBlendFuncSeparate((*batch.BlendMode).SrcColour, (*batch.BlendMode).DstColour, (*batch.BlendMode).SrcAlpha, (*batch.BlendMode).DstAlpha);
 		glBindTexture(GL_TEXTURE_2D, batch.texture);
 
 		vbo.render(batch.offset, batch.size, batch.renderMode);

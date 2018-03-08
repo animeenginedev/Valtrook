@@ -19,29 +19,20 @@ namespace Val {
 		virtual void notifyDestroyed() = 0;
 	};
 
-	//Create a delegate, easiest way to work with it is to pass a lambda of some sort to funcOn<X> if you don't pass a lambda it will update bHas<changed/destroyed> and you can work from that if you really want...
+	//Create a delegate, easiest way to work with it is to pass a lambda of some sort to funcOn<X>
 	template<typename T>
 	class NotifyDelegate : public NotifyReciever<T> {
 	public:
-		NotifyDelegate() : bHasChanged(false), bHasBeenDestroyed(false) {}
-
-		bool hasChanged() const;
-		void resetHasChanged();
-
-		bool hasBeenDestroyed() const;
-		void resetHasBeenDestroyed();
+		NotifyDelegate() {}
 
 		void funcOnChange(std::function<void(T)> OnChange);
 		void funcOnDestroy(std::function<void(T)> OnDestroy);
 	protected:
-		bool bHasChanged;
-		bool bHasBeenDestroyed;
-
 		std::function<void(T)> OnChange;
 		std::function<void(T)> OnDestroy;
 
-		virtual void notifyChanged();
-		virtual void notifyDestroyed();
+		void notifyChanged() override;
+		void notifyDestroyed() override;
 	};
 
 	//The core thing
@@ -67,18 +58,16 @@ namespace Val {
 		std::vector<NotifyReciever<T>*> Recievers;
 	};
 
-
+	//Template implementation below here, enter at your own risk
 	template<typename T>
 	inline Notify<T>::Notify(T data) : Data(data) {
 	}
-
 	template<typename T>
 	inline Notify<T>::~Notify() {
 		for (unsigned int i = 0; i < Recievers.size(); ++i) {
 			Recievers[i]->notifyDestroyed();
 		}
 	}
-
 	template<typename T>
 	inline void Notify<T>::set(T data) {
 		Data = data;
@@ -87,7 +76,6 @@ namespace Val {
 			Recievers[i]->notifyChanged();
 		}
 	}
-
 	template<typename T>
 	inline T Notify<T>::get() const {
 		return Data;
@@ -98,7 +86,6 @@ namespace Val {
 		Type->Source = this;
 		Recievers.push_back(Type);
 	}
-
 	template<typename T>
 	inline void Notify<T>::removeReciever(NotifyReciever<T>* Type) {
 		for (auto iter = Recievers.begin(); iter != Recievers.end(); iter++) {
@@ -109,34 +96,16 @@ namespace Val {
 			}
 		}
 	}
-
 	template<typename T>
 	inline std::size_t Notify<T>::numRecievers() const {
 		return Recievers.size();
 	}
-
 	template<typename T>
 	inline void Notify<T>::clearRecievers() {
 		for (unsigned int i = 0; i < Recievers.size(); ++i) {
 			Recievers[i]->notifyDestroyed();
 		}
 		Recievers.clear();
-	}
-	template<typename T>
-	inline bool NotifyDelegate<T>::hasChanged() const {
-		return bHasChanged;
-	}
-	template<typename T>
-	inline void NotifyDelegate<T>::resetHasChanged() {
-		bHasChanged = false;
-	}
-	template<typename T>
-	inline bool NotifyDelegate<T>::hasBeenDestroyed() const {
-		return bHasBeenDestroyed;
-	}
-	template<typename T>
-	inline void NotifyDelegate<T>::resetHasBeenDestroyed() {
-		bHasBeenDestroyed = false;
 	}
 	template<typename T>
 	inline void NotifyDelegate<T>::funcOnChange(std::function<void(T)> OnChange) {
@@ -152,8 +121,6 @@ namespace Val {
 			OnChange(Source->get());
 			return;
 		}
-
-		bHasChanged = true;
 	}
 	template<typename T>
 	inline void NotifyDelegate<T>::notifyDestroyed() {
@@ -161,7 +128,5 @@ namespace Val {
 			OnDestroy(Source->get());
 			return;
 		}
-
-		bHasBeenDestroyed = true;
 	}
 }

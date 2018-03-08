@@ -32,7 +32,7 @@ namespace Val {
 
 	struct RenderBatch {
 		RenderBatch() : BlendMode(nullptr), texture(0), renderMode(0), offset(0), size(0) {}
-		RenderBatch(GLBlendMode* BlendMode, unsigned inttexture, GLenum renderMode, unsigned int offset = 0, unsigned int size = 0) : BlendMode(BlendMode), texture(texture), renderMode(renderMode), offset(offset), size(size) {
+		RenderBatch(GLBlendMode* BlendMode, unsigned inttexture, GLenum renderMode, unsigned int offset = 0, unsigned int size = 0) : BlendMode(BlendMode), texture(inttexture), renderMode(renderMode), offset(offset), size(size) {
 		}
 
 		GLBlendMode* BlendMode;

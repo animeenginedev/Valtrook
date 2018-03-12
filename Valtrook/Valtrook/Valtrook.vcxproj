@@ -122,6 +122,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GenericShaderObject.cpp" />
     <ClCompile Include="GLBlendMode.cpp" />
     <ClCompile Include="Colour.cpp" />
@@ -129,6 +131,7 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="RuntimeConstants.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
+    <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAsset.cpp" />
     <ClCompile Include="TextureSheet.cpp" />
@@ -154,6 +158,8 @@
     <ClInclude Include="Angle.h" />
     <ClInclude Include="Conversion.h" />
     <ClInclude Include="Exit.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="GenericShaderObject.h" />
     <ClInclude Include="GLBlendMode.h" />
     <ClInclude Include="Clamp.h" />
@@ -165,6 +171,7 @@
     <ClInclude Include="GateTimer.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Glyph.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonReadWriter.h" />
     <ClInclude Include="Lerp.h" />
@@ -173,7 +180,6 @@
     <ClInclude Include="Min.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="Notify.h" />
-    <ClInclude Include="Not_Null.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="Owner.h" />
     <ClInclude Include="ProportionList.h" />
@@ -184,10 +190,12 @@
     <ClInclude Include="RuntimeConstants.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="SimplexNoise.h" />
+    <ClInclude Include="SplashState.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="TextureSheet.h" />
+    <ClInclude Include="TimingType.h" />
     <ClInclude Include="UV.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBOBatcher.h" />

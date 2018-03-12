@@ -44,7 +44,7 @@ namespace Val {
 		return texture;
 	}
 
-	UV TextureResource::getBounds() {
+	UV TextureResource::getBounds() const {
 		return texture->getBounds(resourceName);
 	}
 

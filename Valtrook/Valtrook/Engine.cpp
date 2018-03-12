@@ -15,8 +15,7 @@ static void CreateDirectoryIfItDoesNotExist(std::string directory) {
 
 #include "Angle.h"
 namespace Val {
-	Engine::Engine() : running(false) {
-
+	Engine::Engine() : running(false), inputManager(), game(&inputManager) {
 	}
 
 	Engine::~Engine() {
@@ -38,6 +37,33 @@ namespace Val {
 	bool Engine::isRunning() const {
 		return running;
 	}
+
+	InputManager const * const Engine::getInputManager() const {
+		return &inputManager;
+	}
+
+	RenderingEngine const * Engine::getRenderingEngine() const {
+		return renderer;
+	}
+
+	void Engine::setCustomRenderer(RenderingEngine * renderer) {
+		this->renderer = renderer;
+		usingCustomRenderer = true;
+	}
+
+	void Engine::resetRendererToDefault() {
+		renderer = defaultRenderer;
+		usingCustomRenderer = false;
+	}
+
+	bool Engine::isRendererDefault() const {
+		return !usingCustomRenderer;
+	}
+
+	bool Engine::isRendererCustom() const {
+		return usingCustomRenderer;
+	}
+
 
 	void Engine::setTargetFrameRate(unsigned int frameRate) {
 		targetFrameRate = frameRate;
@@ -89,11 +115,15 @@ namespace Val {
 		camera.getMatrix();
 
 		RenderingEngine::InitWindow();
-		renderer = new RenderingEngine();
-		renderer->initialise();
-		renderer->currentCamera = &camera;
+		usingCustomRenderer = false;
+		defaultRenderer = new RenderingEngine();
+		defaultRenderer->initialise();
+		defaultRenderer->currentCamera = &camera;
+		renderer = defaultRenderer;
 
-		test.initialise(TextureAsset::getTexture(ResourceLocation("Raven", ".png", RuntimeConstants::Instance->TexturePath), false), 0, 0, 0.0f, PixelToWorld<int, float>(150), PixelToWorld<int, float>(150), 0.0f);
+		game.initialise();
+
+		test.initialise(TextureAsset::getTexture(ResourceLocation("Raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.0f, PixelToWorld<int, float>(150), PixelToWorld<int, float>(150), 0.0f);
 	}
 	void Engine::run() {
 		StopWatch updateTimer, renderingTimer, secondTimer;
@@ -107,16 +137,34 @@ namespace Val {
 		while (running) {
 
 			//Events
+			//A note on inputs; if you manage to hit a key up and down faster than it takes to run an update, then you'll have a keypressed thats missed, but good luck pressing a key down faster then 1/120th of a second.
 			if (SDL_PollEvent(&e) == 1) {
 				do {
 					switch (e.type) {
 						case SDL_QUIT:
 							running = false;
+						case SDL_KEYDOWN:
+							inputManager.updateKeyState(e.key.keysym.sym, true);
+							break;
+						case SDL_KEYUP:
+							inputManager.updateKeyState(e.key.keysym.sym, false);
+							break;
+						case SDL_MOUSEBUTTONDOWN:
+							inputManager.updateMouseButton(e.button.button, true);
+							break;
+						case SDL_MOUSEBUTTONUP:
+							inputManager.updateMouseButton(e.button.button, false);
+							break;
+						case SDL_MOUSEWHEEL:
+							inputManager.updateMouseWheel(e.wheel.y);
+							break;
 						default:
 							break;
 					}
+					game.rawEvent(e);
 				} while (SDL_PollEvent(&e) == 1);
 			}
+
 
 			updateTimer.update();
 			updateDelta = updateTimer.getCurrentDeltaSecond<TimingType>();
@@ -124,9 +172,10 @@ namespace Val {
 			if (updateAccumlation >= accumlateUpdateRate) {
 				updateAccumlation -= accumlateUpdateRate;
 				++updateCounter;
-				//Update Here
 
+				game.update(updateDelta);
 
+				inputManager.update();
 			}
 
 			renderingTimer.update();
@@ -135,6 +184,9 @@ namespace Val {
 			if (renderAccumlation >= accumlateFrameRate) {
 				renderAccumlation -= accumlateFrameRate;
 				++renderCounter;
+
+				game.render(renderDelta, renderer);
+
 				//Render Here
 				float deg15 = Radians<float>(35.0f * renderDelta);
 				test.setRotation(test.getRotation() + deg15);

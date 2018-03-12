@@ -39,7 +39,7 @@ namespace Val {
 		Meter getTargetHeight();
 		float getTargetScale();
 
-		std::array<Meter, 2> convertScreenToWorld(Meter screenX, Meter screenY);
+		std::array<Meter, 2> convertScreenToWorld(Pixel screenX, Pixel screenY);
 		std::array<Meter, 2> convertWorldToScreen(Meter worldX, Meter worldY);
 
 		AABB<float> getCameraBounds(Meter extraPadding);

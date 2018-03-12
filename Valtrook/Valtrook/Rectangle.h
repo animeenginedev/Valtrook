@@ -19,7 +19,7 @@ namespace Val {
 		SimpleRectangle();
 		~SimpleRectangle();
 
-		virtual void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const UV& uv = UV(0.0f, 0.0f, 1.0f, 1.0f), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		virtual void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 
 		void setTexture(const TextureResource& texture);
 		void setX(const float& x);
@@ -70,7 +70,7 @@ namespace Val {
 
 	class Rectangle : public SimpleRectangle {
 	public:
-		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const float& rotation, const Colour& colour = Colour(255, 255, 255, 255), const UV& uv = UV(0.0f, 0.0f, 1.0f, 1.0f), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const float& rotation, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		
 		void setRotation(const float& rotation);
 
@@ -78,7 +78,7 @@ namespace Val {
 	protected:
 		float rotation;
 		
-		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const UV& uv = UV(0.0f, 0.0f, 1.0f, 1.0f), const GLBlendMode& blendMode = GLBlendMode::Blend_Default) override;
+		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default) override;
 
 		void recalculateVertexes() override;
 	};

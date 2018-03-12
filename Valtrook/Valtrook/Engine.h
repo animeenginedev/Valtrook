@@ -2,14 +2,16 @@
 
 #include <string>
 
+#include "TimingType.h"
+#include "InputManager.h"
 #include "OrthographicCamera.h"
 #include "Rectangle.h"
+#include "Game.h"
 
 namespace Val {
 	class RenderingEngine;
 
 	class Engine {
-		typedef float TimingType;
 	public:
 		Engine();
 		~Engine();
@@ -17,6 +19,14 @@ namespace Val {
 		void start();
 		void stop();
 		bool isRunning() const;
+
+		InputManager const* const getInputManager() const;
+
+		RenderingEngine const* getRenderingEngine() const;
+		void setCustomRenderer(RenderingEngine* renderer);
+		void resetRendererToDefault();
+		bool isRendererDefault() const;
+		bool isRendererCustom() const;
 
 		void setTargetFrameRate(unsigned int frameRate);
 		void setTargetUpdateRate(unsigned int updateRate);
@@ -30,8 +40,12 @@ namespace Val {
 
 		bool running;
 
+		//INPUT MANAGER MUST COME BEFORE GAME, initialization is declartion order and game relies on inputManager
+		InputManager inputManager;
+		Game game;
 		OrthographicCamera camera;
-		RenderingEngine* renderer;
+		RenderingEngine* renderer, *defaultRenderer;
+		bool usingCustomRenderer;
 
 		//Raw numbers of how many times you want to update
 		unsigned int targetFrameRate, targetUpdateRate, performanceOutputRate;

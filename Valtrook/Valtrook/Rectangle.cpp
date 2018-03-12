@@ -9,13 +9,13 @@ namespace Val {
 	}
 	SimpleRectangle::~SimpleRectangle() {
 	}
-	void SimpleRectangle::initialise(const TextureResource & texture, const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const Colour & colour, const UV & uv, const GLBlendMode & blendMode) {
+	void SimpleRectangle::initialise(const TextureResource & texture, const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const Colour & colour, const GLBlendMode & blendMode) {
 		this->texture = texture;
 		this->center = { x, y };
 		this->depth = depth;
 		this->halfSize = { halfWidth, halfHeight };
 		this->renderColour = colour;
-		this->uvBounds = uv;
+		this->uvBounds = texture.getBounds();
 		this->blendMode = blendMode;
 		
 		needsReconstructed = true;
@@ -152,14 +152,14 @@ namespace Val {
 
 		}), &blendMode).dispose();
 	}
-	void Val::Rectangle::initialise(const TextureResource & texture, const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const float & rotation, const Colour & colour, const UV & uv, const GLBlendMode & blendMode) {
+	void Val::Rectangle::initialise(const TextureResource & texture, const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const float & rotation, const Colour & colour, const GLBlendMode & blendMode) {
 		this->texture = texture;
 		this->center = { x, y };
 		this->depth = depth;
 		this->halfSize = { halfWidth, halfHeight };
 		this->rotation = rotation;
 		this->renderColour = colour;
-		this->uvBounds = uv;
+		this->uvBounds = texture.getBounds();
 		this->blendMode = blendMode;
 
 		needsReconstructed = true;
@@ -171,7 +171,7 @@ namespace Val {
 	float Rectangle::getRotation() const {
 		return rotation;
 	}
-	void Rectangle::initialise(const TextureResource & texture, const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const Colour & colour, const UV & uv, const GLBlendMode & blendMode) {
+	void Rectangle::initialise(const TextureResource & texture, const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const Colour & colour, const GLBlendMode & blendMode) {
 	}
 	void Rectangle::recalculateVertexes() {
 		needsReconstructed = false;

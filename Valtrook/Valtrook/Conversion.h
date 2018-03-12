@@ -18,7 +18,7 @@ namespace Val {
 
 	template<typename Real,
 		typename = std::enable_if_t< std::is_floating_point<Real>::value> >
-		constexpr const Real UnalignedPixelToWorld(const Real& pixels) {
+	constexpr const Real UnalignedPixelToWorld(const Real& pixels) {
 		return static_cast<Real>(pixels) * static_cast<Real>(0.1);
 	}
 

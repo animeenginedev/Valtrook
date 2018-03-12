@@ -19,7 +19,7 @@ namespace Val {
 
 		GLTexture* getGLTexture();
 		Texture* getTexture();
-		UV getBounds();
+		UV getBounds() const;
 		ResourceLocation getResourceName();
 		std::array<unsigned int, 2> getTextureSizeInPixel();
 	protected:

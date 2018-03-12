@@ -112,10 +112,10 @@ namespace Val {
 		return scaleTarget;
 	}
 
-	std::array<Meter, 2> OrthographicCamera::convertScreenToWorld(Meter screenX, Meter screenY) {
+	std::array<Meter, 2> OrthographicCamera::convertScreenToWorld(Pixel screenX, Pixel screenY) {
 		std::array<Meter, 2> ret = {};
-		ret[0] = ((screenX - (bounds[0] / 2.0f)) / scale) + position[0];
-		ret[1] = -(((screenY - (bounds[1] / 2.0f)) / scale) - position[1]);
+		ret[0] = ((PixelToWorld<Pixel, Meter>(screenX) - (bounds[0] / 2.0f)) / scale) + position[0];
+		ret[1] = -(((PixelToWorld<Pixel, Meter>(screenY) - (bounds[1] / 2.0f)) / scale) - position[1]);
 		return ret;
 	}
 

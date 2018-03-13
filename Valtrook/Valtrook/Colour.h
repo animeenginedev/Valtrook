@@ -19,6 +19,15 @@ namespace Val {
 		Colour multiply(const float& right, bool allowUnderOverflow = false) const;
 		Colour divide(const float& right, bool allowUnderOverFlow = false) const;
 
+		template<typename Real = float,
+			typename = std::enable_if_t<std::is_floating_point<Real>::value>>
+		static Colour lerp(Colour start, Colour end, Real t) {
+			return Colour(start.r + ((end.r - start.r) * t),
+						  start.g + ((end.g - start.g) * t),
+						  start.b + ((end.b - start.b) * t), 
+						  start.a + ((end.a - start.a) * t));
+		}
+
 		template<typename T>
 		Colour operator+ (const T& right);
 		template<typename T>

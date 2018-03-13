@@ -39,18 +39,19 @@ namespace Val {
 		void updateMouseWheel(const int& newDelta);
 
 		//Only truely valid in Update()
+		bool isAnyJustUp() const;
+		bool isAnyJustDown() const;
+		bool isAnyPressed() const;
+		//Only truely valid in Update()
 		bool isKeyJustUp(const unsigned short& key) const;
-		//Only truely valid in Update()
 		bool isKeyJustDown(const unsigned short& key) const;
-		//Only truely valid in Update()
 		bool isKeyPressed(const unsigned short& key) const;
-		//Only truely valid in Update()
+		//isKeyJustUp is only truely valid in Update()
 		const KeyState getLeftMouseState() const;
-		//Only truely valid in Update()
+		//isKeyJustUp is only truely valid in Update()
 		const KeyState getRightMouseState() const;
-		//Only truely valid in Update()
+		//isKeyJustUp is only truely valid in Update()
 		const KeyState getMiddleMouseState() const;
-		//Only truely valid in Update()
 		int getMouseWheelDelta() const;
 		std::array<int, 2> getMouseLocation() const;
 	protected:

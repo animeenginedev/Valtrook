@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Notify.h"
+#include "Colour.h"
 #include <string>
 
 namespace Val {
@@ -15,6 +16,7 @@ namespace Val {
 		Notify<std::pair<unsigned int, unsigned int>> Window_Size = Notify<std::pair<unsigned int, unsigned int>>(std::make_pair(1080, 720));
 		Notify<std::pair<unsigned int, unsigned int>> Window_Size_Min = Notify<std::pair<unsigned int, unsigned int>>(std::make_pair(320, 320));
 
+		Notify<Colour> GLClearColour = Notify<Colour>(Colour(0, 0, 0, 255));
 
 		//True constants
 		const std::string AssetPath = "assets\\";

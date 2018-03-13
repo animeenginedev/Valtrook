@@ -1,5 +1,7 @@
 #include "GenericShaderObject.h"
 
+#include "Camera.h"
+
 #include <vector>
 
 namespace Val {
@@ -21,13 +23,16 @@ namespace Val {
 	GenericShaderObject::~GenericShaderObject() {
 	}
 
+	void GenericShaderObject::setCamera(Camera * camera) {
+		GLint cameraLocation = this->getUniformLocation("P");
+		glUniformMatrix4fv(cameraLocation, 1, GL_FALSE, &(camera->getMatrix()[0][0]));
+	}
+
 	void GenericShaderObject::updateShader(GenericShaderObjectUniform sU) {
 		GLint textureLocation = this->getUniformLocation("sample");
-		GLint cameraLocation = this->getUniformLocation("P");
 		GLint lineMode = this->getUniformLocation("lineMode");
 
 		glUniform1i(textureLocation, sU.texLocation);
-		glUniformMatrix4fv(cameraLocation, 1, GL_FALSE, &(*sU.cameraMatrix)[0][0]);
 		glUniform1i(lineMode, sU.lineMode);
 	}
 

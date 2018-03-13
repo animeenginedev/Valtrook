@@ -75,7 +75,8 @@ namespace Val {
 		}
 
 		//Set the background color to blue
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		Colour clearColour = RuntimeConstants::Instance->GLClearColour.get();
+		glClearColor(static_cast<float>(clearColour.r) / 255.0f, static_cast<float>(clearColour.g) / 255.0f, static_cast<float>(clearColour.b) / 255.0f, static_cast<float>(clearColour.a) / 255.0f);
 
 		//Set VSYNC
 		SDL_GL_SetSwapInterval(0);

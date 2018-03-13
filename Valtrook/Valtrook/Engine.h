@@ -4,8 +4,6 @@
 
 #include "TimingType.h"
 #include "InputManager.h"
-#include "OrthographicCamera.h"
-#include "Rectangle.h"
 #include "Game.h"
 
 namespace Val {
@@ -36,14 +34,11 @@ namespace Val {
 		unsigned int getTargetUpdateRate() const;
 		unsigned int getPerformanceOutputRate() const;
 	protected:
-		Rectangle test;
-
 		bool running;
 
 		//INPUT MANAGER MUST COME BEFORE GAME, initialization is declartion order and game relies on inputManager
 		InputManager inputManager;
 		Game game;
-		OrthographicCamera camera;
 		RenderingEngine* renderer, *defaultRenderer;
 		bool usingCustomRenderer;
 

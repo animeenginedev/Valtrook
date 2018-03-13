@@ -8,11 +8,10 @@
 namespace Val {
 	struct GenericShaderObjectUniform {
 		GLint texLocation;
-		glm::mat4x4* cameraMatrix;
 		GLboolean lineMode;
 
-		GenericShaderObjectUniform(glm::mat4x4* cameraMatrix, GLboolean lineMode = false, GLint texLocation = 0) :
-			cameraMatrix(cameraMatrix), lineMode(lineMode), texLocation(texLocation) {
+		GenericShaderObjectUniform(GLboolean lineMode = false, GLint texLocation = 0) :
+			lineMode(lineMode), texLocation(texLocation) {
 		}
 	};
 
@@ -22,6 +21,7 @@ namespace Val {
 		GenericShaderObject();
 		virtual ~GenericShaderObject();
 
+		virtual void setCamera(Camera* camera);
 		virtual void updateShader(GenericShaderObjectUniform sU);
 
 		void setLineMode(bool value);

@@ -7,11 +7,13 @@
 #include <SDL2\SDL.h>
 
 namespace Val {
+	class Camera;
 	class GameState;
 	class RenderingEngine;
 	class InputManager;
 
 	class SplashState;
+	class MenuState;
 
 	class Game {
 	public:
@@ -29,13 +31,20 @@ namespace Val {
 		GameState* getState() const;
 		//happens at the end of the next update(), callback is set to null when it's completed.
 		void setState(GameState* state, std::function<void()> Callback = nullptr);
+		bool hasNextState() const;
 
-		GameState* splashState;
+		void setCamera(Camera* Camera);
+		Camera* getCamera() const;
+		void resetToDefaultCamera();
+
+
+		SplashState* splashState;
+		MenuState* menuState;
 	protected:
 		GameState* currentState;
 		GameState* nextState;
 		std::function<void()> callbackOnStateChange;
-		OrthographicCamera* currentCamera;
+		Camera* currentCamera, *defaultCamera;
 		InputManager const* const inputManager;
 	};
 

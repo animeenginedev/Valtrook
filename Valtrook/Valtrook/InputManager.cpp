@@ -51,6 +51,39 @@ namespace Val {
 	void InputManager::updateMouseWheel(const int& newDelta) {
 		MouseDelta = newDelta;
 	}
+	bool InputManager::isAnyJustUp() const {
+		for (auto keyID : KeysToUpdate) {
+			if (KeyStates.at(keyID).isKeyJustUp())
+				return true;
+		}
+		for (unsigned int i = 0; i < 3; ++i) {
+			if (MouseState[i].isKeyJustUp())
+				return true;
+		}
+		return false;
+	}
+	bool InputManager::isAnyJustDown() const {
+		for (auto keyID : KeysToUpdate) {
+			if (KeyStates.at(keyID).isKeyJustDown())
+				return true;
+		}
+		for (unsigned int i = 0; i < 3; ++i) {
+			if (MouseState[i].isKeyJustDown())
+				return true;
+		}
+		return false;
+	}
+	bool InputManager::isAnyPressed() const {
+		for (auto keyID : KeysToUpdate) {
+			if (KeyStates.at(keyID).isKeyPressed())
+				return true;
+		}
+		for (unsigned int i = 0; i < 3; ++i) {
+			if (MouseState[i].isKeyPressed())
+				return true;
+		}
+		return false;
+	}
 	bool InputManager::isKeyJustUp(const unsigned short& key) const {
 		if (KeyStates.find(key) == KeyStates.end()) {
 			return false;

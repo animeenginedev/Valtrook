@@ -109,21 +109,13 @@ namespace Val {
 		
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->TextureSheetPath);
 
-
-		camera.initialise(PixelToWorld<int, float>(RuntimeConstants::Instance->Window_Size.get().first), PixelToWorld<int, float>(RuntimeConstants::Instance->Window_Size.get().second));
-		camera.update(0.0f);
-		camera.getMatrix();
-
 		RenderingEngine::InitWindow();
 		usingCustomRenderer = false;
 		defaultRenderer = new RenderingEngine();
 		defaultRenderer->initialise();
-		defaultRenderer->currentCamera = &camera;
 		renderer = defaultRenderer;
 
 		game.initialise();
-
-		test.initialise(TextureAsset::getTexture(ResourceLocation("Raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.0f, PixelToWorld<int, float>(150), PixelToWorld<int, float>(150), 0.0f);
 	}
 	void Engine::run() {
 		StopWatch updateTimer, renderingTimer, secondTimer;
@@ -173,7 +165,7 @@ namespace Val {
 				updateAccumlation -= accumlateUpdateRate;
 				++updateCounter;
 
-				game.update(updateDelta);
+				game.update(accumlateUpdateRate);
 
 				inputManager.update();
 			}
@@ -185,15 +177,8 @@ namespace Val {
 				renderAccumlation -= accumlateFrameRate;
 				++renderCounter;
 
-				game.render(renderDelta, renderer);
-
-				//Render Here
-				float deg15 = Radians<float>(35.0f * renderDelta);
-				test.setRotation(test.getRotation() + deg15);
-
-				test.sendRenderInformation(renderer);
-				camera.update(renderDelta);
-
+				game.render(accumlateFrameRate, renderer);
+				
 				renderer->render();
 			}
 

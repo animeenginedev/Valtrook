@@ -136,7 +136,7 @@ namespace Val {
 		return cameraMatrix;
 	}
 
-	void OrthographicCamera::update(float deltaTime) {
+	void OrthographicCamera::update(TimingType deltaTime) {
 		if (!std::equal(position.begin(), position.end(), targetPosition.begin())) {
 			position[0] = lerp<float>(position[0], targetPosition[0], movementLerpPercentage);
 			position[1] = lerp<float>(position[1], targetPosition[1], movementLerpPercentage);

@@ -6,6 +6,8 @@
 #include <GL\glew.h>
 
 namespace Val {
+	class Camera;
+
 	class ShaderObject {
 	public:
 		ShaderObject(std::string vertexShader, std::string fragmentShader, std::string geometryShader, std::string tesselationControlShader, std::string tesselationEvaluationShader,
@@ -16,6 +18,7 @@ namespace Val {
 		virtual void unattach();
 		virtual GLint getUniformLocation(const std::string& uniformName);
 
+		virtual void setCamera(Camera* camera) = 0;
 		virtual void updateShader() = 0;
 	protected:
 		bool bVertexShader, bFragmentShader, bGeometryShader, bTesselationControlShader, bTesselationEvaluationShader;

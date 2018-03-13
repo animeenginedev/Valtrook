@@ -1,14 +1,16 @@
 #pragma once
 
+#include "Camera.h"
 #include "Conversion.h"
 #include "AABB.h"
+#include "TimingType.h"
 
 #include <glm\glm.hpp>
 #include <array>
 
 namespace Val {
 	__declspec(align(16))
-	class OrthographicCamera {
+	class OrthographicCamera : public Camera {
 	public:
 		OrthographicCamera();
 		~OrthographicCamera();
@@ -44,9 +46,10 @@ namespace Val {
 
 		AABB<float> getCameraBounds(Meter extraPadding);
 
-		glm::mat4 getMatrix();
+		glm::mat4 getMatrix() override;
 
-		void update(float deltaTime);
+		void update(TimingType deltaTime) override;
+		CameraType getType() const override { return Orthographic; } ;
 
 		void* operator new(size_t i){ return _mm_malloc(i, 16); }
 		void operator delete(void* p) { _mm_free(p); }

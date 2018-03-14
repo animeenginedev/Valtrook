@@ -14,6 +14,9 @@ namespace Val {
 
 		virtual void initialise();
 
+		virtual void onBecomeActive();
+		virtual void onBecomeInactive();
+
 		virtual void rawEvent(const SDL_Event& e);
 		virtual void update(const TimingType& deltaTime);
 		virtual void render(const TimingType& deltaTime, RenderingEngine * const engine);

@@ -4,6 +4,7 @@
 
 #include "TimingType.h"
 #include "InputManager.h"
+#include "AudioManager.h"
 #include "Game.h"
 
 namespace Val {
@@ -18,6 +19,7 @@ namespace Val {
 		void stop();
 		bool isRunning() const;
 
+		AudioManager * getAudioManager();
 		InputManager const* const getInputManager() const;
 
 		RenderingEngine const* getRenderingEngine() const;
@@ -38,6 +40,7 @@ namespace Val {
 
 		//INPUT MANAGER MUST COME BEFORE GAME, initialization is declartion order and game relies on inputManager
 		InputManager inputManager;
+		AudioManager audioManager;
 		Game game;
 		RenderingEngine* renderer, *defaultRenderer;
 		bool usingCustomRenderer;

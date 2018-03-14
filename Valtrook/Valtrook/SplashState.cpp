@@ -19,6 +19,21 @@ namespace Val {
 		SplashDisplay.initialise(TextureAsset::getTexture(ResourceLocation("raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.5f, PixelToWorld<int, float>(200), PixelToWorld<int, float>(200), 0.0f);
 
 		this->menuState = menuState;
+
+		baka = game->getAudioManager()->getAudioPlayer(ResourceLocation("bakabakabaka", ".ogg", RuntimeConstants::Instance->SoundPath));
+		baka2 = game->getAudioManager()->getAudioPlayer(ResourceLocation("splashNoise", ".mp3", RuntimeConstants::Instance->SoundPath));
+	}
+
+	void SplashState::onBecomeActive() {
+		//fade in has a serious flaw, you cannot control the upper bound the audio goes too. so it goes from 0->128 regardless of channel settings.
+		baka->playFadeIn(60000, nullptr, -1);
+		baka2->play();
+		baka2->setVolume(0.15f);
+	}
+
+	void SplashState::onBecomeInactive() {
+		baka->halt();
+		baka2->halt();
 	}
 
 	void SplashState::update(const TimingType & deltaTime) {

@@ -12,6 +12,12 @@ Val::GameState::~GameState() {
 void Val::GameState::initialise() {
 }
 
+void Val::GameState::onBecomeActive() {
+}
+
+void Val::GameState::onBecomeInactive() {
+}
+
 void Val::GameState::rawEvent(const SDL_Event & e) {
 }
 

@@ -5,7 +5,8 @@
 #include "Rectangle.h"
 #include "TimingType.h"
 #include "GateTimer.h"
-
+#include "AudioManager.h"
+#include <memory>
 namespace Val {
 	class Game;
 
@@ -15,6 +16,9 @@ namespace Val {
 
 		void initialise(GameState* menuState);
 
+		void onBecomeActive() override;
+		void onBecomeInactive() override;
+
 		void update(const TimingType& deltaTime) override;
 		void render(const TimingType& deltaTime, RenderingEngine * const engine) override;
 
@@ -22,6 +26,8 @@ namespace Val {
 		Rectangle SplashDisplay;
 		GateTimer<> splashScreenPersistance;
 		GameState* menuState;
+
+		std::shared_ptr<AudioDelegate> baka, baka2;
 
 		void initialise() override;
 	};

@@ -8,7 +8,7 @@
 #include "RuntimeConstants.h"
 
 namespace Val {
-	Game::Game(InputManager const* const manager) : inputManager(manager), currentState(reinterpret_cast<GameState*>(37)) {
+	Game::Game(InputManager const* const manager, AudioManager * audioManager) : inputManager(manager), audioManager(audioManager), currentState(nullptr) {
 	}
 
 	Game::~Game() {
@@ -28,6 +28,7 @@ namespace Val {
 
 
 		currentState = splashState;
+		splashState->onBecomeActive();
 	}
 
 	void Game::rawEvent(const SDL_Event & e) {
@@ -38,10 +39,13 @@ namespace Val {
 		currentState->update(deltaTime);
 
 		if (nextState != nullptr) {
+			currentState->onBecomeInactive();
 			if (callbackOnStateChange.operator bool())
 				callbackOnStateChange();
 			currentState = nextState;
 			nextState = nullptr;
+
+			currentState->onBecomeActive();
 		}
 	}
 
@@ -54,6 +58,10 @@ namespace Val {
 
 	InputManager const * const Game::getInputManager() const {
 		return inputManager;
+	}
+
+	AudioManager * Game::getAudioManager() const {
+		return audioManager;
 	}
 
 	GameState * Game::getState() const {

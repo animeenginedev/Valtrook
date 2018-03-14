@@ -39,7 +39,7 @@ namespace Val {
 		//if (currentFlags & MOUSE_CAPTURE) { flags |= SDL_WINDOW_MOUSE_CAPTURE; }
 
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			fprintf(stderr, "Video initialization failed: %s\n",
+			fprintf(stderr, "Video initialization failed @SDL2: %s\n",
 					SDL_GetError());
 		}
 

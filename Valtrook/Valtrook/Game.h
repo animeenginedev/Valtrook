@@ -11,13 +11,14 @@ namespace Val {
 	class GameState;
 	class RenderingEngine;
 	class InputManager;
+	class AudioManager;
 
 	class SplashState;
 	class MenuState;
 
 	class Game {
 	public:
-		Game(InputManager const* const manager);
+		Game(InputManager const* const manager, AudioManager* audioManager);
 		~Game();
 
 		void initialise();
@@ -27,6 +28,7 @@ namespace Val {
 		void render(const TimingType& deltaTime, RenderingEngine * const engine);
 
 		InputManager const* const getInputManager() const;
+		AudioManager * getAudioManager() const;
 
 		GameState* getState() const;
 		//happens at the end of the next update(), callback is set to null when it's completed.
@@ -46,6 +48,7 @@ namespace Val {
 		std::function<void()> callbackOnStateChange;
 		Camera* currentCamera, *defaultCamera;
 		InputManager const* const inputManager;
+		AudioManager * audioManager;
 	};
 
 }

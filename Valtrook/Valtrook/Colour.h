@@ -22,10 +22,10 @@ namespace Val {
 		template<typename Real = float,
 			typename = std::enable_if_t<std::is_floating_point<Real>::value>>
 		static Colour lerp(Colour start, Colour end, Real t) {
-			return Colour(start.r + ((end.r - start.r) * t),
-						  start.g + ((end.g - start.g) * t),
-						  start.b + ((end.b - start.b) * t), 
-						  start.a + ((end.a - start.a) * t));
+			return Colour(static_cast<unsigned char>(static_cast<Real>(start.r + ((end.r - start.r)) * t)),
+						  static_cast<unsigned char>(static_cast<Real>(start.g + ((end.g - start.g)) * t)),
+						  static_cast<unsigned char>(static_cast<Real>(start.b + ((end.b - start.b)) * t)),
+						  static_cast<unsigned char>(static_cast<Real>(start.a + ((end.a - start.a)) * t)));
 		}
 
 		template<typename T>

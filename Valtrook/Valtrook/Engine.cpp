@@ -15,7 +15,7 @@ static void CreateDirectoryIfItDoesNotExist(std::string directory) {
 
 #include "Angle.h"
 namespace Val {
-	Engine::Engine() : running(false), inputManager(), game(&inputManager) {
+	Engine::Engine() : running(false), inputManager(), game(&inputManager, &audioManager) {
 	}
 
 	Engine::~Engine() {
@@ -36,6 +36,10 @@ namespace Val {
 
 	bool Engine::isRunning() const {
 		return running;
+	}
+
+	AudioManager * Engine::getAudioManager() {
+		return &audioManager;
 	}
 
 	InputManager const * const Engine::getInputManager() const {
@@ -114,6 +118,8 @@ namespace Val {
 		defaultRenderer = new RenderingEngine();
 		defaultRenderer->initialise();
 		renderer = defaultRenderer;
+
+		audioManager.initialise();
 
 		game.initialise();
 	}

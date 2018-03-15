@@ -3,6 +3,7 @@
 #include "GameState.h"
 
 #include "Rectangle.h"
+#include "TextRectangle.h"
 #include "TimingType.h"
 #include "GateTimer.h"
 #include "AudioManager.h"
@@ -23,7 +24,7 @@ namespace Val {
 		void render(const TimingType& deltaTime, RenderingEngine * const engine) override;
 
 	protected:
-		Rectangle SplashDisplay;
+		TextRectangle SplashDisplay;
 		GateTimer<> splashScreenPersistance;
 		GameState* menuState;
 

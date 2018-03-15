@@ -64,6 +64,42 @@
     <Filter Include="Header Files\EXT">
       <UniqueIdentifier>{201ab0e6-a176-4c82-bc84-44fd66d4fb36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Renderables">
+      <UniqueIdentifier>{b53b446d-b1c4-485c-94a3-1328cb2f8659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Common">
+      <UniqueIdentifier>{84425cb9-0356-4ff0-b579-b3f3e550703f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Collision">
+      <UniqueIdentifier>{30490be0-a78a-4009-a720-ceccdcf59e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{68d770cc-605d-4196-94d2-dc339977879b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{0415201e-468b-4e85-9526-fc38b1f66879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision">
+      <UniqueIdentifier>{e1f3e530-ed0b-4183-bdab-39d2e710776a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Common">
+      <UniqueIdentifier>{b924d6be-4902-4954-baed-3bfa1f7d5784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Renderables">
+      <UniqueIdentifier>{ecf57edc-0575-4c82-8170-73f15647da4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Audio">
+      <UniqueIdentifier>{84c355bc-893b-49c6-b919-29e515b9ea58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Input">
+      <UniqueIdentifier>{c15c21b7-e78b-4735-87a7-10aa2a55f68c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Audio">
+      <UniqueIdentifier>{79abf3db-0cf8-48ad-9c8c-475cb378124f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{df164ff7-28b7-4e7c-9f3e-603da01d57b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,33 +129,6 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="RuntimeConstants.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceLocation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureAsset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonReadWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OrthographicCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GenericShaderObject.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
@@ -141,29 +150,68 @@
     <ClCompile Include="Window.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="RenderingEngine.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SplashState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="TransitionState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashState.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="MenuState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonReadWriter.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureAsset.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="FontAsset.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files\Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files\Engine\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRectangle.cpp">
+      <Filter>Source Files\Engine\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceLocation.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="TextResource.cpp">
+      <Filter>Source Files\Engine\Resource</Filter>
     </ClCompile>
     <ClCompile Include="AudioManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="OrthographicCamera.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingEngine.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureSheet.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeConstants.cpp">
+      <Filter>Source Files\Engine\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,50 +269,8 @@
     <ClInclude Include="Engine.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Notify.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceLocation.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="RuntimeConstants.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Exit.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AABB.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Conversion.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureSheet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureAsset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonReadWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>Header Files\EXT</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OrthographicCamera.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GenericShaderObject.h">
       <Filter>Header Files\Engine\Rendering</Filter>
@@ -293,32 +299,86 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="FontAsset.h">
+      <Filter>Header Files\Engine\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TextureAsset.h">
+      <Filter>Header Files\Engine\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TextResource.h">
+      <Filter>Header Files\Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonReadWriter.h">
+      <Filter>Header Files\Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRectangle.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
     </ClInclude>
     <ClInclude Include="TimingType.h">
-      <Filter>Header Files\Engine</Filter>
+      <Filter>Header Files\Engine\Common</Filter>
     </ClInclude>
-    <ClInclude Include="SplashState.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Exit.h">
+      <Filter>Header Files\Engine\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Notify.h">
+      <Filter>Header Files\Engine\Common</Filter>
     </ClInclude>
-    <ClInclude Include="TransitionState.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Conversion.h">
+      <Filter>Header Files\Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceLocation.h">
+      <Filter>Header Files\Engine\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Header Files\Engine\Collision</Filter>
     </ClInclude>
     <ClInclude Include="MenuState.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashState.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files\Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="TransitionState.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureSheet.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="OrthographicCamera.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeConstants.h">
+      <Filter>Header Files\Engine\Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

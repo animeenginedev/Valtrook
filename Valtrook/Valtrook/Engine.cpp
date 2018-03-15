@@ -5,6 +5,7 @@
 #include "RenderingEngine.h"
 #include "RuntimeConstants.h"
 
+#include <sdl_ttf.h>
 #include <thread>
 #include <chrono>
 
@@ -120,6 +121,10 @@ namespace Val {
 		renderer = defaultRenderer;
 
 		audioManager.initialise();
+
+		if (TTF_Init() == -1) {
+			Logger::Instance->logMessage(LogLevel::SEVERE, "Failed to initialise SDL_TTF");
+		}
 
 		game.initialise();
 	}

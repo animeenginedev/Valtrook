@@ -9,6 +9,9 @@
 #include "Angle.h"
 #include "Conversion.h"
 
+#include "FontAsset.h"
+#include "TextRenderer.h"
+
 namespace Val {
 	void SplashState::initialise() {
 	}
@@ -16,7 +19,7 @@ namespace Val {
 	void SplashState::initialise(GameState * menuState) {
 		splashScreenPersistance.setLength(static_cast<TimingType>(5.0));
 
-		SplashDisplay.initialise(TextureAsset::getTexture(ResourceLocation("raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.5f, PixelToWorld<int, float>(200), PixelToWorld<int, float>(200), 0.0f);
+		SplashDisplay.initialise(TextResource(FontAsset::getFont(ResourceLocation("ralewaymed", ".ttf", RuntimeConstants::Instance->FontPath), 48), "SPLASH TEXT"), 0, 0, 0.5f, PixelToWorld<int, float>(200), PixelToWorld<int, float>(24), 0.0f);
 
 		this->menuState = menuState;
 

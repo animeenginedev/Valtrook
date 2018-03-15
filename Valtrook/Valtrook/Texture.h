@@ -22,6 +22,7 @@ namespace Val {
 		UV getBounds() const;
 		ResourceLocation getResourceName();
 		std::array<unsigned int, 2> getTextureSizeInPixel();
+
 	protected:
 		Texture* texture;
 		ResourceLocation resourceName;
@@ -37,9 +38,12 @@ namespace Val {
 		UV getBounds(ResourceLocation resourceName);
 
 		virtual void addBounds(ResourceLocation resourceName, UV bounds);
+		void setDefaultBounds(UV bounds);
 	protected:
 		GLTexture* texture;
 		std::unordered_map<ResourceLocation, UV> bounds;
+
+		UV defaultBounds;
 	};
 
 	//Uses a naive box packing implementation, but it still works.

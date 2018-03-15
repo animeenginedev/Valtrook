@@ -3,7 +3,7 @@
 #include "Conversion.h"
 
 namespace Val {
-	Texture::Texture(GLTexture * texture) : texture(texture) {
+	Texture::Texture(GLTexture * texture) : texture(texture), defaultBounds(0.0f, 0.0f, 1.0f, 1.0f) {
 	}
 
 	Texture::~Texture() {
@@ -21,7 +21,7 @@ namespace Val {
 		auto res = bounds.find(resourceName);
 		if (res != bounds.end())
 			return res->second;
-		return UV(0.0f, 0.0f, 1.0f, 1.0f);
+		return defaultBounds;
 	}
 
 	void Texture::addBounds(ResourceLocation resourceName, UV bounds) {
@@ -45,7 +45,7 @@ namespace Val {
 	}
 
 	UV TextureResource::getBounds() const {
-		return texture->getBounds(resourceName);
+		return texture != nullptr ? texture->getBounds(resourceName) : UV();
 	}
 
 	ResourceLocation TextureResource::getResourceName() {
@@ -54,8 +54,12 @@ namespace Val {
 
 
 	std::array<unsigned int, 2> TextureResource::getTextureSizeInPixel() {
-		return{ static_cast<unsigned int>(this->getBounds().uWidth * texture->getGLTexture()->operator[](0)),
-			static_cast<unsigned int>(this->getBounds().vHeight * texture->getGLTexture()->operator[](1)) };
+		return{ static_cast<unsigned int>(abs(this->getBounds().uWidth) * texture->getGLTexture()->operator[](0)),
+			static_cast<unsigned int>(abs(this->getBounds().vHeight) * texture->getGLTexture()->operator[](1)) };
+	}
+
+	void Texture::setDefaultBounds(UV bounds) {
+		this->defaultBounds = bounds;
 	}
 
 	AtlasTexture::AtlasTexture(GLTexture * texture) : Texture(texture), filled(false) {

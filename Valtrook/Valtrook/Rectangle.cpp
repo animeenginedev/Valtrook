@@ -3,6 +3,7 @@
 #include "Conversion.h"
 #include "RenderingEngine.h"
 #include "VBOBatcher.h"
+#include "Logger.h"
 
 namespace Val {
 	SimpleRectangle::SimpleRectangle() {
@@ -140,6 +141,11 @@ namespace Val {
 	void SimpleRectangle::recalculateVertexes() {
 		needsReconstructed = false;
 
+		if (texture.getTexture() == nullptr) {
+			Logger::Instance->logMessage(WARNING, "Invalid Texture on Simple Rectangle");
+			return;
+		}
+
 		std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
 		std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
 
@@ -176,6 +182,11 @@ namespace Val {
 	void Rectangle::recalculateVertexes() {
 		needsReconstructed = false;
 
+		if (texture.getTexture() == nullptr) {
+			Logger::Instance->logMessage(WARNING, "Invalid Texture on Rectangle");
+			return;
+		}
+
 		std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
 		std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
 
@@ -189,10 +200,10 @@ namespace Val {
 		
 		Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 
-			Vertex(centerUPixel[0] - wCos + hSin, centerUPixel[1] - hCos - wSin, depth, uvBounds.u, uvBounds.v, renderColour),
-			Vertex(centerUPixel[0] + wCos + hSin, centerUPixel[1] - hCos + wSin, depth, uvBounds.u + uvBounds.uWidth, uvBounds.v, renderColour),
-			Vertex(centerUPixel[0] - wCos - hSin, centerUPixel[1] + hCos - wSin , depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
-			Vertex(centerUPixel[0] + wCos - hSin, centerUPixel[1] + hCos + wSin, depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
+			Vertex(centerUPixel[0] - wCos + hSin, centerUPixel[1] - hCos - wSin, depth, uvBounds.u + uvBounds.uWidth, uvBounds.v, renderColour),
+			Vertex(centerUPixel[0] + wCos + hSin, centerUPixel[1] - hCos + wSin, depth, uvBounds.u, uvBounds.v, renderColour),
+			Vertex(centerUPixel[0] - wCos - hSin, centerUPixel[1] + hCos - wSin , depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour),
+			Vertex(centerUPixel[0] + wCos - hSin, centerUPixel[1] + hCos + wSin, depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour)
 
 		}), &blendMode).dispose();
 	}

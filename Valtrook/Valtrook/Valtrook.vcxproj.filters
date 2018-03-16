@@ -213,6 +213,9 @@
     <ClCompile Include="RuntimeConstants.cpp">
       <Filter>Source Files\Engine\Common</Filter>
     </ClCompile>
+    <ClCompile Include="GUIBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clamp.h">
@@ -379,6 +382,12 @@
     </ClInclude>
     <ClInclude Include="RuntimeConstants.h">
       <Filter>Header Files\Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrayMath.h">
+      <Filter>Header Files\Utility\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

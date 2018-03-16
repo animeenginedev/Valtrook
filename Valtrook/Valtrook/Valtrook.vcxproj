@@ -133,6 +133,7 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="GLTexture.cpp" />
+    <ClCompile Include="GUIBase.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Angle.h" />
+    <ClInclude Include="ArrayMath.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Conversion.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="GateTimer.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Glyph.h" />
+    <ClInclude Include="GUIBase.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonReadWriter.h" />

@@ -28,6 +28,11 @@ namespace Val {
 	FontAsset * SimpleTextRectangle::getFont() const {
 		return textResource.getFont();
 	}
+	void SimpleTextRectangle::reconstruct() {
+		if (needsReconstructed) {
+			recalculateVertexes();
+		}
+	}
 	void SimpleTextRectangle::setScaleTextToHeight(const bool & scaleTextToHeight) {
 		this->scaleTextToHeight = scaleTextToHeight;
 		needsReconstructed = true;

@@ -134,6 +134,10 @@
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="GUIBase.cpp" />
+    <ClCompile Include="GUI_HorizontalBox.cpp" />
+    <ClCompile Include="GUI_Image.cpp" />
+    <ClCompile Include="GUI_Label.cpp" />
+    <ClCompile Include="GUI_VerticalBox.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -184,6 +188,10 @@
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Glyph.h" />
     <ClInclude Include="GUIBase.h" />
+    <ClInclude Include="GUI_HorizontalBox.h" />
+    <ClInclude Include="GUI_Image.h" />
+    <ClInclude Include="GUI_Label.h" />
+    <ClInclude Include="GUI_VerticalBox.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonReadWriter.h" />

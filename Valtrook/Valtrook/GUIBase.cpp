@@ -7,13 +7,16 @@ namespace Val {
 		return 0.02f;
 	}
 
-	GUIBase::GUIBase() : depth(0.0f) {
+	GUIBase::GUIBase() : horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), depth(0.0f), bHidden(false),
+		bJustHidden(false), halfSize({ 0.0f, 0.0f }), bRecievesInputs(true), needsReconstructed(true) {
 	}
 	GUIBase::~GUIBase() {
 	}
 	void GUIBase::reCalculate() {
 		//Size then position
-
+		if (bHidden) {
+			return;
+		}
 		//If we're OKAY we don't need to recalculate; remeber to check children aswell.
 		if (! this->needsRecalculated())
 			return;
@@ -31,15 +34,18 @@ namespace Val {
 		internalRecalculatePosition();
 
 		if (hasParent()) {
-			//if our size changed we'll need to recalculate the parent and propagate changes
-			parent->reCalculate();
-
 			depth = parent->getDepth() + DepthAdvancement();
 		}
+
+		recalculateComplete();
 
 		needsReconstructed = false;
 	}
 	bool GUIBase::needsRecalculated() const {
+		if (bJustHidden) {
+			bJustHidden = false;
+			return true;
+		}
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
 				if (child->needsRecalculated()) {
@@ -52,21 +58,27 @@ namespace Val {
 	}
 	void GUIBase::update(const TimingType & deltaTime) {
 		//Only recalculate on update, since we should only process events there.
-		if (needsRecalculated())
-			reCalculate();
+		if (bHidden)
+			return;
+
+		reCalculate();
 
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
-				child->update(deltaTime);
+				if(!child->isHidden())
+					child->update(deltaTime);
 			}
 		}
 
 		internalUpdate(deltaTime);
 	}
 	void GUIBase::render(const TimingType & deltaTime, RenderingEngine * engine) {
+		if (bHidden)
+			return;
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
-				child->render(deltaTime, engine);
+				if(!child->isHidden())
+					child->render(deltaTime, engine);
 			}
 		}
 
@@ -75,8 +87,8 @@ namespace Val {
 	std::array<float, 2> GUIBase::getPosition() const {
 		return position;
 	}
-	std::array<float, 2> GUIBase::getSize() const {
-		return calculatedSize;
+	std::array<float, 2> GUIBase::getHalfSize() const {
+		return halfSize;
 	}
 	std::array<float, 2> GUIBase::getAbsolutePosition() const {
 		if (hasParent()) {
@@ -146,6 +158,28 @@ namespace Val {
 		return false;
 	}
 
+	void GUIBase::setPosition(const std::array<float, 2>& position) {
+		this->position = position;
+	}
+
+	void GUIBase::setHidden(const bool & hide) {
+		bHidden = hide;
+		bJustHidden = true;
+		needsReconstructed = true;
+	}
+
+	bool GUIBase::isHidden() const {
+		return bHidden;
+	}
+
+	void GUIBase::recalculateComplete() {
+		onRecalculateComplete();
+		for (auto child : getChildren()) {
+			if (!child->isHidden())
+				child->recalculateComplete();
+		}
+	}
+
 	void GUIBase::setParent(GUIBase * parent) {
 		needsReconstructed = true;
 		this->parent = parent;
@@ -163,6 +197,7 @@ namespace Val {
 	bool GUIParentVector::addChild(std::shared_ptr<GUIBase> child) {
 		if (canAddChild(child)) {
 			needsReconstructed = true;
+			child->setParent(this);
 			children.push_back(child);
 			return true;
 		}
@@ -198,6 +233,7 @@ namespace Val {
 	bool GUIParentSingle::addChild(std::shared_ptr<GUIBase> child) {
 		if (canAddChild(child) && this->child[0] == nullptr) {
 			needsReconstructed = true;
+			child->setParent(this);
 			this->child[0] = child;
 			return true;
 		}

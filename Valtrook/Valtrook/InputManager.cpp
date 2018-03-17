@@ -3,7 +3,7 @@
 #include <SDL2\SDL.h>
 
 namespace Val {
-	InputManager::InputManager() {
+	InputManager::InputManager() : MouseState({ KeyState(false), KeyState(false), KeyState(false) }) {
 		//probably enough to cover the vector being reexpanded at runtime.
 		KeysToUpdate.reserve(100);
 	}

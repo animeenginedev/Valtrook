@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TimingType.h"
-#include "Min.h"
+#include "Max.h"
 #include <type_traits>
 
 namespace Val {
@@ -15,7 +15,7 @@ namespace Val {
 
 		//Returns true when the timer is finished
 		bool update(Real delta) {
-			time = Min<Real>(time - delta, static_cast<Real>(0.0));
+			time = Max<Real>(time - delta, static_cast<Real>(0.0));
 			return time <= static_cast<Real>(0.0);
 		};
 

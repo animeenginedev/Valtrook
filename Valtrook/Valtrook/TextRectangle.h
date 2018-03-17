@@ -17,6 +17,8 @@ namespace Val {
 		void changeFont(FontAsset* newFont);
 		FontAsset* getFont() const;
 
+		void reconstruct();
+
 		void setScaleTextToHeight(const bool& scaleTextToHeight);
 		bool doesScaleTextToHeight() const;
 	protected:

@@ -34,7 +34,7 @@ namespace Val {
 		void render(const TimingType& deltaTime, RenderingEngine* engine);
 
 		std::array<float, 2> getPosition() const;
-		std::array<float, 2> getSize() const;
+		std::array<float, 2> getHalfSize() const;
 		std::array<float, 2> getAbsolutePosition() const;
 		float getDepth() const;
 
@@ -61,8 +61,14 @@ namespace Val {
 
 		virtual bool hasChildren() const;
 		virtual bool isParentTypeGUI() const;
-	protected:
+
 		void setParent(GUIBase* parent);
+		void setPosition(const std::array<float, 2>& position);
+
+		void setHidden(const bool& hide);
+		bool isHidden() const;
+	protected:
+
 
 		//Do changes you need to do on update, child updateing is handled for you
 		virtual void internalUpdate(const TimingType& deltaTime) = 0;
@@ -73,6 +79,9 @@ namespace Val {
 		//Calculate your size based on the childrens size
 		virtual void internalRecalculateSize() = 0;
 
+		void recalculateComplete();
+		virtual void onRecalculateComplete() = 0;
+
 		HorizontalJustification horizontal;
 		VerticalJustification vertical;
 
@@ -81,8 +90,10 @@ namespace Val {
 		std::array<float, 2> position;
 
 		float depth;
-		std::array<float, 2> calculatedSize;
-		std::array<float, 2> calculatedMinSize, userSpecMinSize;
+		bool bHidden;
+		mutable bool bJustHidden;
+
+		std::array<float, 2> halfSize;
 
 		bool bRecievesInputs;
 

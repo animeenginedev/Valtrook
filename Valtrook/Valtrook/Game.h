@@ -36,7 +36,7 @@ namespace Val {
 		bool hasNextState() const;
 
 		void setCamera(Camera* Camera);
-		Camera* getCamera() const;
+		Camera* getCamera();
 		void resetToDefaultCamera();
 
 

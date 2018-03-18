@@ -17,8 +17,8 @@ namespace Val {
 
 		virtual CameraType getType() const { return Invalid; };
 		template<typename T> 
-		T* Cast() {
-			return ((T) this);
+		static T* Cast(Camera* tt) {
+			return ((T*) tt);
 		}
 	};
 }

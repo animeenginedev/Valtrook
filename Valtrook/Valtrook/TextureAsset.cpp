@@ -18,6 +18,10 @@ namespace Val {
 
 	const constexpr float atlasSize() { return 2048.0f; }
 
+	TextureResource TextureAsset::getTexture(std::string name, std::string extension, bool atlasTexture, GLenum forceDifferentWrapping) {
+		return getTexture(ResourceLocation(name, extension, RuntimeConstants::Instance->TexturePath), atlasTexture, forceDifferentWrapping);
+	}
+
 	TextureResource TextureAsset::getTexture(ResourceLocation filename, bool atlasTexture, GLenum forceDifferentWrapping) {
 		for (unsigned int i = 0; i < textures.size(); i++) {
 			if (textures[i]->hasBounds(filename)) {

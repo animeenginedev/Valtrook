@@ -80,7 +80,7 @@ namespace Val {
 	void Game::setCamera(Camera * Camera) {
 		currentCamera = Camera;
 	}
-	Camera * Game::getCamera() const {
+	Camera * Game::getCamera() {
 		return currentCamera;
 	}
 	void Game::resetToDefaultCamera() {

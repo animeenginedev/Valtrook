@@ -4,8 +4,8 @@
 
 #include "Rectangle.h"
 
-#include "GUI_VerticalBox.h"
-#include "GUI_Label.h"
+#include "GUI.hpp"
+
 namespace Val {
 	class Game;
 	class MenuState : public GameState {
@@ -17,8 +17,8 @@ namespace Val {
 		void update(const TimingType& deltaTime) override;
 		void render(const TimingType& deltaTime, RenderingEngine * const engine) override;
 
-		GUI_VerticalBox testBox;
+		GUIWindow window;
 
-		GUI_Label::Ptr testLabel;
+		GUIFrame::Ptr testFrame;
 	};
 }

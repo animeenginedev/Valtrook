@@ -7,7 +7,7 @@ namespace Val {
 		return 0.02f;
 	}
 
-	GUIBase::GUIBase() : horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), depth(0.0f), bHidden(false),
+	GUIBase::GUIBase() : eventCallbacks({ nullptr }), lastEventData(nullptr), currentEventData(nullptr), horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), depth(0.0f), bHidden(false),
 		bJustHidden(false), halfSize({ 0.0f, 0.0f }), bRecievesInputs(true), needsReconstructed(true) {
 	}
 	GUIBase::~GUIBase() {
@@ -24,7 +24,8 @@ namespace Val {
 		//All our childs sizes, and their childrens offsets
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
-				child->reCalculate();
+				if (child != nullptr)
+					child->reCalculate();
 			}
 		}
 		//Our size based on our children
@@ -48,8 +49,9 @@ namespace Val {
 		}
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
-				if (child->needsRecalculated()) {
-					return true;
+				if (child != nullptr)
+					if (child->needsRecalculated()) {
+						return true;
 				}
 			}
 		}
@@ -65,10 +67,13 @@ namespace Val {
 
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
-				if(!child->isHidden())
-					child->update(deltaTime);
+				if (child != nullptr)
+					if (!child->isHidden())
+						child->update(deltaTime);
 			}
 		}
+
+		processEvents();
 
 		internalUpdate(deltaTime);
 	}
@@ -77,8 +82,9 @@ namespace Val {
 			return;
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
-				if(!child->isHidden())
-					child->render(deltaTime, engine);
+				if(child != nullptr)
+					if (!child->isHidden())
+						child->render(deltaTime, engine);
 			}
 		}
 
@@ -172,11 +178,131 @@ namespace Val {
 		return bHidden;
 	}
 
+	void GUIBase::setEventCallback(std::function<void()> callback, GUIEventType eventType) {
+		eventCallbacks[eventType] = callback;
+	}
+
+	void GUIBase::removeEventCallback(GUIEventType eventType) {
+		eventCallbacks[eventType] = nullptr;
+	}
+
+	std::function<void()> GUIBase::getEventCallback(GUIEventType eventType) const {
+		return eventCallbacks[eventType];
+	}
+
+	void GUIBase::clearEventCallbacks() {
+		for (unsigned int i = 0; i < GUIEventCount(); ++i) {
+			eventCallbacks[i] = nullptr;
+		}
+	}
+
+	void GUIBase::setUsesInput(const bool & usesInput) {
+		bUsesInput = true;
+	}
+
+	bool GUIBase::usesInput() const {
+		return bUsesInput;
+	}
+
+	void GUIBase::updateEventData(EventData * current, EventData * last) {
+		currentEventData = current;
+		lastEventData = last;
+
+		for (auto child : getChildren()) {
+			if (child != nullptr)
+				child->updateEventData(current, last);
+		}
+	}
+
+	void GUIBase::processEvents() {
+		if (!bRecievesInputs)
+			return;
+		if (lastEventData == nullptr || currentEventData == nullptr)
+			return;
+
+		EventData currentEventData = *(this->currentEventData);
+		EventData lastEventData = *(this->lastEventData);
+
+		bool leftJustDown = currentEventData.leftMouseDown && !lastEventData.leftMouseDown;
+		bool middleJustDown = currentEventData.middleMouseDown && !lastEventData.middleMouseDown;
+		bool rightJustDown = currentEventData.rightMouseDown && !lastEventData.rightMouseDown;
+		bool leftJustUp = !currentEventData.leftMouseDown && lastEventData.leftMouseDown;
+		bool middleJustUp = !currentEventData.middleMouseDown && lastEventData.middleMouseDown;
+		bool rightJustUp = !currentEventData.rightMouseDown && lastEventData.rightMouseDown;
+
+		std::array<float, 2> UpperLeft = getAbsolutePosition() - halfSize;
+		std::array<float, 2> LowerRight = UpperLeft + halfSize + halfSize;
+		std::array<float, 2> MouseLast = lastEventData.mouseWorldPosition;
+		std::array<float, 2> MouseNow = currentEventData.mouseWorldPosition;
+
+		bool isInside = (!(MouseNow[0] > LowerRight[0] ||
+						   MouseNow[0] < UpperLeft[0] ||
+						   MouseNow[1] < UpperLeft[1] ||
+						   MouseNow[1] > LowerRight[1]));
+		bool wasInside = (!(MouseLast[0] > LowerRight[0] ||
+							MouseLast[0] < UpperLeft[0] ||
+							MouseLast[1] < UpperLeft[1] ||
+							MouseLast[1] > LowerRight[1]));
+
+		if (isInside && !wasInside) {
+			if (eventCallbacks[Hover_Enter].operator bool()) {
+				eventCallbacks[Hover_Enter]();
+			}
+		} else if (wasInside && !isInside) {
+			if (eventCallbacks[Hover_Exit].operator bool()) {
+				eventCallbacks[Hover_Exit]();
+			}
+		}
+
+		if (isInside) {
+			if (!currentEventData.inputUsed) {
+				if (leftJustDown && eventCallbacks[MouseLeft_Down].operator bool()) {
+					eventCallbacks[MouseLeft_Down]();
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (middleJustDown && eventCallbacks[MouseMiddle_Down].operator bool()) {
+					eventCallbacks[MouseMiddle_Down]();
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (rightJustDown && eventCallbacks[MouseRight_Down].operator bool()) {
+					eventCallbacks[MouseRight_Down]();
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (leftJustUp && eventCallbacks[MouseLeft_Up].operator bool()) {
+					eventCallbacks[MouseLeft_Up]();
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (middleJustUp && eventCallbacks[MouseMiddle_Up].operator bool()) {
+					eventCallbacks[MouseMiddle_Up]();
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (rightJustUp && eventCallbacks[MouseRight_Up].operator bool()) {
+					eventCallbacks[MouseRight_Up]();
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+			}
+		}
+		
+	}
+	
 	void GUIBase::recalculateComplete() {
 		onRecalculateComplete();
 		for (auto child : getChildren()) {
-			if (!child->isHidden())
-				child->recalculateComplete();
+			if (child != nullptr)
+				if (!child->isHidden())
+					child->recalculateComplete();
 		}
 	}
 
@@ -199,6 +325,7 @@ namespace Val {
 			needsReconstructed = true;
 			child->setParent(this);
 			children.push_back(child);
+			child->updateEventData(currentEventData, lastEventData);
 			return true;
 		}
 		return false;
@@ -226,41 +353,42 @@ namespace Val {
 	bool GUIParentVector::isParentTypeGUI() const {
 		return true;
 	}
-	/*
-	Single parents, like padding or buttons for text
-	
-	*/
+	GUIParentSingle::GUIParentSingle() {
+		child.resize(1);
+	}
 	bool GUIParentSingle::addChild(std::shared_ptr<GUIBase> child) {
-		if (canAddChild(child) && this->child[0] == nullptr) {
-			needsReconstructed = true;
-			child->setParent(this);
+		if (canAddChild(child)) {
 			this->child[0] = child;
+			child->setParent(this);
+			child->updateEventData(currentEventData, lastEventData);
 			return true;
 		}
 		return false;
 	}
+	bool GUIParentSingle::removeChild() {
+		if (child[0] == nullptr) {
+			return false;
+		}
+		child[0] = nullptr;
+		return true;
+	}
 	bool GUIParentSingle::removeChild(std::shared_ptr<GUIBase> child) {
-		if (this->child[0] == child) {
-			needsReconstructed = true;
+		if (child == this->child[0]) {
 			this->child[0] = nullptr;
 			return true;
 		}
 		return false;
 	}
 	void GUIParentSingle::clearChildren() {
-		needsReconstructed = true;
 		child[0] = nullptr;
 	}
 	std::vector<std::shared_ptr<GUIBase>> GUIParentSingle::getChildren() const {
-		return std::vector<std::shared_ptr<GUIBase>>({ child[0] });
+		return child;
 	}
 	bool GUIParentSingle::hasChildren() const {
 		return child[0] != nullptr;
 	}
 	bool GUIParentSingle::isParentTypeGUI() const {
 		return true;
-	}
-	bool GUIParentSingle::canAddChild(std::shared_ptr<GUIBase> child) {
-		return false;
 	}
 }

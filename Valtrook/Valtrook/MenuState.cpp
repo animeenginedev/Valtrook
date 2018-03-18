@@ -5,51 +5,59 @@
 
 #include "Game.h"
 #include "InputManager.h"
-#include "GUI_Image.h"
-#include "GUI_Label.h"
-#include "GUI_HorizontalBox.h"
+
+#include "Logger.h"
+#include "OrthographicCamera.h"
+
 
 namespace Val {
 	void MenuState::initialise() {
-		auto image = SimpleRectangle();
-		image.initialise(TextureAsset::getTexture(ResourceLocation("raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.5f, 10.0f, 10.0f);
-		auto test = GUI_Image::Create(image);
+		window.intialise(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera()));
+		testFrame = GUIFrame::Create();
+		window.addFrame(testFrame);
 
-		auto image2 = SimpleRectangle();
-		image2.initialise(TextureAsset::getTexture(ResourceLocation("raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.5f, 10.0f, 10.0f);
-		auto test3 = GUI_Image::Create(image2);
+
+		auto image = SimpleRectangle();
+		image.initialise(TextureAsset::getTexture("raven"), 0, 0, 0.5f, 12.0f, 12.0f);
+
+		auto test = GUI_Image::Create(image);
+		auto test4 = GUI_Image::Create(image);
+
+		image.setHalfSize(10.0f, 10.0f);
+		auto test3 = GUI_Image::Create(image);
+		auto test5 = GUI_Image::Create(image);
 
 		auto textT = SimpleTextRectangle();
-		textT.initialise(TextResource(FontAsset::getFont(ResourceLocation("ralewaymed", ".ttf", RuntimeConstants::Instance->FontPath), 128), "wau [?!]"), 1, 1, 0.5f, 6.0f, 6.0f);
-		testLabel = GUI_Label::Create(textT);
+		textT.initialise(TextResource("wau", "ralewaymed"), 1, 1, 0.5f, 6.0f, 6.0f);
+		auto testLabel = GUI_Label::Create(textT);
 		
-		auto hBox = GUI_HorizontalBox::Create();
+		auto padding = GUI_Padding::Create(1.0f, 1.0f);
+		padding->addChild(testLabel);
 
-		auto imageh = SimpleRectangle();
-		imageh.initialise(TextureAsset::getTexture(ResourceLocation("raven", ".png", RuntimeConstants::Instance->TexturePath)), 0, 0, 0.5f, 15.0f, 15.0f);
-		auto test4 = GUI_Image::Create(imageh);
+		auto table = GUI_Table::Create(3, 3);
+				
+		table->addChild(test, 0, 0);
+		table->addChild(test4, 2, 2);
+		table->addChild(padding, 1, 1);
+		table->addChild(test3, 2, 0);
+		table->addChild(test5, 0, 2);
 
-		hBox->addChild(test);
-		hBox->addChild(test4);
+		test3->setJustification(LEFT, BOTTOM );
+		test5->setJustification(RIGHT, TOP);
 
-		test->setJustification(LEFT, TOP);
-		hBox->setJustification(LEFT, vCENTER);
-		test3->setJustification(RIGHT, vCENTER);
+		testLabel->setEventCallback([=]() { testLabel->setText("[?!]"); }, GUIEventType::MouseLeft_Up);
+		test->setEventCallback([=]() { test->setHidden(!test->isHidden()); }, GUIEventType::MouseLeft_Up);
+		test3->setEventCallback([=]() { test3->setJustification(RIGHT, TOP);
+		test3->setEventCallback([=]() { test3->setHidden(true); }, GUIEventType::MouseLeft_Up); }, GUIEventType::MouseLeft_Up);
+		test4->setEventCallback([=]() { test4->setHidden(!test4->isHidden()); }, GUIEventType::MouseLeft_Up);
+		test5->setEventCallback([=]() { test5->setHidden(!test5->isHidden()); }, GUIEventType::MouseLeft_Up);
 
-		testBox.addChild(hBox);
-		testBox.addChild(testLabel);
-		testBox.addChild(test3);
-
-		//test2->setHidden(true);
+		testFrame->addChild(table);
 	}
 	void MenuState::update(const TimingType & deltaTime) {
-
-		if (game->getInputManager()->isAnyJustUp()) {
-			testLabel->setHidden(!testLabel->isHidden());
-		}
-		testBox.update(deltaTime);
+		window.update(deltaTime);
 	}
 	void MenuState::render(const TimingType & deltaTime, RenderingEngine * const engine) {
-		testBox.render(deltaTime, engine);
+		window.render(deltaTime, engine);
 	}
 }

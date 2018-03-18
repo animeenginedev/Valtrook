@@ -8,6 +8,7 @@
 namespace Val {
 	class TextResource {
 	public:
+		TextResource(std::string contents, std::string fontName, unsigned int textSize = 96, std::string fontExtension = ".ttf");
 		TextResource(FontAsset* font, std::string contents);
 		~TextResource();
 

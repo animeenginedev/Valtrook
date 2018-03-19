@@ -79,7 +79,7 @@ namespace Val {
 
 		AABB<float> inputAABB = AABB<float>(cX, cY, cX, cY);
 
-		for (float h = cY; h < inH; h = h + PixelToWorld<Pixel, Meter>(50)) {
+		for (float h = cY; h < inH; h = h + PixelToWorld<Pixel, Meter>(10)) {
 			for (float w = cX; w < inW; w = w + PixelToWorld<Pixel, Meter>(10)) {
 				inputAABB.setCenter(w, h);
 				if (!aabbInFilledSpace(inputAABB)) {

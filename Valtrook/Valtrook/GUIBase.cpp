@@ -7,7 +7,7 @@ namespace Val {
 		return 0.02f;
 	}
 
-	GUIBase::GUIBase() : eventCallbacks({ nullptr }), lastEventData(nullptr), currentEventData(nullptr), horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), depth(0.0f), bHidden(false),
+	GUIBase::GUIBase() : eventCallbacks({ nullptr }), lastEventData(nullptr), currentEventData(nullptr), horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), bHidden(false),
 		bJustHidden(false), halfSize({ 0.0f, 0.0f }), bRecievesInputs(true), needsReconstructed(true) {
 	}
 	GUIBase::~GUIBase() {
@@ -33,11 +33,7 @@ namespace Val {
 
 		//Place out children at appropate places
 		internalRecalculatePosition();
-
-		if (hasParent()) {
-			depth = parent->getDepth() + DepthAdvancement();
-		}
-
+		
 		recalculateComplete();
 
 		needsReconstructed = false;
@@ -103,7 +99,10 @@ namespace Val {
 		return position;
 	}
 	float GUIBase::getDepth() const {
-		return depth;
+		if (hasParent()) {
+			return parent->getDepth() + DepthAdvancement();
+		}
+		return 0.0f;
 	}
 	bool GUIBase::hasParent() const {
 		return parent != nullptr;
@@ -214,6 +213,10 @@ namespace Val {
 		}
 	}
 
+	void GUIBase::invalidate() {
+		needsReconstructed = true;
+	}
+
 	void GUIBase::processEvents() {
 		if (!bRecievesInputs)
 			return;
@@ -245,10 +248,12 @@ namespace Val {
 							MouseLast[1] > LowerRight[1]));
 
 		if (isInside && !wasInside) {
+			hoverStart();
 			if (eventCallbacks[Hover_Enter].operator bool()) {
 				eventCallbacks[Hover_Enter]();
 			}
 		} else if (wasInside && !isInside) {
+			hoverEnd();
 			if (eventCallbacks[Hover_Exit].operator bool()) {
 				eventCallbacks[Hover_Exit]();
 			}
@@ -256,38 +261,56 @@ namespace Val {
 
 		if (isInside) {
 			if (!currentEventData.inputUsed) {
-				if (leftJustDown && eventCallbacks[MouseLeft_Down].operator bool()) {
-					eventCallbacks[MouseLeft_Down]();
+				if (leftJustDown) {
+					leftMouseDown();
+					if (eventCallbacks[MouseLeft_Down].operator bool()) {
+						eventCallbacks[MouseLeft_Down]();
+					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
 					}
 				}
-				if (middleJustDown && eventCallbacks[MouseMiddle_Down].operator bool()) {
-					eventCallbacks[MouseMiddle_Down]();
+				if (middleJustDown) {
+					middleMouseDown();
+					if (eventCallbacks[MouseMiddle_Down].operator bool()) {
+						eventCallbacks[MouseMiddle_Down]();
+					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
 					}
 				}
-				if (rightJustDown && eventCallbacks[MouseRight_Down].operator bool()) {
-					eventCallbacks[MouseRight_Down]();
+				if (rightJustDown) {
+					rightMouseDown();
+					if (eventCallbacks[MouseRight_Down].operator bool()) {
+						eventCallbacks[MouseRight_Down]();
+					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
 					}
 				}
-				if (leftJustUp && eventCallbacks[MouseLeft_Up].operator bool()) {
-					eventCallbacks[MouseLeft_Up]();
+				if (leftJustUp) {
+					leftMouseUp();
+					if (eventCallbacks[MouseLeft_Up].operator bool()) {
+						eventCallbacks[MouseLeft_Up]();
+					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
 					}
 				}
-				if (middleJustUp && eventCallbacks[MouseMiddle_Up].operator bool()) {
-					eventCallbacks[MouseMiddle_Up]();
+				if (middleJustUp) {
+					middleMouseUp();
+					if (eventCallbacks[MouseMiddle_Up].operator bool()) {
+						eventCallbacks[MouseMiddle_Up]();
+					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
 					}
 				}
-				if (rightJustUp && eventCallbacks[MouseRight_Up].operator bool()) {
-					eventCallbacks[MouseRight_Up]();
+				if (rightJustUp) {
+					rightMouseUp();
+					if (eventCallbacks[MouseRight_Up].operator bool()) {
+						eventCallbacks[MouseRight_Up]();
+					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
 					}
@@ -325,6 +348,7 @@ namespace Val {
 			needsReconstructed = true;
 			child->setParent(this);
 			children.push_back(child);
+			child->invalidate();
 			child->updateEventData(currentEventData, lastEventData);
 			return true;
 		}
@@ -358,8 +382,10 @@ namespace Val {
 	}
 	bool GUIParentSingle::addChild(std::shared_ptr<GUIBase> child) {
 		if (canAddChild(child)) {
+			needsReconstructed = true;
 			this->child[0] = child;
 			child->setParent(this);
+			child->invalidate();
 			child->updateEventData(currentEventData, lastEventData);
 			return true;
 		}
@@ -369,17 +395,20 @@ namespace Val {
 		if (child[0] == nullptr) {
 			return false;
 		}
+		needsReconstructed = true;
 		child[0] = nullptr;
 		return true;
 	}
 	bool GUIParentSingle::removeChild(std::shared_ptr<GUIBase> child) {
 		if (child == this->child[0]) {
+			needsReconstructed = true;
 			this->child[0] = nullptr;
 			return true;
 		}
 		return false;
 	}
 	void GUIParentSingle::clearChildren() {
+		needsReconstructed = true;
 		child[0] = nullptr;
 	}
 	std::vector<std::shared_ptr<GUIBase>> GUIParentSingle::getChildren() const {
@@ -390,5 +419,21 @@ namespace Val {
 	}
 	bool GUIParentSingle::isParentTypeGUI() const {
 		return true;
+	}
+	void GUIBase::leftMouseDown() {
+	}
+	void GUIBase::middleMouseDown() {
+	}
+	void GUIBase::rightMouseDown() {
+	}
+	void GUIBase::leftMouseUp() {
+	}
+	void GUIBase::middleMouseUp() {
+	}
+	void GUIBase::rightMouseUp() {
+	}
+	void GUIBase::hoverStart() {
+	}
+	void GUIBase::hoverEnd() {
 	}
 }

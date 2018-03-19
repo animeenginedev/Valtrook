@@ -23,6 +23,7 @@ namespace Val {
 	}
 	void SimpleRectangle::setTexture(const TextureResource & texture) {
 		this->texture = texture;
+		this->uvBounds = texture.getBounds();
 		needsReconstructed = true;
 	}
 	void SimpleRectangle::setX(const float & x) {

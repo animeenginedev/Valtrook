@@ -46,8 +46,8 @@ namespace Val {
 		shaderObject->setLineMode(false);
 
 		if (GUIRenderer.VertexCount() > 0) {
-			glClear(GL_DEPTH_BUFFER_BIT);
 			glEnable(GL_DEPTH_TEST);
+			glClear(GL_DEPTH_BUFFER_BIT);
 			GUIRenderer.render();
 			shaderObject->setLineMode(true);
 			GUIRenderer.renderLines();

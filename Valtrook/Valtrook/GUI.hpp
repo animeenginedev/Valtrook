@@ -9,5 +9,7 @@
 #include "GUI_VerticalBox.h"
 #include "GUI_Table.h"
 
+#include "GUI_Button.h"
+
 #include "GUI_Label.h"
 #include "GUI_Image.h"

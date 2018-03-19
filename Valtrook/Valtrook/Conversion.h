@@ -13,13 +13,13 @@ namespace Val {
 		typename = std::enable_if_t < std::is_integral<Integer>::value >,
 		typename = std::enable_if_t< std::is_floating_point<Real>::value> >
 	constexpr const Real PixelToWorld(const Integer& pixels) {
-		return static_cast<Real>(pixels) * static_cast<Real>(0.1);
+		return static_cast<Real>(pixels) * static_cast<Real>(0.01);
 	}
 
 	template<typename Real,
 		typename = std::enable_if_t< std::is_floating_point<Real>::value> >
 	constexpr const Real UnalignedPixelToWorld(const Real& pixels) {
-		return static_cast<Real>(pixels) * static_cast<Real>(0.1);
+		return static_cast<Real>(pixels) * static_cast<Real>(0.01);
 	}
 
 	template<typename Integer, typename Real,

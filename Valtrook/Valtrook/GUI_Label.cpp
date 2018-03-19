@@ -1,5 +1,6 @@
 #include "GUI_Label.h"
 
+#include "RenderingEngine.h"
 
 namespace Val {
 	GUI_Label::Ptr GUI_Label::Create(const SimpleTextRectangle & rectangle) {
@@ -28,7 +29,7 @@ namespace Val {
 	void GUI_Label::internalUpdate(const TimingType & deltaTime) {
 	}
 	void GUI_Label::internalRender(const TimingType & deltaTime, RenderingEngine * engine) {
-		textRect.sendRenderInformation(engine);
+		textRect.sendRenderInformation(engine->getGUIRenderer());
 	}
 	void GUI_Label::internalRecalculatePosition() {
 	}
@@ -39,6 +40,6 @@ namespace Val {
 	}
 	void GUI_Label::onRecalculateComplete() {
 		textRect.setCenter(getAbsolutePosition());
-		textRect.setDepth(depth);
+		textRect.setDepth(getDepth());
 	}
 }

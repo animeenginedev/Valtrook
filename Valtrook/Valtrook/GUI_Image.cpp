@@ -24,7 +24,7 @@ namespace Val {
 		//We don't care about our internal update
 	}
 	void GUI_Image::internalRender(const TimingType & deltaTime, RenderingEngine * engine) {
-		image.sendRenderInformation(engine);
+		image.sendRenderInformation(engine->getGUIRenderer());
 	}
 	void GUI_Image::internalRecalculatePosition() {
 		//We don't have children so we don't care
@@ -34,6 +34,6 @@ namespace Val {
 	}
 	void GUI_Image::onRecalculateComplete() {
 		image.setCenter(getAbsolutePosition());
-		image.setDepth(depth);
+		image.setDepth(getDepth());
 	}
 }

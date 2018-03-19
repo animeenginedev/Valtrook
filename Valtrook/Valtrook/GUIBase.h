@@ -108,6 +108,7 @@ namespace Val {
 		bool usesInput() const;
 
 		void updateEventData(EventData* current, EventData* last);
+		void invalidate();
 	protected:
 		std::array<std::function<void()>, GUIEventCount()> eventCallbacks;
 		EventData *currentEventData, *lastEventData;
@@ -123,6 +124,15 @@ namespace Val {
 		//Calculate your size based on the childrens size
 		virtual void internalRecalculateSize() = 0;
 
+		virtual void leftMouseDown();
+		virtual void middleMouseDown();
+		virtual void rightMouseDown();
+		virtual void leftMouseUp();
+		virtual void middleMouseUp();
+		virtual void rightMouseUp();
+		virtual void hoverStart();
+		virtual void hoverEnd();
+
 		void recalculateComplete();
 		virtual void onRecalculateComplete() = 0;
 
@@ -133,7 +143,6 @@ namespace Val {
 
 		std::array<float, 2> position;
 
-		float depth;
 		bool bHidden;
 		mutable bool bJustHidden;
 

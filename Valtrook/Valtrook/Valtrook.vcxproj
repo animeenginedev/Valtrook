@@ -136,6 +136,7 @@
     <ClCompile Include="GUIBase.cpp" />
     <ClCompile Include="GUIFrame.cpp" />
     <ClCompile Include="GUIWindow.cpp" />
+    <ClCompile Include="GUI_Button.cpp" />
     <ClCompile Include="GUI_HorizontalBox.cpp" />
     <ClCompile Include="GUI_Image.cpp" />
     <ClCompile Include="GUI_Label.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="GUI.hpp" />
     <ClInclude Include="GUIFrame.h" />
     <ClInclude Include="GUIWindow.h" />
+    <ClInclude Include="GUI_Button.h" />
     <ClInclude Include="GUI_HorizontalBox.h" />
     <ClInclude Include="GUI_Image.h" />
     <ClInclude Include="GUI_Label.h" />

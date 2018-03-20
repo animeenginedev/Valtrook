@@ -4,18 +4,13 @@
 
 namespace Val {
 	GUI_Image::Ptr GUI_Image::Create(const SimpleRectangle & rectangle) {
-		auto ptr = std::make_shared<GUI_Image>(GUI_Image());
-		ptr->initailise(rectangle);
-		return ptr;
+		return std::make_shared<GUI_Image>(rectangle);
 	}
-	GUI_Image::GUI_Image() {
-	}
-	GUI_Image::~GUI_Image() {
-	}
-	void GUI_Image::initailise(const SimpleRectangle & rectangle) {
-		this->image = rectangle;
+	GUI_Image::GUI_Image(const SimpleRectangle& rectangle) : image(rectangle) {
 		halfSize = rectangle.getHalfSize();
 		needsReconstructed = true;
+	}
+	GUI_Image::~GUI_Image() {
 	}
 	SimpleRectangle * GUI_Image::getImage() {
 		return &image;

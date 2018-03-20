@@ -7,14 +7,13 @@
 #include "OrthographicCamera.h"
 
 namespace Val {
-	GUIWindow::GUIWindow() : current(new EventData()), last(new EventData()), camera(nullptr), inputManager(nullptr) {
+	GUIWindow::Ptr GUIWindow::Create(InputManager const * inputBus, OrthographicCamera * camera) {
+		return std::make_shared<GUIWindow>(inputBus, camera);
 	}
 
-	GUIWindow::~GUIWindow() {
+	GUIWindow::GUIWindow(InputManager const * inputBus, OrthographicCamera* camera) : current(new EventData()), last(new EventData()), camera(camera), inputManager(inputBus) {
 	}
-	void GUIWindow::intialise(InputManager const * inputBus, OrthographicCamera * camera) {
-		inputManager = inputBus;
-		this->camera = camera;
+	GUIWindow::~GUIWindow() {
 	}
 	void GUIWindow::setInput(InputManager const * inputManager) {
 		this->inputManager = inputManager;

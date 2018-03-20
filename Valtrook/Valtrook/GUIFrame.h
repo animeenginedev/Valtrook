@@ -8,11 +8,9 @@ namespace Val {
 		typedef std::shared_ptr<GUIFrame> Ptr;
 		static GUIFrame::Ptr Create(int inputPriority = 0);
 
-		GUIFrame();
+		GUIFrame(int inputPriority);
 		~GUIFrame();
-
-		void initialise(int inputPriority);
-
+		
 		void setInputPriority(const int& inputPri);
 		int getInputPriority() const;
 

@@ -135,7 +135,7 @@ namespace Val {
 		secondTimer.update();
 		TimingType updateAccumlation = TimingType(), renderAccumlation = TimingType(), secondAccumlation = TimingType();
 		TimingType updateDelta, renderDelta;
-		unsigned int secondCounter = 0u, updateCounter = 0u, renderCounter = 0u, performanceCounter = performanceOutputRate;
+		unsigned int secondCounter = 0u, updateCounter = 0u, renderCounter = 0u, loopCounter = 0u, performanceCounter = performanceOutputRate;
 		SDL_Event e;
 		while (running) {
 
@@ -206,9 +206,11 @@ namespace Val {
 					Logger::Instance->logMessage(LogLevel::INFO, performanceAverageString);
 					Logger::Instance->logMessage(LogLevel::INFO, "U: " + std::to_string(static_cast<float>(updateCounter) / 10.0f) + updateExpectedString);
 					Logger::Instance->logMessage(LogLevel::INFO, "R: " + std::to_string(static_cast<float>(renderCounter) / 10.0f) + renderExpectedString);
+					Logger::Instance->logMessage(LogLevel::INFO, "LR: " + std::to_string(static_cast<float>(loopCounter) / 10.0f));
 
 					updateCounter = 0;
 					renderCounter = 0;
+					loopCounter = 0;
 				}
 
 				//Output Log
@@ -216,6 +218,7 @@ namespace Val {
 			}
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			++loopCounter;
 		}
 	}
 }

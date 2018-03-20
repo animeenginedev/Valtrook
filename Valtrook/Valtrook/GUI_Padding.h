@@ -10,7 +10,7 @@ namespace Val {
 		typedef std::shared_ptr<GUI_Padding> Ptr;
 		static GUI_Padding::Ptr Create(float widthPad, float heightPad);
 
-		GUI_Padding();
+		GUI_Padding(float widthPad, float heightPad);
 		~GUI_Padding();
 
 		void setWidthPadding(const float& widthPad);

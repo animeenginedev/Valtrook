@@ -8,10 +8,8 @@ namespace Val {
 		typedef std::shared_ptr<GUI_Table> Ptr;
 		static GUI_Table::Ptr Create(unsigned int width, unsigned int height);
 
-		GUI_Table();
+		GUI_Table(unsigned int width, unsigned int height);
 		~GUI_Table();
-
-		void initialise(unsigned int width, unsigned int height);
 
 		bool addChild(std::shared_ptr<GUIBase> child, unsigned int x, unsigned int y);
 		std::shared_ptr<GUIBase> getChild(unsigned int x, unsigned int y);

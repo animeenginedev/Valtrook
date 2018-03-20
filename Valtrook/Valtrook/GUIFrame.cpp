@@ -2,16 +2,11 @@
 
 namespace Val {
 	GUIFrame::Ptr GUIFrame::Create(int inputPriority) {
-		auto ptr = std::make_shared<GUIFrame>(GUIFrame());
-		ptr->initialise(inputPriority);
-		return ptr;
+		return std::make_shared<GUIFrame>(inputPriority);
 	}
-	GUIFrame::GUIFrame() {
+	GUIFrame::GUIFrame(int inputPriority) : inputPriority(inputPriority) {
 	}
 	GUIFrame::~GUIFrame() {
-	}
-	void GUIFrame::initialise(int inputPriority) {
-		this->inputPriority=inputPriority;
 	}
 	void GUIFrame::setInputPriority(const int & inputPri) {
 		inputPriority = inputPri;

@@ -243,6 +243,12 @@
     <ClCompile Include="GUI_Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTextRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clamp.h">
@@ -445,6 +451,15 @@
     </ClInclude>
     <ClInclude Include="GUI_Button.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangles.hpp">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleRectangle.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTextRectangle.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

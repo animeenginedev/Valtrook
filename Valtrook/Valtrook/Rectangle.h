@@ -1,42 +1,40 @@
 #pragma once
 
+#include "TextureAsset.h"
 #include "Glyph.h"
 #include "Colour.h"
-#include "Vertex.h"
-#include "TextureAsset.h"
-#include "UV.h"
 #include "GLBlendMode.h"
-
-#include <type_traits>
-#include <array>
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
-
-	class SimpleRectangle {
+	
+	class Rectangle {
 	public:
-		SimpleRectangle();
-		~SimpleRectangle();
-
-		virtual void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		Rectangle(const TextureResource& texture);
+		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation);
+		Rectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation);
+		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		Rectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		~Rectangle();
 
 		void setTexture(const TextureResource& texture);
-		void setX(const float& x);
-		void setY(const float& y);
-		void setDepth(const float& depth);
+		void setX(float x);
+		void setY(float y);
+		void setDepth(float depth);
 		void setCenter(const std::array<float, 2>& center);
-		void setCenter(const float &x, const float &y);
-		void setHalfWidth(const float& h_width);
-		void setHalfHeight(const float& h_height);
+		void setCenter(float x, float y);
+		void setHalfWidth(float h_width);
+		void setHalfHeight(float h_height);
 		void setHalfSize(const std::array<float, 2>& halfSize);
-		void setHalfSize(const float& h_width, const float& h_height);
+		void setHalfSize(float h_width, float h_height);
 		void setWidth(float width);
 		void setHeight(float height);
 		void setSize(float width, float height);
 		void setColour(const Colour& colour);
 		void setUV(const UV& uv);
 		void setBlendMode(const GLBlendMode& blendMode);
+		void setRotation(float rotation);
 
 		TextureResource getTexture() const;
 		float getX() const;
@@ -49,6 +47,8 @@ namespace Val {
 		Colour getColour() const;
 		UV getUV() const;
 		GLBlendMode getBlendMode() const;
+		float getRotation() const;
+
 
 		std::array<TriangleGlyph, 2> getRenderGlyphs();
 		void sendRenderInformation(RenderingEngine* engine);
@@ -57,6 +57,7 @@ namespace Val {
 		std::array<float, 2> center;
 		float depth;
 		std::array<float, 2> halfSize;
+		float rotation;
 
 		TextureResource texture;
 		GLBlendMode blendMode;
@@ -65,21 +66,6 @@ namespace Val {
 		Colour renderColour;
 
 		bool needsReconstructed;
-		virtual void recalculateVertexes();
-	};
-
-	class Rectangle : public SimpleRectangle {
-	public:
-		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const float& rotation, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-		
-		void setRotation(const float& rotation);
-
-		float getRotation() const;
-	protected:
-		float rotation;
-		
-		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default) override;
-
-		void recalculateVertexes() override;
+		void recalculateVertexes();
 	};
 }

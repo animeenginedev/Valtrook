@@ -4,11 +4,9 @@
 
 namespace Val {
 	GUI_Padding::Ptr GUI_Padding::Create(float widthPad, float heightPad) {
-		auto ptr = std::make_shared<GUI_Padding>(GUI_Padding());
-		ptr->setPadding({ widthPad, heightPad });
-		return ptr;
+		return std::make_shared<GUI_Padding>(widthPad, heightPad);
 	}
-	GUI_Padding::GUI_Padding() : padding({ 0.0f, 0.0f }) {
+	GUI_Padding::GUI_Padding(float widthPad, float heightPad) : padding({ widthPad, heightPad }) {
 	}
 	GUI_Padding::~GUI_Padding() {
 	}

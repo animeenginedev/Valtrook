@@ -3,20 +3,12 @@
 #include "RenderingEngine.h"
 
 namespace Val {
-	GUI_Button::Ptr GUI_Button::Create(const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const TextureResource & defaultTex, const TextureResource & hoverTex, const TextureResource & downTex) {
-		auto ptr = std::make_shared<GUI_Button>();
-		ptr->initialise(x, y, depth, halfWidth, halfHeight, defaultTex, hoverTex, downTex);
-		return ptr;
+	GUI_Button::Ptr GUI_Button::Create(const TextureResource & defaultTex, const TextureResource & hoverTex, const TextureResource & downTex) {
+		return std::make_shared<GUI_Button>(defaultTex, hoverTex, downTex);
 	}
-	GUI_Button::GUI_Button() {
+	GUI_Button::GUI_Button(const TextureResource& defaultTex, const TextureResource& hoverTex, const TextureResource& downTex) : buttonRender(defaultTex), defaultTexture(defaultTex), hoverTexture(hoverTex), downTexture(downTex) {
 	}
 	GUI_Button::~GUI_Button() {
-	}
-	void GUI_Button::initialise(const float & x, const float & y, const float & depth, const float & halfWidth, const float & halfHeight, const TextureResource & defaultTex, const TextureResource & hoverTex, const TextureResource & downTex) {
-		buttonRender.initialise(defaultTex, x, y, depth, halfWidth, halfHeight);
-		defaultTexture = defaultTex;
-		hoverTexture = hoverTex;
-		downTexture = downTex;
 	}
 	void GUI_Button::setDefaultTexture(const TextureResource & tex) {
 		defaultTexture = tex;
@@ -39,7 +31,7 @@ namespace Val {
 	TextureResource GUI_Button::getDownTexture() const {
 		return downTexture;
 	}
-	void GUI_Button::setButtonRender(const Rectangle & buttonRender) {
+	void GUI_Button::setButtonRender(const SimpleRectangle & buttonRender) {
 		this->buttonRender = buttonRender;
 		this->needsReconstructed = true;
 	}

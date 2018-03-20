@@ -67,7 +67,9 @@ namespace Val {
 
 		std::array<float, 2> getPosition() const;
 		std::array<float, 2> getHalfSize() const;
+		//Offsets from each parent added together
 		std::array<float, 2> getAbsolutePosition() const;
+		//Depth from each parent adjusted forwards
 		float getDepth() const;
 
 		bool hasParent() const;
@@ -81,6 +83,7 @@ namespace Val {
 		VerticalJustification getVerticalJustification() const;
 		std::pair<HorizontalJustification, VerticalJustification> getJustification() const;
 
+		//do we process events on this gui object at all
 		void setRecievesInputs(const bool& bInput);
 		bool recievesInputs() const;
 		
@@ -104,6 +107,7 @@ namespace Val {
 		void removeEventCallback(GUIEventType eventType);
 		std::function<void()> getEventCallback(GUIEventType eventType) const;
 		void clearEventCallbacks();
+		//If we process events, do we use the input and stop other elements from seeing it.
 		void setUsesInput(const bool& usesInput);
 		bool usesInput() const;
 

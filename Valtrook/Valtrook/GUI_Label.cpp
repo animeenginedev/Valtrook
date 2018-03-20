@@ -4,17 +4,11 @@
 
 namespace Val {
 	GUI_Label::Ptr GUI_Label::Create(const SimpleTextRectangle & rectangle) {
-		auto ptr = std::make_shared<GUI_Label>(GUI_Label());
-		ptr->initailise(rectangle);
-		return ptr;
+		return std::make_shared<GUI_Label>(rectangle);
 	}
-	GUI_Label::GUI_Label() {
+	GUI_Label::GUI_Label(const SimpleTextRectangle& rectangle) : textRect(rectangle) {
 	}
 	GUI_Label::~GUI_Label() {
-	}
-	void GUI_Label::initailise(const SimpleTextRectangle & rectangle) {
-		this->textRect = rectangle;
-		needsReconstructed = true;
 	}
 	void GUI_Label::setText(const std::string & text) {
 		textRect.setText(text);

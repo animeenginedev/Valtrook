@@ -4,47 +4,74 @@
 #include "TextResource.h"
 
 namespace Val {
+	class RenderingEngine;
+	class VBOBatcher;
 
-	class SimpleTextRectangle : public SimpleRectangle {
+	class TextRectangle {
 	public:
-		SimpleTextRectangle();
-		~SimpleTextRectangle();
+		TextRectangle(const TextResource& texture);
+		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation);
+		TextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation);
+		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		TextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		~TextRectangle();
 
-		virtual void initialise(TextResource text, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-
+		void setTextResource(const TextResource& text);
 		void setText(const std::string& contents);
-		std::string getText() const;		
-		void changeFont(FontAsset* newFont);
+		void setFont(FontAsset* newFont);
+		void setX(float x);
+		void setY(float y);
+		void setDepth(float depth);
+		void setCenter(const std::array<float, 2>& center);
+		void setCenter(float x, float y);
+		void setHalfWidth(float h_width);
+		void setHalfHeight(float h_height);
+		void setHalfSize(const std::array<float, 2>& halfSize);
+		void setHalfSize(float h_width, float h_height);
+		void setWidth(float width);
+		void setHeight(float height);
+		void setSize(float width, float height);
+		void setColour(const Colour& colour);
+		void setUV(const UV& uv);
+		void setBlendMode(const GLBlendMode& blendMode);
+		void setScaleTextToHeight(bool scaleTextToHeight);
+		void setRotation(float rotation);
+
+		TextResource getTextResource() const;
+		std::string getText() const;
 		FontAsset* getFont() const;
+		float getX() const;
+		float getY() const;
+		float getDepth() const;
+		std::array<float, 2> getCenter() const;
+		float getHalfWidth() const;
+		float getHalfHeight() const;
+		std::array<float, 2> getHalfSize() const;
+		Colour getColour() const;
+		UV getUV() const;
+		GLBlendMode getBlendMode() const;
+		bool doesScaleTextToHeight() const;
+		float getRotation() const;
 
 		void reconstruct();
 
-		void setScaleTextToHeight(const bool& scaleTextToHeight);
-		bool doesScaleTextToHeight() const;
+		std::array<TriangleGlyph, 2> getRenderGlyphs();
+		void sendRenderInformation(RenderingEngine* engine);
+		void sendRenderInformation(VBOBatcher* batcher);
 	protected:
-		void initialise(const TextureResource& texture, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default) override;
+		std::array<float, 2> center;
+		float depth;
+		std::array<float, 2> halfSize;
+		float rotation;
 
 		TextResource textResource;
+		GLBlendMode blendMode;
+		UV uvBounds;
+		std::array<TriangleGlyph, 2> Glyph;
+		Colour renderColour;
 		bool scaleTextToHeight;
 
-		void recalculateVertexes() override;
-	};
-
-	class TextRectangle : public SimpleTextRectangle {
-	public:
-		TextRectangle();
-		~TextRectangle();
-
-		virtual void initialise(TextResource text, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const float& rotation, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-
-		void setRotation(const float& rotation);
-
-		float getRotation() const;
-	protected:
-		float rotation;
-		
-		void recalculateVertexes() override;
-
-		void initialise(TextResource text, const float& x, const float& y, const float& depth, const float& halfWidth, const float& halfHeight, const Colour& colour = Colour(255, 255, 255, 255), const GLBlendMode& blendMode = GLBlendMode::Blend_Default) override;
+		bool needsReconstructed;
+		void recalculateVertexes();
 	};
 }

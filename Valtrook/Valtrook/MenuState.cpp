@@ -11,14 +11,14 @@
 
 
 namespace Val {
+	MenuState::MenuState(Game * const game) : GameState(game), window(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera())) {
+	}
 	void MenuState::initialise() {
-		window.intialise(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera()));
 		testFrame = GUIFrame::Create();
 		window.addFrame(testFrame);
 
 
-		auto image = SimpleRectangle();
-		image.initialise(TextureAsset::getTexture("raven"), 0, 0, 0.5f, 1.20f, 1.20f);
+		auto image = SimpleRectangle(TextureAsset::getTexture("raven"), 0, 0, 0.5f, 1.20f, 1.20f);
 
 		auto test = GUI_Image::Create(image);
 		auto test4 = GUI_Image::Create(image);
@@ -27,8 +27,7 @@ namespace Val {
 		auto test3 = GUI_Image::Create(image);
 		auto test5 = GUI_Image::Create(image);
 
-		auto textT = SimpleTextRectangle();
-		textT.initialise(TextResource("wau", "ralewaymed"), 1, 1, 0.5f, 0.60f, 0.60f, Colour(0, 0, 0, 255));
+		auto textT = SimpleTextRectangle(TextResource("wau", "ralewaymed"), 1, 1, 0.5f, 0.60f, 0.60f, Colour(0, 0, 0, 255));
 		auto testLabel = GUI_Label::Create(textT);
 		testLabel->setRecievesInputs(false);
 
@@ -36,7 +35,7 @@ namespace Val {
 		padding->addChild(testLabel);
 		padding->setRecievesInputs(false);
 
-		auto testButton = GUI_Button::Create(0, 0, 0, 1, 1, TextureAsset::getTexture("gui/buttonDefault"), TextureAsset::getTexture("gui/buttonHover"), TextureAsset::getTexture("gui/buttonDown"));
+		auto testButton = GUI_Button::Create(TextureAsset::getTexture("gui/buttonDefault"), TextureAsset::getTexture("gui/buttonHover"), TextureAsset::getTexture("gui/buttonDown"));
 		testButton->addChild(padding);
 
 		auto table = GUI_Table::Create(3, 3);

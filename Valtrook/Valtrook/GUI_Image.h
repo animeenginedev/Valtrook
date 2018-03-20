@@ -2,7 +2,7 @@
 
 #include "GUIBase.h"
 
-#include "Rectangle.h"
+#include "SimpleRectangle.h"
 
 namespace Val {
 	class GUI_Image : public GUIBase {
@@ -10,10 +10,8 @@ namespace Val {
 		typedef std::shared_ptr<GUI_Image> Ptr;
 		static GUI_Image::Ptr Create(const SimpleRectangle& rectangle);
 
-		GUI_Image();
+		GUI_Image(const SimpleRectangle& rectangle);
 		~GUI_Image();
-
-		void initailise(const SimpleRectangle& rectangle);
 		
 		SimpleRectangle* getImage();
 	protected:

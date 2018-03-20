@@ -2,7 +2,7 @@
 
 #include "GameState.h"
 
-#include "Rectangle.h"
+#include "SimpleRectangle.h"
 
 #include "GUI.hpp"
 
@@ -10,7 +10,7 @@ namespace Val {
 	class Game;
 	class MenuState : public GameState {
 	public:
-		MenuState(Game * const game) : GameState(game) {};
+		MenuState(Game * const game);
 
 		void initialise();
 

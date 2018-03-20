@@ -3,20 +3,14 @@
 
 namespace Val {
 	GUI_Table::Ptr GUI_Table::Create(unsigned int width, unsigned int height) {
-		auto ptr = std::make_shared<GUI_Table>(GUI_Table());
-		ptr->initialise(width, height);
-		return ptr;
+		return std::make_shared<GUI_Table>(width, height);
 	}
-	GUI_Table::GUI_Table() : width(0), height(0) {
-	}
-	GUI_Table::~GUI_Table() {
-	}
-	void GUI_Table::initialise(unsigned int width, unsigned int height) {
-		this->width = width;
-		this->height = height;
+	GUI_Table::GUI_Table(unsigned int width, unsigned int height) : width(width), height(height) {
 		children.resize(width * height);
 		halfWidths.resize(width);
 		halfHeights.resize(height);
+	}
+	GUI_Table::~GUI_Table() {
 	}
 	bool GUI_Table::addChild(std::shared_ptr<GUIBase> child, unsigned int x, unsigned int y) {
 		if (canAddChild(child, x, y)) {

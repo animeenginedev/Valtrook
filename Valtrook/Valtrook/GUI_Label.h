@@ -2,7 +2,7 @@
 
 #include "GUIBase.h"
 
-#include "TextRectangle.h"
+#include "SimpleTextRectangle.h"
 
 namespace Val {
 	class GUI_Label : public GUIBase {
@@ -10,9 +10,8 @@ namespace Val {
 		typedef std::shared_ptr<GUI_Label> Ptr;
 		static GUI_Label::Ptr Create(const SimpleTextRectangle& rectangle);
 
-		GUI_Label();
+		GUI_Label(const SimpleTextRectangle& rectangle);
 		~GUI_Label();
-		void initailise(const SimpleTextRectangle& rectangle);
 
 		void setText(const std::string& text);
 		std::string getText() const;

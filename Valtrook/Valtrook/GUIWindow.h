@@ -13,11 +13,12 @@ namespace Val {
 
 	class GUIWindow {
 	public:
-		GUIWindow();
+		typedef std::shared_ptr<GUIWindow> Ptr;
+		GUIWindow::Ptr Create(InputManager const * inputBus, OrthographicCamera* camera);
+
+		GUIWindow(InputManager const * inputBus, OrthographicCamera* camera);
 		~GUIWindow();
-
-		void intialise(InputManager const * inputBus, OrthographicCamera* camera);
-
+		
 		void setInput(InputManager const * inputManager);
 		void setCamera(OrthographicCamera* camera);
 

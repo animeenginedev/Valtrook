@@ -13,7 +13,7 @@ namespace Val {
 
 	class SplashState : public GameState {
 	public:
-		SplashState(Game * const game) : GameState(game) {};
+		SplashState(Game * const game);
 
 		void initialise(GameState* menuState);
 

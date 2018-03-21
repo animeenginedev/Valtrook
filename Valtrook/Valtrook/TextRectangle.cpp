@@ -91,10 +91,6 @@ namespace Val {
 		this->renderColour = colour;
 		needsReconstructed = true;
 	}
-	void TextRectangle::setUV(const UV & uv) {
-		this->uvBounds = uv;
-		needsReconstructed = true;
-	}
 	void TextRectangle::setBlendMode(const GLBlendMode & blendMode) {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
@@ -140,9 +136,6 @@ namespace Val {
 	Colour TextRectangle::getColour() const {
 		return renderColour;
 	}
-	UV TextRectangle::getUV() const {
-		return uvBounds;
-	}
 	GLBlendMode TextRectangle::getBlendMode() const {
 		return blendMode;
 	}
@@ -179,10 +172,15 @@ namespace Val {
 
 		auto texture = TextRenderer::getTexture(textResource);;
 
+		auto renderColour = this->renderColour;
+
 		if (texture.getTexture() == nullptr) {
-			Logger::Instance->logMessage(WARNING, "Invalid Texture on Simple Text Rectangle");
-			return;
+			Logger::Instance->logMessage(WARNING, "Invalid Texture on Text Rectangle");
+			texture = Texture::errorTexture;
+			renderColour = Colour(255, 255, 255, this->renderColour.a);
 		}
+
+		auto uvBounds = texture.getBounds();
 
 		if (scaleTextToHeight) {
 			auto texSize = texture.getTextureSizeInPixel();

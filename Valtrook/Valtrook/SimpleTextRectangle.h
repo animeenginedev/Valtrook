@@ -35,7 +35,6 @@ namespace Val {
 		void setHeight(float height);
 		void setSize(float width, float height);
 		void setColour(const Colour& colour);
-		void setUV(const UV& uv);
 		void setBlendMode(const GLBlendMode& blendMode);
 		void setScaleTextToHeight(bool scaleTextToHeight);
 
@@ -50,7 +49,6 @@ namespace Val {
 		float getHalfHeight() const;
 		std::array<float, 2> getHalfSize() const;
 		Colour getColour() const;
-		UV getUV() const;
 		GLBlendMode getBlendMode() const;
 		bool doesScaleTextToHeight() const;
 
@@ -66,7 +64,6 @@ namespace Val {
 
 		TextResource textResource;
 		GLBlendMode blendMode;
-		UV uvBounds;
 		std::array<TriangleGlyph, 2> Glyph;
 		Colour renderColour;
 		bool scaleTextToHeight;

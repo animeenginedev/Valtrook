@@ -1,11 +1,13 @@
 #pragma once
 
 #include "ResourceLocation.h"
+#include "Owner.h"
 
 #include <unordered_map>
 #include <SDL2\SDL_mixer.h>
 #include <functional>
 #include <memory>
+#include <future>
 
 namespace Val {
 	class AudioDelegate;
@@ -16,17 +18,23 @@ namespace Val {
 
 		ResourceLocation resource;
 		Mix_Chunk* loadedAsset;
+		
 
-		void load(ResourceLocation res);
+		void load(ResourceLocation res, bool allowAsyncLoad);
 		std::shared_ptr<AudioDelegate> createPlayDelegate();
-
+		Owner<AudioDelegate*> createPlayDelegateO();
 		void cleanup();
+
+	protected:
+		void AsyncLoadWav(std::string loc);
 	};
 
 	class AudioDelegate {
 	public:
 		AudioDelegate(AudioAsset* asset);
 		~AudioDelegate();
+
+		bool isLoaded();
 
 		//Play
 		bool playFadeIn(int milliseconds, std::function<void(AudioDelegate*)> callback = nullptr, int repeats = 0);
@@ -81,7 +89,8 @@ namespace Val {
 
 		void setMusicVolume(float vol);
 
-		std::shared_ptr<AudioDelegate> getAudioPlayer(ResourceLocation loc);
+		std::shared_ptr<AudioDelegate> getAudioPlayer(ResourceLocation loc, bool allowAsyncLoad);
+		Owner<AudioDelegate*> getAudioPlayerO(ResourceLocation loc, bool allowAsyncLoad);
 
 		//Input: The amount you want; Output the amount you got
 		int allocateChannels(int number);
@@ -91,7 +100,7 @@ namespace Val {
 	protected:
 		int channels;
 		std::unordered_map<ResourceLocation, Mix_Music*> MusicAssets;
-		std::unordered_map<ResourceLocation, AudioAsset> Assets;
+		std::unordered_map<ResourceLocation, AudioAsset*> Assets;
 	};
 
 }

@@ -163,6 +163,7 @@
     <ClCompile Include="SimpleTextRectangle.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
     <ClCompile Include="SplashState.cpp" />
+    <ClCompile Include="TaskMaster.cpp" />
     <ClCompile Include="TextRectangle.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextResource.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="StopWatch.h" />
+    <ClInclude Include="TaskMaster.h" />
     <ClInclude Include="TextRectangle.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextResource.h" />

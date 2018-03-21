@@ -244,9 +244,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimpleRectangle.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Renderables</Filter>
     </ClCompile>
     <ClCompile Include="SimpleTextRectangle.cpp">
+      <Filter>Source Files\Engine\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskMaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="SimpleTextRectangle.h">
       <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskMaster.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

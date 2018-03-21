@@ -143,7 +143,8 @@ namespace Val {
 
 		if (texture.getTexture() == nullptr) {
 			Logger::Instance->logMessage(WARNING, "Invalid Texture on Simple Rectangle");
-			return;
+
+			texture = Texture::errorTexture;
 		}
 
 		std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };

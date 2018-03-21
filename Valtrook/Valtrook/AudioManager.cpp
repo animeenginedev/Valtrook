@@ -1,5 +1,6 @@
 #include "AudioManager.h"
 
+#include "TaskMaster.h"
 #include <thread>
 #include <SDL2\SDL.h>
 #include <SDL2\SDL_audio.h>
@@ -10,22 +11,35 @@ namespace Val {
 
 	AudioAsset::AudioAsset() : resource("", "", "") {
 	}
+
+	void AudioAsset::AsyncLoadWav(std::string loc) {
+		loadedAsset = Mix_LoadWAV(loc.c_str());
+		if (loadedAsset == nullptr) {
+			fprintf(stderr, "Failed to load audio asset @ %s :: Err %s\n", loc.c_str(), Mix_GetError());
+		}
+	}
+
 	//Asset
-	void AudioAsset::load(ResourceLocation res) {
+	void AudioAsset::load(ResourceLocation res, bool allowAsyncLoad) {
 		auto ext = res.getExtension();
 		if (ext == ".wav" || ext == ".ogg" || ext == ".mp3" || ext == ".mod" || ext == ".midi") {
-			this->loadedAsset = Mix_LoadWAV(res.getLocation().c_str());
-			if (loadedAsset == nullptr) {
-				fprintf(stderr, "Failed to load audio asset @ %s :: Err %s\n", res.getLocation().c_str(), Mix_GetError());
+			if (allowAsyncLoad) {
+				TaskMaster::addTask(MakeTask(std::bind(&AudioAsset::AsyncLoadWav, this, res.getLocation())));				
+			} else {
+				this->loadedAsset = Mix_LoadWAV(res.getLocation().c_str());
+				if (loadedAsset == nullptr) {
+					fprintf(stderr, "Failed to load audio asset @ %s :: Err %s\n", res.getLocation().c_str(), Mix_GetError());
+				}
 			}
 		} else {
 			fprintf(stderr, "Failed to load audio asset unsupported type@ %s\n", resource.getLocation().c_str());
 		}
 	}
 	std::shared_ptr<AudioDelegate> AudioAsset::createPlayDelegate() {
-		if (loadedAsset == nullptr)
-			return nullptr;
 		return std::make_shared<AudioDelegate>(this);		
+	}
+	Owner<AudioDelegate*> AudioAsset::createPlayDelegateO() {
+		return new AudioDelegate(this);
 	}
 	void AudioAsset::cleanup() {
 		if (loadedAsset != nullptr) {
@@ -41,14 +55,19 @@ namespace Val {
 			callbacks.erase(audioChannel);
 		}
 	}
+	bool AudioDelegate::isLoaded() {
+		return asset->loadedAsset != nullptr;
+	}
 	bool AudioDelegate::playFadeIn(int milliseconds, std::function<void(AudioDelegate*)> callback, int repeats) {
-		if (validDelegate()) {
-			channelDelegates.erase(audioChannel);
-			callbacks.erase(audioChannel);
-		}
+		if (!isLoaded())
+			return false;
+
 		if ((audioChannel = Mix_FadeInChannel(-1, asset->loadedAsset, repeats, milliseconds)) == -1) {
 			return false;
 		}
+		channelDelegates.erase(audioChannel);
+		callbacks.erase(audioChannel);
+
 		channelDelegates.insert(std::make_pair(audioChannel, this));
 		if (callback.operator bool()) {
 			AudioDelegate::callbacks.insert(std::make_pair(audioChannel, callback));
@@ -58,13 +77,15 @@ namespace Val {
 		return true;
 	}
 	bool AudioDelegate::playFadeInTimed(int fadeInMilliseconds, int timedMilliseconds, std::function<void(AudioDelegate*)> callback, int repeats) {
-		if (validDelegate()) {
-			channelDelegates.erase(audioChannel);
-			callbacks.erase(audioChannel);
-		}
+		if (!isLoaded())
+			return false;
+
 		if ((audioChannel = Mix_FadeInChannelTimed(-1, asset->loadedAsset, repeats, fadeInMilliseconds, timedMilliseconds)) == -1) {
 			return false;
 		}
+		channelDelegates.erase(audioChannel);
+		callbacks.erase(audioChannel);
+
 		channelDelegates.insert(std::make_pair(audioChannel, this));
 		if (callback.operator bool()) {
 			AudioDelegate::callbacks.insert(std::make_pair(audioChannel, callback));
@@ -74,13 +95,15 @@ namespace Val {
 		return true;
 	}
 	bool AudioDelegate::play(std::function<void(AudioDelegate*)> callback, int repeats) {
-		if (validDelegate()) {
-			channelDelegates.erase(audioChannel);
-			callbacks.erase(audioChannel);
-		}
+		if (!isLoaded())
+			return false;
+
 		if ((audioChannel = Mix_PlayChannel(-1, asset->loadedAsset, repeats)) == -1) {
 			return false;
 		}
+		channelDelegates.erase(audioChannel);
+		callbacks.erase(audioChannel);
+
 		channelDelegates.insert(std::make_pair(audioChannel, this));
 		if (callback.operator bool()) {
 			AudioDelegate::callbacks.insert(std::make_pair(audioChannel, callback));
@@ -90,13 +113,15 @@ namespace Val {
 		return true;
 	}
 	bool AudioDelegate::playTimed(int milliseconds, std::function<void(AudioDelegate*)> callback, int repeatsMax) {
-		if (validDelegate()) {
-			channelDelegates.erase(audioChannel);
-			callbacks.erase(audioChannel);
-		}
+		if (!isLoaded())
+			return false;
+
 		if ((audioChannel = Mix_PlayChannelTimed(-1, asset->loadedAsset, repeatsMax, milliseconds)) == -1) {
 			return false;
 		}
+		channelDelegates.erase(audioChannel);
+		callbacks.erase(audioChannel);
+
 		channelDelegates.insert(std::make_pair(audioChannel, this));
 		if (callback.operator bool()) {
 			AudioDelegate::callbacks.insert(std::make_pair(audioChannel, callback));
@@ -106,30 +131,42 @@ namespace Val {
 		return true;
 	}
 	void AudioDelegate::setVolume(float volume) {
+		if (!isLoaded())
+			return;
 		if (validDelegate()) {
 			Mix_Volume(audioChannel, static_cast<int>(volume * 128));
 		}
 	}
 	void AudioDelegate::pause() {
+		if (!isLoaded())
+			return;
 		if (validDelegate()) {
 			Mix_Pause(audioChannel);
 		}
 	}
 	void AudioDelegate::resume() {
+		if (!isLoaded())
+			return;
 		if (validDelegate()) {
 			Mix_Resume(audioChannel);
 		}
 	}
 	void AudioDelegate::fadeOut(int milliseconds) {
+		if (!isLoaded())
+			return;
 		if (validDelegate())
 			Mix_FadeOutChannel(audioChannel, milliseconds);
 	}
 	void AudioDelegate::expire(int milliseconds) {
+		if (!isLoaded())
+			return;
 		if (validDelegate())
 			Mix_ExpireChannel(audioChannel, milliseconds);
 	}
 
 	void AudioDelegate::halt() {
+		if (!isLoaded())
+			return;
 		if (validDelegate()) 
 			Mix_HaltChannel(audioChannel);
 	}
@@ -230,15 +267,29 @@ namespace Val {
 		Mix_VolumeMusic(static_cast<int>(static_cast<float>(128) * vol));
 	}
 
-	std::shared_ptr<AudioDelegate> AudioManager::getAudioPlayer(ResourceLocation loc) {
+	std::shared_ptr<AudioDelegate> AudioManager::getAudioPlayer(ResourceLocation loc, bool allowAsyncLoad) {
 		if (Assets.find(loc) == Assets.end()) {
-			AudioAsset asset = AudioAsset();
-			asset.load(loc);
-			if(asset.loadedAsset == nullptr)
-				return nullptr;
+			auto asset = new AudioAsset();
+			asset->load(loc, allowAsyncLoad);
+			if (!allowAsyncLoad) {
+				if (asset == nullptr)
+					return nullptr;
+			}
 			Assets.insert(std::make_pair(loc, asset));
 		}
-		return Assets.at(loc).createPlayDelegate();
+		return Assets.at(loc)->createPlayDelegate();
+	}
+	Owner<AudioDelegate*> AudioManager::getAudioPlayerO(ResourceLocation loc, bool allowAsyncLoad) {
+		if (Assets.find(loc) == Assets.end()) {
+			auto asset = new AudioAsset();
+			asset->load(loc, allowAsyncLoad);
+			if (!allowAsyncLoad) {
+				if (asset == nullptr)
+					return nullptr;
+			}
+			Assets.insert(std::make_pair(loc, std::move(asset)));
+		}
+		return Assets.at(loc)->createPlayDelegateO();
 	}
 
 	int AudioManager::allocateChannels(int number) {

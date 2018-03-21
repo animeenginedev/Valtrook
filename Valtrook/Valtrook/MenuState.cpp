@@ -8,6 +8,8 @@
 
 #include "Logger.h"
 #include "OrthographicCamera.h"
+#include "AudioManager.h"
+#include "Owner.h"
 
 
 namespace Val {
@@ -48,12 +50,18 @@ namespace Val {
 
 		test3->setJustification(LEFT, BOTTOM );
 		test5->setJustification(RIGHT, TOP);
+				
 
 		testButton->setEventCallback([=]() { testLabel->setText("[?!]"); }, GUIEventType::MouseLeft_Up);
 		test->setEventCallback([=]() { test->setHidden(!test->isHidden()); }, GUIEventType::MouseLeft_Up);
 		test3->setEventCallback([=]() { test3->setJustification(RIGHT, TOP);
 		test3->setEventCallback([=]() { test3->setHidden(true); }, GUIEventType::MouseLeft_Up); }, GUIEventType::MouseLeft_Up);
-		test4->setEventCallback([=]() { test4->setHidden(!test4->isHidden()); }, GUIEventType::MouseLeft_Up);
+		test4->setEventCallback([=]() { 
+			test4->setHidden(!test4->isHidden());
+			auto audioP = game->getAudioManager()->getAudioPlayer(ResourceLocation("knockknockknock", ".ogg", RuntimeConstants::Instance->SoundPath), true);
+			audioP->play([=](AudioDelegate* d) { audioP->playFadeIn(100); }, 0);
+		
+		}, GUIEventType::MouseLeft_Up);
 		test5->setEventCallback([=]() { test5->setHidden(!test5->isHidden()); }, GUIEventType::MouseLeft_Up);
 
 		testFrame->addChild(table);

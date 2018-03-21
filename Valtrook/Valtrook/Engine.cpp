@@ -4,6 +4,10 @@
 #include "Logger.h"
 #include "RenderingEngine.h"
 #include "RuntimeConstants.h"
+#include "Texture.h"
+#include "TextureAsset.h"
+#include "TaskMaster.h"
+
 
 #include <sdl_ttf.h>
 #include <thread>
@@ -126,6 +130,10 @@ namespace Val {
 			Logger::Instance->logMessage(LogLevel::SEVERE, "Failed to initialise SDL_TTF");
 		}
 
+		TaskMaster::initialise(std::thread::hardware_concurrency());
+
+		Texture::errorTexture = TextureAsset::getTexture("errorTexture");
+
 		game.initialise();
 	}
 	void Engine::run() {
@@ -220,5 +228,7 @@ namespace Val {
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			++loopCounter;
 		}
+
+		TaskMaster::shutdown();
 	}
 }

@@ -26,8 +26,10 @@ namespace Val {
 
 		this->menuState = menuState;
 
-		baka = game->getAudioManager()->getAudioPlayer(ResourceLocation("bakabakabaka", ".ogg", RuntimeConstants::Instance->SoundPath));
-		baka2 = game->getAudioManager()->getAudioPlayer(ResourceLocation("splashNoise", ".mp3", RuntimeConstants::Instance->SoundPath));
+		baka = game->getAudioManager()->getAudioPlayer(ResourceLocation("bakabakabaka", ".ogg", RuntimeConstants::Instance->SoundPath), false);
+		baka2 = game->getAudioManager()->getAudioPlayer(ResourceLocation("splashNoise", ".mp3", RuntimeConstants::Instance->SoundPath), false);
+
+		game->getAudioManager()->getAudioPlayer(ResourceLocation("knockknockknock", ".ogg", RuntimeConstants::Instance->SoundPath), true);
 	}
 
 	void SplashState::onBecomeActive() {

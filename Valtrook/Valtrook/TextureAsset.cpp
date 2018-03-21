@@ -34,6 +34,12 @@ namespace Val {
 			AtlasTexture* atlas = nullptr;
 			AABB<float> atlasAABB = AABB<float>(0.0f, 0.0f, 0.0f);
 			GLTexture* t = new GLTexture(loadTexture(filename, forceDifferentWrapping));
+
+			if (t->getTextureID() == 0) {
+				delete t;
+				return Texture::errorTexture;
+			}
+
 			for (unsigned int i = 0; i < atlasTextures.size(); i++) {
 				if (!atlasTextures[i]->filled) {
 					atlasAABB = atlasTextures[i]->getSpace(t->operator[](0), t->operator[](1));
@@ -97,8 +103,15 @@ namespace Val {
 			glDeleteTextures(1, &t->getTextureIDForGL());
 			delete t;
 		} else {
-			texture = new Texture(new GLTexture(loadTexture(filename, forceDifferentWrapping)));
+			auto GLTex = new GLTexture(loadTexture(filename, forceDifferentWrapping));
 
+			if (GLTex->getTextureID() == 0) {
+				delete GLTex;
+				return Texture::errorTexture;
+			}
+
+			auto texture = new Texture(GLTex);
+			
 			texture->addBounds(filename, UV(0.0f, 0.0f, 1.0f, 1.0f));
 			textures.push_back(texture);
 		}

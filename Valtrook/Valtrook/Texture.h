@@ -30,6 +30,8 @@ namespace Val {
 
 	class Texture {
 	public:
+		static TextureResource errorTexture;
+
 		Texture(GLTexture* texture);
 		~Texture();
 

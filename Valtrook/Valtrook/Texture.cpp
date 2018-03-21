@@ -3,6 +3,7 @@
 #include "Conversion.h"
 
 namespace Val {
+	TextureResource Texture::errorTexture = TextureResource(nullptr, ResourceLocation("", "", ""));
 	Texture::Texture(GLTexture * texture) : texture(texture), defaultBounds(0.0f, 0.0f, 1.0f, 1.0f) {
 	}
 

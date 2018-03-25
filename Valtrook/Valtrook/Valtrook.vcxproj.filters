@@ -252,6 +252,9 @@
     <ClCompile Include="TaskMaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUI_VerticalScroll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clamp.h">
@@ -465,6 +468,9 @@
       <Filter>Header Files\Engine\Renderables</Filter>
     </ClInclude>
     <ClInclude Include="TaskMaster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_VerticalScroll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

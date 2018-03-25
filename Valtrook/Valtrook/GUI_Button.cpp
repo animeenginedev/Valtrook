@@ -73,18 +73,28 @@ namespace Val {
 		}
 	}
 	void GUI_Button::internalRecalculateSize() {
+		halfSize = { 0.0f, 0.0f };
 		if (child[0] != nullptr) {
 			if (!child[0]->isHidden()) {
 				halfSize = child[0]->getHalfSize();
-				return;
 			}
 		}
-		halfSize = { 0.0f, 0.0f };
 	}
 	void GUI_Button::onRecalculateComplete() {
 		buttonRender.setCenter(getAbsolutePosition());
 		buttonRender.setHalfSize(halfSize[0], halfSize[1]);
 		buttonRender.setDepth(getDepth());
+		interactionArea.centerX = buttonRender.getX();
+		interactionArea.centerY = buttonRender.getY();
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
+
+		if (hasCullAABB) {
+			interactionArea = interactionArea.getCulledAABB(cullAABB);
+		}
+	}
+	void GUI_Button::onSetCullAABB(const AABB<float>& cullAABB) {
+		buttonRender.setCullSurface(cullAABB);
 	}
 	bool GUI_Button::canAddChild(std::shared_ptr<GUIBase> child) {
 		return this->child[0] == nullptr && child != nullptr;

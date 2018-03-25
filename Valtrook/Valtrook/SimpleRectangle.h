@@ -34,6 +34,8 @@ namespace Val {
 		void setColour(const Colour& colour);
 		void setUV(const UV& uv);
 		void setBlendMode(const GLBlendMode& blendMode);
+		//Honestly, don't ask. It's really used to GUI rendering, setting the center/height/width and the uv dependant on the culling aabb size&position
+		void setCullSurface(AABB<float> cullAABB);
 
 		TextureResource getTexture() const;
 		float getX() const;
@@ -46,6 +48,7 @@ namespace Val {
 		Colour getColour() const;
 		UV getUV() const;
 		GLBlendMode getBlendMode() const;
+		AABB<float> getCullSurface() const;
 
 		std::array<TriangleGlyph, 2> getRenderGlyphs();
 		void sendRenderInformation(RenderingEngine* engine);
@@ -54,6 +57,9 @@ namespace Val {
 		std::array<float, 2> center;
 		float depth;
 		std::array<float, 2> halfSize;
+
+		AABB<float> cullAABB;
+		bool bHasCullSurface;
 
 		TextureResource texture;
 		GLBlendMode blendMode;

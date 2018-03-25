@@ -8,7 +8,7 @@ namespace Val {
 	}
 
 	GUIBase::GUIBase() : eventCallbacks({ nullptr }), lastEventData(nullptr), currentEventData(nullptr), horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), bHidden(false),
-		bJustHidden(false), halfSize({ 0.0f, 0.0f }), bRecievesInputs(true), needsReconstructed(true) {
+		bJustHidden(false), halfSize({ 0.0f, 0.0f }), bRecievesInputs(true), needsReconstructed(true), interactionArea(0, 0, 0), cullAABB(0.0f, 0.0f, 0.0f), hasCullAABB(false) {
 	}
 	GUIBase::~GUIBase() {
 	}
@@ -217,6 +217,19 @@ namespace Val {
 		needsReconstructed = true;
 	}
 
+	void GUIBase::setCullAABB(const AABB<float>& cullAABB) {
+		static AABB<float> noCullSurface = { 0.0f, 0.0f, 0.0f, 0.0f };
+		this->cullAABB = cullAABB;
+		hasCullAABB = !(this->cullAABB == noCullSurface);
+
+		for (auto child : getChildren()) {
+			if (child != nullptr)
+				child->setCullAABB(cullAABB);
+		}
+
+		onSetCullAABB(cullAABB);
+	}
+
 	void GUIBase::processEvents() {
 		if (!bRecievesInputs)
 			return;
@@ -233,19 +246,12 @@ namespace Val {
 		bool middleJustUp = !currentEventData.middleMouseDown && lastEventData.middleMouseDown;
 		bool rightJustUp = !currentEventData.rightMouseDown && lastEventData.rightMouseDown;
 
-		std::array<float, 2> UpperLeft = getAbsolutePosition() - halfSize;
-		std::array<float, 2> LowerRight = UpperLeft + halfSize + halfSize;
 		std::array<float, 2> MouseLast = lastEventData.mouseWorldPosition;
 		std::array<float, 2> MouseNow = currentEventData.mouseWorldPosition;
 
-		bool isInside = (!(MouseNow[0] > LowerRight[0] ||
-						   MouseNow[0] < UpperLeft[0] ||
-						   MouseNow[1] < UpperLeft[1] ||
-						   MouseNow[1] > LowerRight[1]));
-		bool wasInside = (!(MouseLast[0] > LowerRight[0] ||
-							MouseLast[0] < UpperLeft[0] ||
-							MouseLast[1] < UpperLeft[1] ||
-							MouseLast[1] > LowerRight[1]));
+		bool isInside = interactionArea.containsPoint(MouseNow[0], MouseNow[1]);
+		bool wasInside = interactionArea.containsPoint(MouseLast[0], MouseLast[1]);
+
 
 		if (isInside && !wasInside) {
 			hoverStart();
@@ -435,5 +441,7 @@ namespace Val {
 	void GUIBase::hoverStart() {
 	}
 	void GUIBase::hoverEnd() {
+	}
+	void GUIBase::onSetCullAABB(const AABB<float>& cullAABB) {
 	}
 }

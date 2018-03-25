@@ -146,6 +146,7 @@
     <ClCompile Include="GUI_Padding.cpp" />
     <ClCompile Include="GUI_Table.cpp" />
     <ClCompile Include="GUI_VerticalBox.cpp" />
+    <ClCompile Include="GUI_VerticalScroll.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="GUI_Padding.h" />
     <ClInclude Include="GUI_Table.h" />
     <ClInclude Include="GUI_VerticalBox.h" />
+    <ClInclude Include="GUI_VerticalScroll.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonReadWriter.h" />

@@ -22,6 +22,14 @@ namespace Val {
 
 		auto image = SimpleRectangle(TextureAsset::getTexture("raven"), 0, 0, 0.5f, 1.20f, 1.20f);
 
+		overlay = new SimpleRectangle(image);
+		overlay->setHalfSize(3.0f, 3.0f);
+		overlay->setColour(Colour(255, 255, 255, 100));
+
+		cullingTest = new SimpleRectangle(image);
+		cullingTest->setHalfSize(3.0f, 3.0f);
+		cullingTest->setCullSurface(AABB<float>(-1.0f, 1.0f, 1.5f, 3.5f));
+
 		auto test = GUI_Image::Create(image);
 		auto test4 = GUI_Image::Create(image);
 
@@ -65,11 +73,19 @@ namespace Val {
 		test5->setEventCallback([=]() { test5->setHidden(!test5->isHidden()); }, GUIEventType::MouseLeft_Up);
 
 		testFrame->addChild(table);
+
+		testFrame->setCullAABB(AABB<float>(0.0f, 0.0f, 2.0f));
 	}
 	void MenuState::update(const TimingType & deltaTime) {
 		window.update(deltaTime);
+		auto mouseLoc = game->getInputManager()->getMouseLocation();
+		auto center = Camera::Cast<OrthographicCamera>(game->getCamera())->convertScreenToWorld(mouseLoc[0], mouseLoc[1]);
+
+		cullingTest->setCullSurface(AABB<float>(center[0], center[1], 0.5f, 0.5f));
 	}
 	void MenuState::render(const TimingType & deltaTime, RenderingEngine * const engine) {
 		window.render(deltaTime, engine);
+		//overlay->sendRenderInformation(engine);
+		//cullingTest->sendRenderInformation(engine);
 	}
 }

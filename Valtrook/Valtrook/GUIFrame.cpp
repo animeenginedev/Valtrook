@@ -33,6 +33,15 @@ namespace Val {
 			halfSize = { 0.0f, 0.0f };
 	}
 	void GUIFrame::onRecalculateComplete() {
+		auto pos = getAbsolutePosition();
+		interactionArea.centerX = pos[0];
+		interactionArea.centerY = pos[1];
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
+
+		if (hasCullAABB) {
+			interactionArea = interactionArea.getCulledAABB(cullAABB);
+		}
 	}
 	bool GUIFrame::canAddChild(std::shared_ptr<GUIBase> child) {
 		return child != nullptr && this->child[0] == nullptr;

@@ -8,6 +8,7 @@
 #include <functional>
 #include <type_traits>
 #include "TimingType.h"
+#include "AABB.h"
 
 namespace Val {
 	class RenderingEngine;
@@ -113,6 +114,8 @@ namespace Val {
 
 		void updateEventData(EventData* current, EventData* last);
 		void invalidate();
+
+		void setCullAABB(const AABB<float>& cullAABB);
 	protected:
 		std::array<std::function<void()>, GUIEventCount()> eventCallbacks;
 		EventData *currentEventData, *lastEventData;
@@ -137,6 +140,8 @@ namespace Val {
 		virtual void hoverStart();
 		virtual void hoverEnd();
 
+		virtual void onSetCullAABB(const AABB<float>& cullAABB);
+
 		void recalculateComplete();
 		virtual void onRecalculateComplete() = 0;
 
@@ -151,6 +156,10 @@ namespace Val {
 		mutable bool bJustHidden;
 
 		std::array<float, 2> halfSize;
+
+		AABB<float> interactionArea;
+		AABB<float> cullAABB;
+		bool hasCullAABB;
 
 		bool bRecievesInputs;
 

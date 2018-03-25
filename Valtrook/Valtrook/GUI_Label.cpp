@@ -35,5 +35,17 @@ namespace Val {
 	void GUI_Label::onRecalculateComplete() {
 		textRect.setCenter(getAbsolutePosition());
 		textRect.setDepth(getDepth());
+
+		interactionArea.centerX = textRect.getX();
+		interactionArea.centerY = textRect.getY();
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
+
+		if (hasCullAABB) {
+			interactionArea = interactionArea.getCulledAABB(cullAABB);
+		}
+	}
+	void GUI_Label::onSetCullAABB(const AABB<float>& cullAABB) {
+		textRect.setCullSurface(cullAABB);
 	}
 }

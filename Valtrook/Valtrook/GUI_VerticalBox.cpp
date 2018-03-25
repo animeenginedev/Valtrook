@@ -65,6 +65,15 @@ namespace Val {
 		}
 	}
 	void GUI_VerticalBox::onRecalculateComplete() {
+		auto pos = getAbsolutePosition();
+		interactionArea.centerX = pos[0];
+		interactionArea.centerY = pos[1];
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
+
+		if (hasCullAABB) {
+			interactionArea = interactionArea.getCulledAABB(cullAABB);
+		}
 	}
 	bool GUI_VerticalBox::canAddChild(std::shared_ptr<GUIBase> child) {
 		if (child == nullptr)

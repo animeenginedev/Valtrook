@@ -16,7 +16,7 @@ namespace Val {
 		void internalRecalculatePosition() override;
 		void internalRecalculateSize() override;
 		void onRecalculateComplete() override;
-
+		
 		bool canAddChild(std::shared_ptr<GUIBase> child);
 	};
 

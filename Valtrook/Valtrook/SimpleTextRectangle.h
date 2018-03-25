@@ -5,6 +5,7 @@
 #include "Colour.h"
 #include "GLBlendMode.h"
 #include "UV.h"
+#include "AABB.h"
 
 namespace Val {
 	class RenderingEngine;
@@ -37,6 +38,8 @@ namespace Val {
 		void setColour(const Colour& colour);
 		void setBlendMode(const GLBlendMode& blendMode);
 		void setScaleTextToHeight(bool scaleTextToHeight);
+		//Honestly, don't ask. It's really used to GUI rendering, setting the center/height/width and the uv dependant on the culling aabb size&position
+		void setCullSurface(AABB<float> cullAABB);
 
 		TextResource getTextResource() const;
 		std::string getText() const;
@@ -51,6 +54,7 @@ namespace Val {
 		Colour getColour() const;
 		GLBlendMode getBlendMode() const;
 		bool doesScaleTextToHeight() const;
+		AABB<float> getCullSurface() const;
 
 		void reconstruct();
 
@@ -61,6 +65,9 @@ namespace Val {
 		std::array<float, 2> center;
 		float depth;
 		std::array<float, 2> halfSize;
+
+		AABB<float> cullAABB;
+		bool bHasCullSurface;
 
 		TextResource textResource;
 		GLBlendMode blendMode;

@@ -30,5 +30,17 @@ namespace Val {
 	void GUI_Image::onRecalculateComplete() {
 		image.setCenter(getAbsolutePosition());
 		image.setDepth(getDepth());
+
+		interactionArea.centerX = image.getX();
+		interactionArea.centerY = image.getY();
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
+
+		if (hasCullAABB) {
+			interactionArea = interactionArea.getCulledAABB(cullAABB);
+		}
+	}
+	void GUI_Image::onSetCullAABB(const AABB<float>& cullAABB) {
+		image.setCullSurface(cullAABB);
 	}
 }

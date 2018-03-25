@@ -42,6 +42,8 @@ namespace Val {
 		void internalRecalculateSize() override;
 		void onRecalculateComplete() override;
 
+		void onSetCullAABB(const AABB<float>& cullAABB) override;
+
 		bool canAddChild(std::shared_ptr<GUIBase> child) override;
 	};
 }

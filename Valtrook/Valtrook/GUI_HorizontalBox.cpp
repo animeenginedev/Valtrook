@@ -63,8 +63,19 @@ namespace Val {
 			halfSize[0] += fabs(child->getHalfSize()[0]);
 			halfSize[1] = Max<float>(fabs(child->getHalfSize()[1]), halfSize[1]);
 		}
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
 	}
 	void GUI_HorizontalBox::onRecalculateComplete() {
+		auto pos = getAbsolutePosition();
+		interactionArea.centerX = pos[0];
+		interactionArea.centerY = pos[1];
+		interactionArea.halfWidth = halfSize[0];
+		interactionArea.halfHeight = halfSize[1];
+
+		if (hasCullAABB) {
+			interactionArea = interactionArea.getCulledAABB(cullAABB);
+		}
 	}
 	bool GUI_HorizontalBox::canAddChild(std::shared_ptr<GUIBase> child) {
 		if (child == nullptr)

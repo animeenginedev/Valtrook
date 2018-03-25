@@ -4,6 +4,7 @@
 #include "VBOBatcher.h"
 #include "Logger.h"
 #include "Conversion.h"
+#include "ArrayMath.h"
 
 namespace Val {
 	SimpleRectangle::SimpleRectangle(const TextureResource & texture) : SimpleRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
@@ -15,7 +16,7 @@ namespace Val {
 	SimpleRectangle::SimpleRectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode & blendMode) : SimpleRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {
 	}
 	SimpleRectangle::SimpleRectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode & blendMode) :
-		texture(texture), center(center), depth(depth), halfSize(halfSize), renderColour(colour), blendMode(blendMode), uvBounds(texture.getBounds()), needsReconstructed(true) {
+		texture(texture), center(center), depth(depth), halfSize(halfSize), cullAABB({ 0.0f, 0.0f, 0.0f, 0.0f }), bHasCullSurface(false), renderColour(colour), blendMode(blendMode), uvBounds(texture.getBounds()), needsReconstructed(true) {
 	}
 	SimpleRectangle::~SimpleRectangle() {
 	}
@@ -88,6 +89,12 @@ namespace Val {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
+	void SimpleRectangle::setCullSurface(AABB<float> cullAABB) {
+		static AABB<float> noCullSurface = { 0.0f, 0.0f, 0.0f, 0.0f };
+		this->cullAABB = cullAABB;
+		bHasCullSurface = !(cullAABB == noCullSurface);
+		needsReconstructed = true;
+	}
 	TextureResource SimpleRectangle::getTexture() const {
 		return texture;
 	}
@@ -121,6 +128,9 @@ namespace Val {
 	GLBlendMode SimpleRectangle::getBlendMode() const {
 		return blendMode;
 	}
+	AABB<float> SimpleRectangle::getCullSurface() const {
+		return cullAABB;
+	}
 	std::array<TriangleGlyph, 2> SimpleRectangle::getRenderGlyphs() {
 		if (needsReconstructed)
 			recalculateVertexes();
@@ -147,16 +157,52 @@ namespace Val {
 			texture = Texture::errorTexture;
 		}
 
-		std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
-		std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
+		if (bHasCullSurface) {
+			AABB<float> thisAABB = AABB<float>(center[0], center[1], halfSize[0], halfSize[1]);
+			if (thisAABB.isCompletlyInside(cullAABB)) {
+				//goto looooooool
+				goto normalRender;
+			} else if (thisAABB.intersectsAABB(cullAABB)) {
+				auto resultAABB = thisAABB.getCulledAABB(cullAABB);
 
-		Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
+				std::array<float, 2> minUPixel = { WorldToUnalignedPixel<float>(resultAABB.minX()), WorldToUnalignedPixel<float>(resultAABB.minY()) };
+				std::array<float, 2> maxUPixel = { WorldToUnalignedPixel<float>(resultAABB.maxX()), WorldToUnalignedPixel<float>(resultAABB.maxY()) };
 
-			Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v, renderColour),
-			Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v, renderColour),
-																							 Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
-																							 Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
+				float uStart = uvBounds.u + (uvBounds.uWidth * ((resultAABB.minX() - thisAABB.minX()) / (thisAABB.maxX() - thisAABB.minX())));
+				float vStart = uvBounds.v + (uvBounds.vHeight * ((resultAABB.minY() - thisAABB.minY()) / (thisAABB.maxY() - thisAABB.minY())));
+				float uWidth = uvBounds.uWidth * ((resultAABB.maxX() - resultAABB.minX()) / (thisAABB.maxX() - thisAABB.minX()));
+				float vHeight = uvBounds.vHeight * ((resultAABB.maxY() - resultAABB.minY()) / (thisAABB.maxY() - thisAABB.minY()));
 
-		}), &blendMode).dispose();
+				vStart = (uvBounds.vHeight - vHeight) - vStart;
+				
+				Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
+
+					Vertex(minUPixel[0], maxUPixel[1], depth, uStart, vStart, renderColour),
+					Vertex(maxUPixel[0], maxUPixel[1], depth, uStart + uWidth, vStart, renderColour),
+					Vertex(minUPixel[0], minUPixel[1], depth, uStart, vStart + vHeight, renderColour),
+					Vertex(maxUPixel[0], minUPixel[1], depth, uStart + uWidth, vStart + vHeight, renderColour)
+
+				}), &blendMode).dispose();
+
+			} else {
+				Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
+				}), &blendMode).dispose();
+			}
+			//We're completely culled so who gives a fuck
+		} else {
+			normalRender:
+			std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
+			std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
+
+
+			Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
+
+				Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v, renderColour),
+				Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v, renderColour),
+				Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
+				Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
+
+			}), &blendMode).dispose();
+		}
 	}
 }

@@ -19,6 +19,8 @@ namespace Val {
 
 		GUIWindow window;
 
+		SimpleRectangle* cullingTest, *overlay;
+
 		GUIFrame::Ptr testFrame;
 	};
 }

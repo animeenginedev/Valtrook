@@ -47,7 +47,7 @@ namespace Val {
 			centerY = y;
 		}
 
-		bool containsPoint(Real x, Real y) {
+		bool containsPoint(Real x, Real y) const {
 			return !(x > centerX + halfWidth ||
 					 x < centerX - halfWidth ||
 					 y < centerY - halfHeight ||

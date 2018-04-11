@@ -5,6 +5,8 @@
 #include "Conversion.h"
 #include "RenderingEngine.h"
 #include "VBOBatcher.h"
+#include "ShapeCuller.h"
+
 
 namespace Val {
 	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture) : SimpleTextRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
@@ -187,51 +189,19 @@ namespace Val {
 			auto texSize = texture.getTextureSizeInPixel();
 			halfSize[0] = (halfSize[1] / texSize[1]) * texSize[0];
 		}
-		if (bHasCullSurface) {
-			AABB<float> thisAABB = AABB<float>(center[0], center[1], halfSize[0], halfSize[1]);
-			if (thisAABB.isCompletlyInside(cullAABB)) {
-				//goto looooooool
-				goto normalRender;
-			} else if (thisAABB.intersectsAABB(cullAABB)) {
-				auto resultAABB = thisAABB.getCulledAABB(cullAABB);
 
-				std::array<float, 2> minUPixel = { WorldToUnalignedPixel<float>(resultAABB.minX()), WorldToUnalignedPixel<float>(resultAABB.minY()) };
-				std::array<float, 2> maxUPixel = { WorldToUnalignedPixel<float>(resultAABB.maxX()), WorldToUnalignedPixel<float>(resultAABB.maxY()) };
+		std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
+		std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
 
-				float uStart = uvBounds.u + (uvBounds.uWidth * ((resultAABB.minX() - thisAABB.minX()) / (thisAABB.maxX() - thisAABB.minX())));
-				float vStart = uvBounds.v + (uvBounds.vHeight * ((resultAABB.minY() - thisAABB.minY()) / (thisAABB.maxY() - thisAABB.minY())));
-				float uWidth = uvBounds.uWidth * ((resultAABB.maxX() - resultAABB.minX()) / (thisAABB.maxX() - thisAABB.minX()));
-				float vHeight = uvBounds.vHeight * ((resultAABB.maxY() - resultAABB.minY()) / (thisAABB.maxY() - thisAABB.minY()));
+		auto Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 
-				vStart = (uvBounds.vHeight - vHeight) - vStart;
+			Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v, renderColour),
+			Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v, renderColour),
+			Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
+			Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
+																								  
+		}), &blendMode);
 
-				Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
-
-					Vertex(minUPixel[0], maxUPixel[1], depth, uStart, vStart, renderColour),
-					Vertex(maxUPixel[0], maxUPixel[1], depth, uStart + uWidth, vStart, renderColour),
-																									 Vertex(minUPixel[0], minUPixel[1], depth, uStart, vStart + vHeight, renderColour),
-																									 Vertex(maxUPixel[0], minUPixel[1], depth, uStart + uWidth, vStart + vHeight, renderColour)
-
-				}), &blendMode).dispose();
-
-			} else {
-				Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
-				}), &blendMode).dispose();
-			}
-			//We're completely culled so who gives a fuck
-		} else {
-			normalRender:
-			std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
-			std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
-
-			Glyph = RectangleGlyph(texture.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
-
-				Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v, renderColour),
-				Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] + halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v, renderColour),
-				Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
-				Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
-
-			}), &blendMode).dispose();
-		}
+		this->Glyph = bHasCullSurface ? ShapeCuller::cullRectangle(Glyph, cullAABB).dispose() : Glyph.dispose();
 	}
 }

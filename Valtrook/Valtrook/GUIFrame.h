@@ -2,6 +2,8 @@
 
 #include "GUIBase.h"
 
+#include "FrameRender.h"
+
 namespace Val {
 	class GUIFrame : public GUIParentSingle {
 	public:
@@ -29,5 +31,36 @@ namespace Val {
 		void onRecalculateComplete() override;
 
 		bool canAddChild(std::shared_ptr<GUIBase> child) override;
+	};
+
+	class GUIFrameR : public GUIFrame {
+	public:
+		typedef std::shared_ptr<GUIFrameR> Ptr;
+		static GUIFrameR::Ptr Create(int inputPriority, float edgeWidth, Colour edgeColour, Colour centerColour, FrameStyle style = FrameStyle::getDefaultCurved());
+		
+		GUIFrameR(int inputPriority, float edgeWidth, Colour edgeColour,  Colour centerColour, FrameStyle style);
+		~GUIFrameR();
+
+		void setFrameStyle(FrameStyle style);
+		void setFrameColours(Colour edge, Colour center);
+
+		Colour getEdgeColour();
+		Colour getCenterColour();
+		FrameStyle getFrameStyle();
+		FrameRender* getFrameRender();
+
+		bool operator<(const GUIFrameR& rhs) {
+			return inputPriority < rhs.inputPriority;
+		}
+		bool operator<(const GUIFrame& rhs) {
+			return inputPriority < rhs.getInputPriority();
+		}
+	protected:
+		int inputPriority;
+		FrameRender frameRender;
+
+		void internalRender(const TimingType& deltaTime, RenderingEngine* engine) override;
+
+		void onRecalculateComplete() override;
 	};
 }

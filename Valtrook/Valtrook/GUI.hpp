@@ -7,6 +7,8 @@
 
 #include "GUI_HorizontalBox.h"
 #include "GUI_VerticalBox.h"
+
+#include "GUI_VerticalScroll.h"
 #include "GUI_Table.h"
 
 #include "GUI_Button.h"

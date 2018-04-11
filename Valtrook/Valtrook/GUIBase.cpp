@@ -7,14 +7,14 @@ namespace Val {
 		return 0.02f;
 	}
 
-	GUIBase::GUIBase() : eventCallbacks({ nullptr }), lastEventData(nullptr), currentEventData(nullptr), horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), bHidden(false),
+	GUIBase::GUIBase() : eventCallbacks({ nullptr }), eventMouseWheelCallback(nullptr), lastEventData(nullptr), currentEventData(nullptr), horizontal(hCENTER), vertical(vCENTER), parent(nullptr), position({ 0.0f, 0.0f }), bHidden(false),
 		bJustHidden(false), halfSize({ 0.0f, 0.0f }), bRecievesInputs(true), needsReconstructed(true), interactionArea(0, 0, 0), cullAABB(0.0f, 0.0f, 0.0f), hasCullAABB(false) {
 	}
 	GUIBase::~GUIBase() {
 	}
 	void GUIBase::reCalculate() {
 		//Size then position
-		if (bHidden) {
+		if (bHidden && !bJustHidden) {
 			return;
 		}
 		//If we're OKAY we don't need to recalculate; remeber to check children aswell.
@@ -189,10 +189,23 @@ namespace Val {
 		return eventCallbacks[eventType];
 	}
 
+	void GUIBase::setEventMouseWheelCallback(std::function<bool(int)> callback) {
+		this->eventMouseWheelCallback = callback;
+	}
+
+	void GUIBase::removeEventMouseWheelCallback() {
+		eventMouseWheelCallback = nullptr;
+	}
+
+	std::function<bool(int)> GUIBase::getEventMouseWheelCallback() const {
+		return eventMouseWheelCallback;
+	}
+
 	void GUIBase::clearEventCallbacks() {
 		for (unsigned int i = 0; i < GUIEventCount(); ++i) {
 			eventCallbacks[i] = nullptr;
 		}
+		eventMouseWheelCallback = nullptr;
 	}
 
 	void GUIBase::setUsesInput(const bool & usesInput) {
@@ -239,6 +252,8 @@ namespace Val {
 		EventData currentEventData = *(this->currentEventData);
 		EventData lastEventData = *(this->lastEventData);
 
+		onProcessEvents();
+
 		bool leftJustDown = currentEventData.leftMouseDown && !lastEventData.leftMouseDown;
 		bool middleJustDown = currentEventData.middleMouseDown && !lastEventData.middleMouseDown;
 		bool rightJustDown = currentEventData.rightMouseDown && !lastEventData.rightMouseDown;
@@ -253,17 +268,50 @@ namespace Val {
 		bool wasInside = interactionArea.containsPoint(MouseLast[0], MouseLast[1]);
 
 
-		if (isInside && !wasInside) {
+		if ((isInside && !wasInside) || (!isInsideToggle && isInside)) {
 			hoverStart();
 			if (eventCallbacks[Hover_Enter].operator bool()) {
 				eventCallbacks[Hover_Enter]();
 			}
-		} else if (wasInside && !isInside) {
+			if (!currentEventData.inputUsed) {
+				if (currentEventData.leftMouseDown) {
+					leftMouseDown();
+					if (eventCallbacks[MouseLeft_Down].operator bool()) {
+						eventCallbacks[MouseLeft_Down]();
+					}
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (currentEventData.middleMouseDown) {
+					middleMouseDown();
+					if (eventCallbacks[MouseMiddle_Down].operator bool()) {
+						eventCallbacks[MouseMiddle_Down]();
+					}
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+				if (currentEventData.rightMouseDown) {
+					rightMouseDown();
+					if (eventCallbacks[MouseRight_Down].operator bool()) {
+						eventCallbacks[MouseRight_Down]();
+					}
+					if (bUsesInput) {
+						currentEventData.inputUsed = true;
+					}
+				}
+			}
+			isInsideToggle = true;
+		} 
+		if ((wasInside && !isInside) || (isInsideToggle && !isInside)) {
 			hoverEnd();
 			if (eventCallbacks[Hover_Exit].operator bool()) {
 				eventCallbacks[Hover_Exit]();
 			}
+			isInsideToggle = false;
 		}
+
 
 		if (isInside) {
 			if (!currentEventData.inputUsed) {
@@ -319,6 +367,22 @@ namespace Val {
 					}
 					if (bUsesInput) {
 						currentEventData.inputUsed = true;
+					}
+				}
+				if (currentEventData.mouseWheelDelta != 0) {
+					bool clearMouseWheelDelta = false;
+					clearMouseWheelDelta = mouseWheel(currentEventData.mouseWheelDelta);
+					
+					if (eventMouseWheelCallback.operator bool()) {
+						if (clearMouseWheelDelta == false) {
+							clearMouseWheelDelta = eventMouseWheelCallback(currentEventData.mouseWheelDelta);
+						} else {
+							eventMouseWheelCallback(currentEventData.mouseWheelDelta);
+						}
+					}
+
+					if (clearMouseWheelDelta) {
+						currentEventData.mouseWheelDelta = 0;
 					}
 				}
 			}
@@ -426,6 +490,8 @@ namespace Val {
 	bool GUIParentSingle::isParentTypeGUI() const {
 		return true;
 	}
+	void GUIBase::onProcessEvents() {
+	}
 	void GUIBase::leftMouseDown() {
 	}
 	void GUIBase::middleMouseDown() {
@@ -441,6 +507,9 @@ namespace Val {
 	void GUIBase::hoverStart() {
 	}
 	void GUIBase::hoverEnd() {
+	}
+	bool GUIBase::mouseWheel(int delta) {
+		return false;
 	}
 	void GUIBase::onSetCullAABB(const AABB<float>& cullAABB) {
 	}

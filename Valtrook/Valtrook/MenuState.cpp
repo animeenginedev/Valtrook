@@ -16,11 +16,11 @@ namespace Val {
 	MenuState::MenuState(Game * const game) : GameState(game), window(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera())) {
 	}
 	void MenuState::initialise() {
-		testFrame = GUIFrame::Create();
+		testFrame = GUIFrameR::Create(1, 0.2f, Colour(55, 55, 55, 255), Colour(125, 150, 125, 255));
 		window.addFrame(testFrame);
 
 
-		auto image = SimpleRectangle(TextureAsset::getTexture("raven"), 0, 0, 0.5f, 1.20f, 1.20f);
+		auto image = SimpleRectangle(TextureAsset::getTexture("raven"), 0, 0, 0.5f, 1.20f, 3.20f);
 
 		overlay = new SimpleRectangle(image);
 		overlay->setHalfSize(3.0f, 3.0f);
@@ -37,7 +37,8 @@ namespace Val {
 		auto test3 = GUI_Image::Create(image);
 		auto test5 = GUI_Image::Create(image);
 
-		auto textT = SimpleTextRectangle(TextResource("wau", "ralewaymed"), 1, 1, 0.5f, 0.60f, 0.60f, Colour(0, 0, 0, 255));
+		auto textT = SimpleTextRectangle(TextResource("desu", "ralewaymed"), 1, 1, 0.5f, 0.60f, 0.60f, Colour(0, 0, 0, 255));
+		textT.setScaleTextToHeight(true);
 		auto testLabel = GUI_Label::Create(textT);
 		testLabel->setRecievesInputs(false);
 
@@ -45,13 +46,14 @@ namespace Val {
 		padding->addChild(testLabel);
 		padding->setRecievesInputs(false);
 
-		auto testButton = GUI_Button::Create(TextureAsset::getTexture("gui/buttonDefault"), TextureAsset::getTexture("gui/buttonHover"), TextureAsset::getTexture("gui/buttonDown"));
+		auto testButton = GUI_Button::Create(0.15f, Colour(100, 100, 100, 255), Colour(80, 80, 80, 255), Colour(50, 50, 50, 255), 
+											 Colour(230, 230, 230, 255), Colour(200, 200, 200, 255), Colour(150, 150, 150, 255), FrameStyle::getDefault());
 		testButton->addChild(padding);
 
-		auto table = GUI_Table::Create(3, 3);
+		auto table = GUI_Table::Create(3,4);
 				
 		table->addChild(test, 0, 0);
-		table->addChild(test4, 2, 2);
+		table->addChild(test4, 2, 3);
 		table->addChild(testButton, 1, 1);
 		table->addChild(test3, 2, 0);
 		table->addChild(test5, 0, 2);
@@ -60,7 +62,7 @@ namespace Val {
 		test5->setJustification(RIGHT, TOP);
 				
 
-		testButton->setEventCallback([=]() { testLabel->setText("[?!]"); }, GUIEventType::MouseLeft_Up);
+		testButton->setEventCallback([=]() { testLabel->setText("never ever"); }, GUIEventType::MouseLeft_Up);
 		test->setEventCallback([=]() { test->setHidden(!test->isHidden()); }, GUIEventType::MouseLeft_Up);
 		test3->setEventCallback([=]() { test3->setJustification(RIGHT, TOP);
 		test3->setEventCallback([=]() { test3->setHidden(true); }, GUIEventType::MouseLeft_Up); }, GUIEventType::MouseLeft_Up);
@@ -72,16 +74,22 @@ namespace Val {
 		}, GUIEventType::MouseLeft_Up);
 		test5->setEventCallback([=]() { test5->setHidden(!test5->isHidden()); }, GUIEventType::MouseLeft_Up);
 
-		testFrame->addChild(table);
+		testScroll = GUI_VerticalScroll::Create({ 4, 1 }, { 0.1f, 0.1f }, TextureAsset::getTexture("gui/scrollbarCircleUp"), TextureAsset::getTexture("gui/scrollbarCircleDown"), TextureAsset::getTexture("gui/scrollbarCircleHover"));
+		auto framePadding = GUI_Padding::Create(0.05f, 0.05f);
 
-		testFrame->setCullAABB(AABB<float>(0.0f, 0.0f, 2.0f));
+		testFrame->addChild(framePadding);
+
+		framePadding->addChild(testScroll);
+
+		testScroll->addChild(table);
+
+		//testFrame->setCullAABB(AABB<float>(0.0f, 0.0f, 2.0f));
 	}
 	void MenuState::update(const TimingType & deltaTime) {
 		window.update(deltaTime);
 		auto mouseLoc = game->getInputManager()->getMouseLocation();
 		auto center = Camera::Cast<OrthographicCamera>(game->getCamera())->convertScreenToWorld(mouseLoc[0], mouseLoc[1]);
-
-		cullingTest->setCullSurface(AABB<float>(center[0], center[1], 0.5f, 0.5f));
+		//testFrame->setCullAABB(AABB<float>(center[0], center[1], 2.0f));
 	}
 	void MenuState::render(const TimingType & deltaTime, RenderingEngine * const engine) {
 		window.render(deltaTime, engine);

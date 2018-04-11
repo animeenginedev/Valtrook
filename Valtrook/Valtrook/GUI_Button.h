@@ -2,30 +2,23 @@
 
 #include "GUIBase.h"
 
-#include "SimpleRectangle.h"
+#include "FrameRender.h"
 
 namespace Val {
 	class GUI_Button : public GUIParentSingle {
 	public:
 		typedef std::shared_ptr<GUI_Button> Ptr;
-		static GUI_Button::Ptr Create(const TextureResource& defaultTex, const TextureResource& hoverTex, const TextureResource& downTex);
+		static GUI_Button::Ptr Create(float edgeWidth, Colour edgeDefault, Colour edgeHover, Colour edgeDown, Colour centerDefault, Colour centerHover, Colour centerDown, FrameStyle style = FrameStyle::getDefaultCurved());
 
-		GUI_Button(const TextureResource& defaultTex, const TextureResource& hoverTex, const TextureResource& downTex);
+		GUI_Button(float edgeWidth, Colour edgeDefault, Colour edgeHover, Colour edgeDown, Colour centerDefault, Colour centerHover, Colour centerDown, FrameStyle style);
 		~GUI_Button();
 
-		void setDefaultTexture(const TextureResource& tex);
-		void setHoverTexture(const TextureResource& tex);
-		void setDownTexture(const TextureResource& tex);
-
-		TextureResource getDefaultTexture() const;
-		TextureResource getHoverTexture() const;
-		TextureResource getDownTexture() const;
-
-		void setButtonRender(const SimpleRectangle& buttonRender);
-		SimpleRectangle getButtonRender() const;
+		FrameRender getButtonRender() const;
 	protected:
-		SimpleRectangle buttonRender;
-		TextureResource defaultTexture, hoverTexture, downTexture;
+		FrameRender buttonRender;
+		Colour defaultEdge, defaultCenter;
+		Colour hoverEdge, hoverCenter;
+		Colour downEdge, downCenter;
 
 		void leftMouseDown() override;
 		void middleMouseDown() override;

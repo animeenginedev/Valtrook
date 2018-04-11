@@ -110,10 +110,12 @@ namespace Val {
 				return Texture::errorTexture;
 			}
 
-			auto texture = new Texture(GLTex);
+			//For whatever reason, release compliation forced the normal texture to be nullptr, even after this statement, so this is a b grade workaround for some dodgy shit.
+			auto texture2 = new Texture(GLTex);
 			
-			texture->addBounds(filename, UV(0.0f, 0.0f, 1.0f, 1.0f));
-			textures.push_back(texture);
+			texture2->addBounds(filename, UV(0.0f, 0.0f, 1.0f, 1.0f));
+			textures.push_back(texture2);
+			texture = texture2;
 		}
 
 		return TextureResource(texture, filename);

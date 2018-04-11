@@ -15,7 +15,7 @@ namespace Val {
 		virtual glm::mat4 getMatrix() = 0;
 		virtual void update(TimingType deltaTime) = 0;
 
-		virtual CameraType getType() const { return Invalid; };
+		virtual CameraType getType() const { return CameraType::Invalid; };
 		template<typename T> 
 		static T* Cast(Camera* tt) {
 			return ((T*) tt);

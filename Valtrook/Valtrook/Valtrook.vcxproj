@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="FontAsset.cpp" />
+    <ClCompile Include="FrameRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GenericShaderObject.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="GUI_VerticalBox.cpp" />
     <ClCompile Include="GUI_VerticalScroll.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InteractionArea.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="Conversion.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="FontAsset.h" />
+    <ClInclude Include="FrameRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GenericShaderObject.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="GUI_VerticalBox.h" />
     <ClInclude Include="GUI_VerticalScroll.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InteractionArea.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonReadWriter.h" />
     <ClInclude Include="Lerp.h" />
@@ -226,6 +230,7 @@
     <ClInclude Include="ProportionList.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="ShapeCuller.h" />
     <ClInclude Include="Rectangles.hpp" />
     <ClInclude Include="RenderingEngine.h" />
     <ClInclude Include="ResourceLocation.h" />

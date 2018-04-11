@@ -41,14 +41,16 @@ namespace Val {
 	};
 
 	struct EventData {
-		EventData() : EventData(false, false, false, { 0.0f, 0.0f }) {
+		EventData() : EventData(false, false, false, 0, { 0.0f, 0.0f }) {
 			inputUsed = true;
 		};
-		EventData(bool leftMouseStatus, bool middleMouseStatus, bool rightMouseStatus, std::array<float, 2> mouseWorldPosition) : leftMouseDown(leftMouseStatus), middleMouseDown(middleMouseStatus), rightMouseDown(rightMouseStatus), mouseWorldPosition(mouseWorldPosition), inputUsed(false) {};
+		EventData(bool leftMouseStatus, bool middleMouseStatus, bool rightMouseStatus, int mouseWheelDelta, std::array<float, 2> mouseWorldPosition) : leftMouseDown(leftMouseStatus), middleMouseDown(middleMouseStatus), rightMouseDown(rightMouseStatus), mouseWheelDelta(mouseWheelDelta), mouseWorldPosition(mouseWorldPosition), inputUsed(false) {};
 
 		bool leftMouseDown;
 		bool middleMouseDown;
 		bool rightMouseDown;
+
+		int mouseWheelDelta;
 
 		std::array<float, 2> mouseWorldPosition;
 
@@ -107,6 +109,11 @@ namespace Val {
 		void setEventCallback(std::function<void()> callback, GUIEventType eventType);
 		void removeEventCallback(GUIEventType eventType);
 		std::function<void()> getEventCallback(GUIEventType eventType) const;
+		//The bool return will; if true set the events mouseDelta to 0 so the input is eaten
+		void setEventMouseWheelCallback(std::function<bool(int)> callback);
+		void removeEventMouseWheelCallback();
+		std::function<bool(int)> getEventMouseWheelCallback() const;
+
 		void clearEventCallbacks();
 		//If we process events, do we use the input and stop other elements from seeing it.
 		void setUsesInput(const bool& usesInput);
@@ -118,9 +125,11 @@ namespace Val {
 		void setCullAABB(const AABB<float>& cullAABB);
 	protected:
 		std::array<std::function<void()>, GUIEventCount()> eventCallbacks;
+		std::function<bool(int)> eventMouseWheelCallback;
 		EventData *currentEventData, *lastEventData;
 		bool bUsesInput;
 		void processEvents();
+		bool isInsideToggle;
 
 		//Do changes you need to do on update, child updateing is handled for you
 		virtual void internalUpdate(const TimingType& deltaTime) = 0;
@@ -131,6 +140,8 @@ namespace Val {
 		//Calculate your size based on the childrens size
 		virtual void internalRecalculateSize() = 0;
 
+		virtual void onProcessEvents();
+
 		virtual void leftMouseDown();
 		virtual void middleMouseDown();
 		virtual void rightMouseDown();
@@ -139,6 +150,7 @@ namespace Val {
 		virtual void rightMouseUp();
 		virtual void hoverStart();
 		virtual void hoverEnd();
+		virtual bool mouseWheel(int delta);
 
 		virtual void onSetCullAABB(const AABB<float>& cullAABB);
 

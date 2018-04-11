@@ -21,6 +21,7 @@ namespace Val {
 
 		SimpleRectangle* cullingTest, *overlay;
 
+		GUI_VerticalScroll::Ptr testScroll;
 		GUIFrame::Ptr testFrame;
 	};
 }

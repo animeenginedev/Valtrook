@@ -42,7 +42,7 @@ namespace Val {
 	void GUIWindow::update(const TimingType & deltaTime) {
 		*last = *current;
 		auto mousePos = inputManager->getMouseLocation();
-		*current = EventData(inputManager->getLeftMouseState().isKeyPressed(), inputManager->getMiddleMouseState().isKeyPressed(), inputManager->getRightMouseState().isKeyPressed(), Camera::Cast<OrthographicCamera>(camera)->convertScreenToWorld(mousePos[0], mousePos[1]));
+		*current = EventData(inputManager->getLeftMouseState().isKeyPressed(), inputManager->getMiddleMouseState().isKeyPressed(), inputManager->getRightMouseState().isKeyPressed(), inputManager->getMouseWheelDelta(), Camera::Cast<OrthographicCamera>(camera)->convertScreenToWorld(mousePos[0], mousePos[1]));
 
 		for (auto f : Frames)
 			f->update(deltaTime);

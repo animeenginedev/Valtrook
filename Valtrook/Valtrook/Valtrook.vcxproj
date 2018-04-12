@@ -126,6 +126,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="CollisionShapeCircle.cpp" />
+    <ClCompile Include="CollisionShapePolygon.cpp" />
     <ClCompile Include="FontAsset.cpp" />
     <ClCompile Include="FrameRender.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -149,7 +151,6 @@
     <ClCompile Include="GUI_VerticalBox.cpp" />
     <ClCompile Include="GUI_VerticalScroll.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="InteractionArea.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -185,6 +186,9 @@
     <ClInclude Include="ArrayMath.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CollisionShape2D.h" />
+    <ClInclude Include="CollisionShapeCircle.h" />
+    <ClInclude Include="CollisionShapePolygon.h" />
     <ClInclude Include="Conversion.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="FontAsset.h" />
@@ -230,7 +234,7 @@
     <ClInclude Include="ProportionList.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Rectangle.h" />
-    <ClInclude Include="ShapeCuller.h" />
+    <ClInclude Include="GlyphCuller.h" />
     <ClInclude Include="Rectangles.hpp" />
     <ClInclude Include="RenderingEngine.h" />
     <ClInclude Include="ResourceLocation.h" />

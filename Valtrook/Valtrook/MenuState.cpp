@@ -74,10 +74,11 @@ namespace Val {
 		}, GUIEventType::MouseLeft_Up);
 		test5->setEventCallback([=]() { test5->setHidden(!test5->isHidden()); }, GUIEventType::MouseLeft_Up);
 
-		testScroll = GUI_VerticalScroll::Create({ 4, 1 }, { 0.1f, 0.1f }, TextureAsset::getTexture("gui/scrollbarCircleUp"), TextureAsset::getTexture("gui/scrollbarCircleDown"), TextureAsset::getTexture("gui/scrollbarCircleHover"));
+		testScroll = GUI_VerticalScroll::Create({ 4, 1 }, 0.1f, TextureAsset::getTexture("gui/scrollbarCircleUp"), TextureAsset::getTexture("gui/scrollbarCircleDown"), TextureAsset::getTexture("gui/scrollbarCircleHover"));
 		auto framePadding = GUI_Padding::Create(0.05f, 0.05f);
 
 		testFrame->addChild(framePadding);
+		testFrame->setPosition({ 1, -0.5f });
 
 		framePadding->addChild(testScroll);
 

@@ -5,14 +5,15 @@
 #include "Texture.h"
 #include "SimpleRectangle.h"
 #include "InteractionArea.h"
+#include "CollisionShapeCircle.h"
 
 namespace Val {
 	class GUI_VerticalScroll : public GUIParentVector {
 	public:
 		typedef std::shared_ptr<GUI_VerticalScroll> Ptr;
-		static GUI_VerticalScroll::Ptr Create(std::array<float, 2> halfExtents, std::array<float, 2> buttonSize, TextureResource Up, TextureResource Down, TextureResource Hover);
+		static GUI_VerticalScroll::Ptr Create(std::array<float, 2> halfExtents, float buttonRadius, TextureResource Up, TextureResource Down, TextureResource Hover);
 
-		GUI_VerticalScroll(std::array<float, 2> halfExtents, std::array<float, 2> buttonSize, TextureResource Up, TextureResource Down, TextureResource Hover);
+		GUI_VerticalScroll(std::array<float, 2> halfExtents, float buttonRadiu, TextureResource Up, TextureResource Down, TextureResource Hover);
 		~GUI_VerticalScroll();
 
 		void setExtents(std::array<float, 2> halfExtents);
@@ -29,7 +30,7 @@ namespace Val {
 
 		TextureResource Hover, Down, Up;
 		SimpleRectangle scrollBarButtonRender;
-		InteractionArea scrollBarButton;
+		InteractionArea<CollisionShapeCircle> scrollBarButton;
 		bool scrollBarDragging;
 		float scrollBarMouseOffset;
 

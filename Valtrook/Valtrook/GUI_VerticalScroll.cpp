@@ -5,11 +5,11 @@
 #include "RenderingEngine.h"
 
 namespace Val {
-	GUI_VerticalScroll::Ptr GUI_VerticalScroll::Create(std::array<float, 2> halfExtents, std::array<float, 2> buttonSize, TextureResource Up, TextureResource Down, TextureResource Hover) {
-		return std::make_shared<GUI_VerticalScroll>(halfExtents, buttonSize, Up, Down, Hover);
+	GUI_VerticalScroll::Ptr GUI_VerticalScroll::Create(std::array<float, 2> halfExtents, float buttonRadius, TextureResource Up, TextureResource Down, TextureResource Hover) {
+		return std::make_shared<GUI_VerticalScroll>(halfExtents, buttonRadius, Up, Down, Hover);
 	}
-	GUI_VerticalScroll::GUI_VerticalScroll(std::array<float, 2> halfExtents, std::array<float, 2> buttonSize, TextureResource Up, TextureResource Down, TextureResource Hover) :
-		cullAABB(0.0f, 0.0f, 0.0f, 0.0f), internalOverflow(false), Up(Up), Hover(Hover), Down(Down), scrollBarButton(0.0f, 0.0f, buttonSize[0], buttonSize[1]), scrollBarButtonRender(Up, 0.0f, 0.0f, 0.0f, buttonSize[0], buttonSize[1]), scrollBarDragging(false) {
+	GUI_VerticalScroll::GUI_VerticalScroll(std::array<float, 2> halfExtents, float buttonRadius, TextureResource Up, TextureResource Down, TextureResource Hover) :
+		cullAABB(0.0f, 0.0f, 0.0f, 0.0f), internalOverflow(false), Up(Up), Hover(Hover), Down(Down), scrollBarButton(CollisionShapeCircle(0.0f, 0.0f, buttonRadius)), scrollBarButtonRender(Up, 0.0f, 0.0f, 0.0f, buttonRadius, buttonRadius), scrollBarDragging(false) {
 
 		halfSize = halfExtents;
 		cullAABB.halfWidth = halfSize[0];
@@ -130,7 +130,7 @@ namespace Val {
 			//Height Center+HalfHeight + scrollBarOffset + (verticalPosition * (halfSize[1] * 2) - (scrollBarOffset * 2))
 			scrollBarButtonRender.setCenter((pos[0] + halfSize[0]) - scrollBarOffset[0],
 											(pos[1] + halfSize[1]) - scrollBarOffset[1] - (verticalPosition * ((halfSize[1] + halfSize[1]) - (scrollBarOffset[1] + scrollBarOffset[1]))));
-			scrollBarButton.setCenter(scrollBarButtonRender.getCenter());
+			scrollBarButton.getInteractionArea()->setCenter(scrollBarButtonRender.getCenter());
 		}
 
 		interactionArea.centerX = pos[0];
@@ -172,7 +172,7 @@ namespace Val {
 				break;
 		}
 		if (scrollBarDragging) {
-			verticalPosition = 1.0 - (((mousePos[1] + scrollBarMouseOffset) + pos[1] + halfSize[1]) - scrollBarOffset[1]) / ((halfSize[1] + halfSize[1]) - (scrollBarOffset[1] + scrollBarOffset[1]));
+			verticalPosition = 1.0 - (((mousePos[1] + scrollBarMouseOffset) - pos[1] + halfSize[1]) - scrollBarOffset[1]) / ((halfSize[1] + halfSize[1]) - (scrollBarOffset[1] + scrollBarOffset[1]));
 			currentEventData->inputUsed = true;
 			this->needsReconstructed = true;
 		}

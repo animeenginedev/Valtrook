@@ -255,11 +255,14 @@
     <ClCompile Include="GUI_VerticalScroll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InteractionArea.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FrameRender.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionShapePolygon.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionShapeCircle.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,7 +488,16 @@
     <ClInclude Include="FrameRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShapeCuller.h">
+    <ClInclude Include="CollisionShape2D.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionShapeCircle.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionShapePolygon.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="GlyphCuller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

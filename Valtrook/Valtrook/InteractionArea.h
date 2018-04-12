@@ -1,8 +1,9 @@
 #pragma once
 
+#include "CollisionShape2D.h"
 #include "AABB.h"
 #include <array>
-
+#include <type_traits>
 namespace Val {
 	enum InteractionState {
 		IS_Just_Inside,
@@ -12,24 +13,45 @@ namespace Val {
 		IS_Outside
 	};
 
+	template<class T, typename = std::enable_if_t<std::is_convertible<T, CollisionShape2D>::value>>
 	class InteractionArea {
 	public:
-		InteractionArea(float x, float y, float halfWidth, float halfHeight);
-		InteractionArea(AABB<float> interactionArea);
-		~InteractionArea();
+		InteractionArea(T CollisionShape) : interactionArea(CollisionShape), state(IS_Outside) {}
+		~InteractionArea() {}
 
-		void setX(float x);
-		void setY(float y);
-		void setCenter(float x, float y);
-		void setCenter(std::array<float, 2> center);
-		void setHalfWidth(float halfWidth);
-		void setHalfHeight(float halfHeight);
-		void setHalfSize(float halfWidth, float halfHeight);
-		void setHalfSize(std::array<float, 2> halfSize);
+		void setInteractionArea(T area) { interactionArea = area; };
+		T* getInteractionArea() { return &interactionArea; };
 
-		InteractionState getState(float x, float y) const;
+
+		InteractionState getState(float x, float y) const {
+			bool isInside = interactionArea.isPointInside(x, y);
+
+			if (state == IS_Just_Inside) {
+				if (isInside) {
+					state = IS_Inside;
+				} else {
+					state = IS_Just_WasInside;
+				}
+			} else if (state == IS_Just_WasInside) {
+				if (isInside) {
+					state = IS_Just_Inside;
+				} else {
+					state = IS_Outside;
+				}
+			} else if (state == IS_Inside) {
+				if (!isInside) {
+					state = IS_Just_WasInside;
+				}
+			} else if (state == IS_Outside) {
+				if (isInside) {
+					state = IS_Just_Inside;
+				}
+			}
+
+			return state;
+		}
 	protected:
-		AABB<float> interactionArea;
+		T interactionArea;
 
 		mutable InteractionState state;
 	};

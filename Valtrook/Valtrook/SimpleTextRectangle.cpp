@@ -5,7 +5,7 @@
 #include "Conversion.h"
 #include "RenderingEngine.h"
 #include "VBOBatcher.h"
-#include "ShapeCuller.h"
+#include "GlyphCuller.h"
 
 
 namespace Val {
@@ -202,6 +202,6 @@ namespace Val {
 																								  
 		}), &blendMode);
 
-		this->Glyph = bHasCullSurface ? ShapeCuller::cullRectangle(Glyph, cullAABB).dispose() : Glyph.dispose();
+		this->Glyph = bHasCullSurface ? GlyphCuller::cullRectangle(Glyph, cullAABB).dispose() : Glyph.dispose();
 	}
 }

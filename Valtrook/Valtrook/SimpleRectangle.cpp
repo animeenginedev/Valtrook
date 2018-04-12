@@ -5,7 +5,7 @@
 #include "Logger.h"
 #include "Conversion.h"
 #include "ArrayMath.h"
-#include "ShapeCuller.h"
+#include "GlyphCuller.h"
 
 namespace Val {
 	SimpleRectangle::SimpleRectangle(const TextureResource & texture) : SimpleRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
@@ -173,7 +173,7 @@ namespace Val {
 		}), &blendMode);
 
 		if (bHasCullSurface)
-			this->Glyph = (ShapeCuller::cullRectangle(Glyph, cullAABB)).dispose();
+			this->Glyph = (GlyphCuller::cullRectangle(Glyph, cullAABB)).dispose();
 		else
 			this->Glyph = Glyph.dispose();
 

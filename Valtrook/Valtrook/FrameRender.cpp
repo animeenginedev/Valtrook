@@ -4,7 +4,7 @@
 #include "VBOBatcher.h"
 #include "Engine.h"
 #include "Logger.h"
-#include "ShapeCuller.h"
+#include "GlyphCuller.h"
 namespace Val {
 	FrameRender::FrameRender(const FrameStyle& frameStyle, const std::array<float, 2>& center, const std::array<float, 2>& halfSize, float edgeWidth, Colour edgeColour, Colour centerColour)
 		: cullAABB(0.0f, 0.0f, 0.0f), bHasCullSurface(false), frameStyle(frameStyle), center(center), halfSize(halfSize), edgeWidth(edgeWidth), edgeColour(edgeColour), centerColour(centerColour), needsReconstructed(true)
@@ -214,7 +214,7 @@ namespace Val {
 			Vertex(vertexPositions[2][0], vertexPositions[2][1], edgeDepth, cornerUV.u, cornerUV.v + cornerUV.vHeight, edgeColour),
 			Vertex(vertexPositions[3][0], vertexPositions[3][1], edgeDepth, cornerUV.u + cornerUV.uWidth, cornerUV.v + cornerUV.vHeight, edgeColour)
 		}), &edgeBlendMode);
-		auto TopLeftGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(TopLeftRect, cullAABB).dispose() : TopLeftRect.dispose();
+		auto TopLeftGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(TopLeftRect, cullAABB).dispose() : TopLeftRect.dispose();
 
 		auto TopRightRect = RectangleGlyph(frameStyle.corner.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 			Vertex(vertexPositions[4][0], vertexPositions[4][1], edgeDepth,cornerUV.u + cornerUV.uWidth, cornerUV.v, edgeColour),
@@ -222,7 +222,7 @@ namespace Val {
 			Vertex(vertexPositions[6][0], vertexPositions[6][1], edgeDepth,cornerUV.u + cornerUV.uWidth, cornerUV.v + cornerUV.vHeight, edgeColour),
 			Vertex(vertexPositions[7][0], vertexPositions[7][1], edgeDepth, cornerUV.u, cornerUV.v + cornerUV.vHeight, edgeColour)
 		}), &edgeBlendMode);
-		auto TopRightGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(TopRightRect, cullAABB).dispose() : TopRightRect.dispose();
+		auto TopRightGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(TopRightRect, cullAABB).dispose() : TopRightRect.dispose();
 
 		auto BottomLeftRect = RectangleGlyph(frameStyle.corner.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 			Vertex(vertexPositions[8][0], vertexPositions[8][1], edgeDepth, cornerUV.u, cornerUV.v + cornerUV.vHeight, edgeColour),
@@ -230,7 +230,7 @@ namespace Val {
 			Vertex(vertexPositions[10][0], vertexPositions[10][1], edgeDepth, cornerUV.u, cornerUV.v, edgeColour),
 			Vertex(vertexPositions[11][0], vertexPositions[11][1], edgeDepth, cornerUV.u + cornerUV.uWidth, cornerUV.v, edgeColour)
 		}), &edgeBlendMode);
-		auto BottomLeftGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(BottomLeftRect, cullAABB).dispose() : BottomLeftRect.dispose();
+		auto BottomLeftGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(BottomLeftRect, cullAABB).dispose() : BottomLeftRect.dispose();
 
 		auto BottomRightRect = RectangleGlyph(frameStyle.corner.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 			Vertex(vertexPositions[12][0], vertexPositions[12][1], edgeDepth, cornerUV.u + cornerUV.uWidth, cornerUV.v + cornerUV.vHeight, edgeColour),
@@ -238,7 +238,7 @@ namespace Val {
 			Vertex(vertexPositions[14][0], vertexPositions[14][1], edgeDepth, cornerUV.u + cornerUV.uWidth, cornerUV.v, edgeColour),
 			Vertex(vertexPositions[15][0], vertexPositions[15][1], edgeDepth, cornerUV.u, cornerUV.v, edgeColour)
 		}), &edgeBlendMode);
-		auto BottomRightGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(BottomRightRect, cullAABB).dispose() : BottomRightRect.dispose();
+		auto BottomRightGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(BottomRightRect, cullAABB).dispose() : BottomRightRect.dispose();
 
 
 		float lengthDiff = fabs((topLeft[0] - topRight[0]) / edgeWidthUPixel);
@@ -249,7 +249,7 @@ namespace Val {
 			Vertex(vertexPositions[3][0], vertexPositions[3][1], edgeDepth, 0.0f, 1.0f, edgeColour),
 			Vertex(vertexPositions[6][0], vertexPositions[6][1], edgeDepth, lengthDiff , 1.0f, edgeColour)
 		}), &edgeBlendMode);
-		auto TopEdgeGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(TopEdgeRect, cullAABB).dispose() : TopEdgeRect.dispose();
+		auto TopEdgeGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(TopEdgeRect, cullAABB).dispose() : TopEdgeRect.dispose();
 
 		auto BottomEdgeRect = RectangleGlyph(frameStyle.edgeTop.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 			Vertex(vertexPositions[9][0], vertexPositions[9][1], edgeDepth,  0.0f, 1.0f, edgeColour),
@@ -257,7 +257,7 @@ namespace Val {
 			Vertex(vertexPositions[11][0], vertexPositions[11][1], edgeDepth,0.0f, 0.0f, edgeColour),
 			Vertex(vertexPositions[14][0], vertexPositions[14][1], edgeDepth,lengthDiff, 0.0f, edgeColour)
 		}), &edgeBlendMode);
-		auto BottomEdgeGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(BottomEdgeRect, cullAABB).dispose() : BottomEdgeRect.dispose();
+		auto BottomEdgeGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(BottomEdgeRect, cullAABB).dispose() : BottomEdgeRect.dispose();
 		//Height LengthDiff may be different.
 		lengthDiff = fabs((topLeft[1] - bottomLeft[1]) / edgeWidthUPixel);
 		auto LeftEdgeRect = RectangleGlyph(frameStyle.edgeSide.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
@@ -266,7 +266,7 @@ namespace Val {
 			Vertex(vertexPositions[8][0], vertexPositions[8][1], edgeDepth, 0.0f, lengthDiff, edgeColour),
 			Vertex(vertexPositions[9][0], vertexPositions[9][1], edgeDepth, 1.0f, lengthDiff, edgeColour)
 		}), &edgeBlendMode);
-		auto LeftEdgeGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(LeftEdgeRect, cullAABB).dispose() : LeftEdgeRect.dispose();
+		auto LeftEdgeGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(LeftEdgeRect, cullAABB).dispose() : LeftEdgeRect.dispose();
 
 		auto RightEdgeRect = RectangleGlyph(frameStyle.edgeSide.getGLTexture()->getTextureID(), std::array<Vertex, 4>({
 			Vertex(vertexPositions[6][0], vertexPositions[6][1], edgeDepth, 1.0f, 0.0f, edgeColour),
@@ -274,7 +274,7 @@ namespace Val {
 			Vertex(vertexPositions[12][0], vertexPositions[12][1], edgeDepth, 1.0f, lengthDiff, edgeColour),
 			Vertex(vertexPositions[13][0], vertexPositions[13][1], edgeDepth, 0.0f,lengthDiff, edgeColour)
 		}), &edgeBlendMode);
-		auto RightEdgeGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(RightEdgeRect, cullAABB).dispose() : RightEdgeRect.dispose();
+		auto RightEdgeGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(RightEdgeRect, cullAABB).dispose() : RightEdgeRect.dispose();
 
 		auto centerUV = frameStyle.center.getBounds();
 		auto correctionAmount = edgeWidthUPixel / 8.0f;
@@ -284,7 +284,7 @@ namespace Val {
 			Vertex(bottomLeft[0] + correctionAmount, bottomLeft[1] + correctionAmount, centerDepth, centerUV.u, centerUV.v + centerUV.vHeight, centerColour),
 				Vertex(bottomRight[0] - correctionAmount, bottomRight[1] + correctionAmount, centerDepth, centerUV.u + centerUV.uWidth, centerUV.v + centerUV.vHeight, centerColour)
 		}), &centerBlendMode);
-		auto CenterGlyphs = bHasCullSurface ? ShapeCuller::cullRectangle(CenterRect, cullAABB).dispose() : CenterRect.dispose();
+		auto CenterGlyphs = bHasCullSurface ? GlyphCuller::cullRectangle(CenterRect, cullAABB).dispose() : CenterRect.dispose();
 
 		Glyph[0] = TopLeftGlyphs[0];
 		Glyph[1] = TopLeftGlyphs[1];

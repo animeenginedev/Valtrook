@@ -26,6 +26,7 @@ namespace Val {
 		const std::string FontPath = AssetPath + "fonts\\";
 		const std::string SoundPath = AssetPath + "audio\\";
 		const std::string SettingPath = AssetPath + "settings\\";
+		const std::string ScriptingPath = AssetPath + "scripting\\";
 
 		const std::string TextureSheetPath = TexturePath + "sheets\\";
 	};

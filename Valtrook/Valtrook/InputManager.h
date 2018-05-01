@@ -4,8 +4,10 @@
 #include <vector>
 #include <unordered_map>
 
+#include "RegisterToScript.h"
+
 namespace Val {
-	struct KeyState {
+	struct KeyState : RegisterToScript {
 		KeyState() : bPrevious(false), bCurrent(true) {};
 		KeyState(bool current) : bPrevious(false), bCurrent(current) {};
 
@@ -26,9 +28,17 @@ namespace Val {
 		bool isKeyPressed() const {
 			return bCurrent;
 		}
+
+		void registerToScript(chaiscript::ChaiScript* script) override {
+			script->add(chaiscript::user_type<KeyState>(), "KeyState");
+
+			script->add(chaiscript::fun(&KeyState::isKeyJustUp), "isKeyJustUp");
+			script->add(chaiscript::fun(&KeyState::isKeyJustDown), "isKeyJustDown");
+			script->add(chaiscript::fun(&KeyState::isKeyPressed), "isKeyPressed");
+		}
 	};
 
-	class InputManager {
+	class InputManager : RegisterToScript {
 	public:
 		InputManager();
 		~InputManager();
@@ -54,6 +64,8 @@ namespace Val {
 		const KeyState getMiddleMouseState() const;
 		int getMouseWheelDelta() const;
 		std::array<int, 2> getMouseLocation() const;
+
+		void registerToScript(chaiscript::ChaiScript* script) override;
 	protected:
 		std::vector<unsigned short> KeysToUpdate;
 		std::unordered_map<unsigned short, KeyState> KeyStates;

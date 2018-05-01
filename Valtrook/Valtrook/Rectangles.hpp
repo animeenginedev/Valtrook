@@ -4,3 +4,4 @@
 #include "Rectangle.h"
 #include "SimpleTextRectangle.h"
 #include "TextRectangle.h"
+#include "SimpleMultilineTextRectangle.h"

@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "TextureAsset.h"
 #include "TaskMaster.h"
+#include "BindingRegister.h"
 
 
 #include <sdl_ttf.h>
@@ -20,7 +21,7 @@ static void CreateDirectoryIfItDoesNotExist(std::string directory) {
 
 #include "Angle.h"
 namespace Val {
-	Engine::Engine() : running(false), inputManager(), game(&inputManager, &audioManager) {
+	Engine::Engine() : running(false), scriptingEngine(), inputManager(), game(&inputManager, &audioManager, &scriptingEngine) {
 	}
 
 	Engine::~Engine() {
@@ -49,6 +50,10 @@ namespace Val {
 
 	InputManager const * const Engine::getInputManager() const {
 		return &inputManager;
+	}
+
+	chaiscript::ChaiScript * Engine::getScriptingEngine() {
+		return &scriptingEngine;
 	}
 
 	RenderingEngine const * Engine::getRenderingEngine() const {
@@ -103,18 +108,37 @@ namespace Val {
 		return performanceOutputRate;
 	}
 
+	void Engine::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<Engine>(), "Engine");
+
+		script->add(chaiscript::fun(&Engine::stop), "stop");
+		script->add(chaiscript::fun(&Engine::isRunning), "isRunning");
+
+		script->add(chaiscript::fun(&Engine::getAudioManager), "getAudioManager");
+		script->add(chaiscript::fun(&Engine::getInputManager), "getInputManager");
+
+		script->add(chaiscript::fun(&Engine::setTargetFrameRate), "setTargetFrameRate");
+		script->add(chaiscript::fun(&Engine::setTargetUpdateRate), "setTargetUpdateRate");
+		script->add(chaiscript::fun(&Engine::setPerformanceOutputRate), "setPerformanceOutputRate");
+
+		script->add(chaiscript::fun(&Engine::getTargetFrameRate), "getTargetFrameRate");
+		script->add(chaiscript::fun(&Engine::getTargetUpdateRate), "getTargetUpdateRate");
+		script->add(chaiscript::fun(&Engine::getPerformanceOutputRate), "getPerformanceOutputRate");
+	}
+	
 	void Engine::initialise() {
 		setTargetFrameRate(240);
 		setTargetUpdateRate(120);
 		setPerformanceOutputRate(10);
-
+		
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->AssetPath); 
 
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->ShaderPath);
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->TexturePath);
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->FontPath);
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->SoundPath);
-		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->SettingPath);
+		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->SettingPath); 
+		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->ScriptingPath); 
 		
 		CreateDirectoryIfItDoesNotExist(RuntimeConstants::Instance->TextureSheetPath);
 
@@ -125,7 +149,7 @@ namespace Val {
 		renderer = defaultRenderer;
 
 		audioManager.initialise();
-
+		
 		if (TTF_Init() == -1) {
 			Logger::Instance->logMessage(LogLevel::SEVERE, "Failed to initialise SDL_TTF");
 		}
@@ -133,6 +157,8 @@ namespace Val {
 		TaskMaster::initialise(std::thread::hardware_concurrency());
 
 		Texture::errorTexture = TextureAsset::getTexture("errorTexture");
+
+		BindingRegister::RegisterBindings(this, scriptingEngine);
 
 		game.initialise();
 	}

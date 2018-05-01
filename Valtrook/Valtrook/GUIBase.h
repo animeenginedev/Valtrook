@@ -9,21 +9,11 @@
 #include <type_traits>
 #include "TimingType.h"
 #include "AABB.h"
+#include "Justification.h"
 
 namespace Val {
 	class RenderingEngine;
 
-	enum HorizontalJustification {
-		LEFT = 0,
-		hCENTER = 1,
-		RIGHT = 2
-	};
-
-	enum VerticalJustification {
-		TOP = 0,
-		vCENTER = 1,
-		BOTTOM = 2
-	};	
 
 	const constexpr unsigned int GUIEventCount() {
 		return 8;
@@ -131,6 +121,7 @@ namespace Val {
 		void processEvents();
 		bool isInsideToggle;
 
+		virtual void preRecalculate();
 		//Do changes you need to do on update, child updateing is handled for you
 		virtual void internalUpdate(const TimingType& deltaTime) = 0;
 		//Do your rendering, child rendering is handled for you

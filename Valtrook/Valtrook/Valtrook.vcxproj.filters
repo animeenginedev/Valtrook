@@ -58,9 +58,6 @@
     <Filter Include="Source Files\Engine\Resource">
       <UniqueIdentifier>{c9832b0d-894c-48d3-b346-cfc7c2ecaeba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Utility\Pointer">
-      <UniqueIdentifier>{1c05dca3-1d1e-49b6-9fb0-6545e0dd4ef0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\EXT">
       <UniqueIdentifier>{201ab0e6-a176-4c82-bc84-44fd66d4fb36}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,27 @@
     </Filter>
     <Filter Include="Source Files\Engine\Input">
       <UniqueIdentifier>{df164ff7-28b7-4e7c-9f3e-603da01d57b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\GUI">
+      <UniqueIdentifier>{0582ef9c-6205-4659-9633-3d7742ffa212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\GUI">
+      <UniqueIdentifier>{d7761bf5-0a37-41ac-b281-39795dfe6125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Structures">
+      <UniqueIdentifier>{ec2d48e3-8622-44e3-adc8-679bde307204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Renderables\Interface">
+      <UniqueIdentifier>{e9fff1e2-a5d9-4f7a-80bf-9d192254e538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Renderables\Interface">
+      <UniqueIdentifier>{1ae30332-8ef9-4d7a-87c6-79bc5cd85c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Scripting">
+      <UniqueIdentifier>{114281f2-5fcc-4907-92bd-a29dfc7c2396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility\Pointer">
+      <UniqueIdentifier>{1c05dca3-1d1e-49b6-9fb0-6545e0dd4ef0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,56 +231,80 @@
     <ClCompile Include="RuntimeConstants.cpp">
       <Filter>Source Files\Engine\Common</Filter>
     </ClCompile>
-    <ClCompile Include="GUIBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_VerticalBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_HorizontalBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Table.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Padding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SimpleRectangle.cpp">
       <Filter>Source Files\Engine\Renderables</Filter>
     </ClCompile>
     <ClCompile Include="SimpleTextRectangle.cpp">
       <Filter>Source Files\Engine\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="TaskMaster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI_VerticalScroll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameRender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionShapePolygon.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
     </ClCompile>
     <ClCompile Include="CollisionShapeCircle.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Button.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_HorizontalBox.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_HorizontalTabParent.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Image.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_InputField.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Label.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Padding.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_Table.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_VerticalBox.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI_VerticalScroll.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIBase.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIFrame.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIWindow.cpp">
+      <Filter>Source Files\Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="WordString.cpp">
+      <Filter>Source Files\Utility\Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMultilineTextRectangle.cpp">
+      <Filter>Source Files\Engine\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameRender.cpp">
+      <Filter>Source Files\Engine\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskMaster.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Source Files\Engine\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="ARect.cpp">
+      <Filter>Source Files\Engine\Renderables\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ATexturedRect.cpp">
+      <Filter>Source Files\Engine\Renderables\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="BindingRegister.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,41 +473,8 @@
     <ClInclude Include="RuntimeConstants.h">
       <Filter>Header Files\Engine\Common</Filter>
     </ClInclude>
-    <ClInclude Include="GUIBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ArrayMath.h">
       <Filter>Header Files\Utility\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_Label.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_VerticalBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_HorizontalBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_Table.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_Padding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIFrame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_Button.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rectangles.hpp">
       <Filter>Header Files\Engine\Renderables</Filter>
@@ -476,18 +485,6 @@
     <ClInclude Include="SimpleTextRectangle.h">
       <Filter>Header Files\Engine\Renderables</Filter>
     </ClInclude>
-    <ClInclude Include="TaskMaster.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI_VerticalScroll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InteractionArea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameRender.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionShape2D.h">
       <Filter>Header Files\Engine\Collision</Filter>
     </ClInclude>
@@ -497,7 +494,85 @@
     <ClInclude Include="CollisionShapePolygon.h">
       <Filter>Header Files\Engine\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="GUIWindow.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.hpp">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_Button.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_HorizontalBox.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_HorizontalTabParent.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_Image.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_InputField.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_Label.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_Padding.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_Table.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_VerticalBox.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI_VerticalScroll.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIBase.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIFrame.h">
+      <Filter>Header Files\Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="WordString.h">
+      <Filter>Header Files\Utility\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMultilineTextRectangle.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="Justification.h">
+      <Filter>Header Files\Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRender.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskMaster.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
     <ClInclude Include="GlyphCuller.h">
+      <Filter>Header Files\Engine\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionArea.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Header Files\Engine\Renderables\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ARect.h">
+      <Filter>Header Files\Engine\Renderables\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ATexturedRect.h">
+      <Filter>Header Files\Engine\Renderables\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisterToScript.h">
+      <Filter>Header Files\Engine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="BindingRegister.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

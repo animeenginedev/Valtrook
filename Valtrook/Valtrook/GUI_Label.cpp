@@ -3,10 +3,10 @@
 #include "RenderingEngine.h"
 
 namespace Val {
-	GUI_Label::Ptr GUI_Label::Create(const SimpleTextRectangle & rectangle) {
+	GUI_Label::Ptr GUI_Label::Create(const SimpleMultilineTextRectangle & rectangle) {
 		return std::make_shared<GUI_Label>(rectangle);
 	}
-	GUI_Label::GUI_Label(const SimpleTextRectangle& rectangle) : textRect(rectangle) {
+	GUI_Label::GUI_Label(const SimpleMultilineTextRectangle& rectangle) : textRect(rectangle) {
 	}
 	GUI_Label::~GUI_Label() {
 	}
@@ -17,7 +17,7 @@ namespace Val {
 	std::string GUI_Label::getText() const {
 		return textRect.getText();
 	}
-	SimpleTextRectangle * GUI_Label::getTextRect() {
+	SimpleMultilineTextRectangle * GUI_Label::getTextRect() {
 		return &textRect;
 	}
 	void GUI_Label::internalUpdate(const TimingType & deltaTime) {

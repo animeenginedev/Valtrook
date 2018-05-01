@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <SDL2\SDL.h>
+#include <chaiscript\chaiscript.hpp>
 
 namespace Val {
 	class Camera;
@@ -18,7 +19,7 @@ namespace Val {
 
 	class Game {
 	public:
-		Game(InputManager const* const manager, AudioManager* audioManager);
+		Game(InputManager const* const manager, AudioManager* audioManager, chaiscript::ChaiScript* scriptingEngine);
 		~Game();
 
 		void initialise();
@@ -29,6 +30,7 @@ namespace Val {
 
 		InputManager const* const getInputManager() const;
 		AudioManager * getAudioManager() const;
+		chaiscript::ChaiScript* getScriptingEngine();
 
 		GameState* getState() const;
 		//happens at the end of the next update(), callback is set to null when it's completed.
@@ -49,6 +51,7 @@ namespace Val {
 		Camera* currentCamera, *defaultCamera;
 		InputManager const* const inputManager;
 		AudioManager * audioManager;
+		chaiscript::ChaiScript* scriptingEngine;
 	};
 
 }

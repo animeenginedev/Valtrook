@@ -176,7 +176,7 @@ namespace Val {
 			Logger::Instance->logMessage(WARNING, "Invalid Texture on Frame Render");
 		}
 		
-		std::array<float, 2> centerUPixel = { WorldToUnalignedPixel<float>(center[0]), WorldToUnalignedPixel<float>(center[1]) };
+		std::array<float, 2> centerUPixel = { static_cast<float>(WorldToPixel<int, float>(center[0])), static_cast<float>(WorldToPixel<int, float>(center[1])) };
 		std::array<float, 2> halfSizeUPixel = { WorldToUnalignedPixel<float>(halfSize[0]), WorldToUnalignedPixel<float>(halfSize[1]) };
 		float edgeWidthUPixel = WorldToUnalignedPixel<float>(edgeWidth);
 

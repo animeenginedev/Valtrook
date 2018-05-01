@@ -26,7 +26,7 @@ namespace Val {
 
 			it = loadedFonts.find(fontName);
 			if (it->second->font == nullptr) {
-				Logger::Instance->logMessage(LogLevel::ERROR, "Failed to load font \"" + fontName + "\"!");
+				Logger::Instance->logMessage(LogLevel::L_ERROR, "Failed to load font \"" + fontName + "\"!");
 				return nullptr;
 			}
 		}

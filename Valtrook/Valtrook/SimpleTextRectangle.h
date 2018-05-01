@@ -1,17 +1,14 @@
 #pragma once
 
+#include "ATexturedRect.h"
 #include "TextResource.h"
 #include "Glyph.h"
-#include "Colour.h"
-#include "GLBlendMode.h"
-#include "UV.h"
-#include "AABB.h"
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
 
-	class SimpleTextRectangle {
+	class SimpleTextRectangle : public ATexturedRect {
 	public:
 		SimpleTextRectangle(const TextResource& texture);
 		SimpleTextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight);
@@ -23,20 +20,6 @@ namespace Val {
 		void setTextResource(const TextResource& text);
 		void setText(const std::string& contents);
 		void setFont(FontAsset* newFont);
-		void setX(float x);
-		void setY(float y);
-		void setDepth(float depth);
-		void setCenter(const std::array<float, 2>& center);
-		void setCenter(float x, float y);
-		void setHalfWidth(float h_width);
-		void setHalfHeight(float h_height);
-		void setHalfSize(const std::array<float, 2>& halfSize);
-		void setHalfSize(float h_width, float h_height);
-		void setWidth(float width);
-		void setHeight(float height);
-		void setSize(float width, float height);
-		void setColour(const Colour& colour);
-		void setBlendMode(const GLBlendMode& blendMode);
 		void setScaleTextToHeight(bool scaleTextToHeight);
 		//Honestly, don't ask. It's really used to GUI rendering, setting the center/height/width and the uv dependant on the culling aabb size&position
 		void setCullSurface(AABB<float> cullAABB);
@@ -44,38 +27,22 @@ namespace Val {
 		TextResource getTextResource() const;
 		std::string getText() const;
 		FontAsset* getFont() const;
-		float getX() const;
-		float getY() const;
-		float getDepth() const;
-		std::array<float, 2> getCenter() const;
-		float getHalfWidth() const;
-		float getHalfHeight() const;
-		std::array<float, 2> getHalfSize() const;
-		Colour getColour() const;
-		GLBlendMode getBlendMode() const;
 		bool doesScaleTextToHeight() const;
 		AABB<float> getCullSurface() const;
 
 		void reconstruct();
 
 		std::array<TriangleGlyph, 2> getRenderGlyphs();
-		void sendRenderInformation(RenderingEngine* engine);
-		void sendRenderInformation(VBOBatcher* batcher);
+		void sendRenderInformation(RenderingEngine* engine) override;
+		void sendRenderInformation(VBOBatcher* batcher) override;
 	protected:
-		std::array<float, 2> center;
-		float depth;
-		std::array<float, 2> halfSize;
-
 		AABB<float> cullAABB;
 		bool bHasCullSurface;
 
 		TextResource textResource;
-		GLBlendMode blendMode;
 		std::array<TriangleGlyph, 2> Glyph;
-		Colour renderColour;
 		bool scaleTextToHeight;
 
-		bool needsReconstructed;
 		void recalculateVertexes();
 	};
 }

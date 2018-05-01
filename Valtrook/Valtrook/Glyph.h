@@ -30,6 +30,7 @@ namespace Val {
 		}
 	};
 	struct LineGlyph : public Glyph<2> {
+		LineGlyph() : Glyph(0, {}, &GLBlendMode::Blend_Default) {};
 		LineGlyph(GLuint text, std::array<Vertex, 2> verts, GLBlendMode* customBlend) : Glyph(text, verts, customBlend) {};
 	};
 }

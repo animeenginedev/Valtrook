@@ -65,6 +65,12 @@ namespace Val {
 		void add(std::vector<RectangleGlyph> glyph);
 		void add(std::vector<TriangleGlyph> glyph);
 
+		template<std::size_t Count>
+		void add(std::vector<std::array<TriangleGlyph, Count>> glyphs) {
+			for (const auto& g : glyphs) {
+				add<Count>(g);
+			}
+		}
 
 		void prepare();
 		bool isPrepared() const;

@@ -21,6 +21,8 @@ namespace Val {
 		if (! this->needsRecalculated())
 			return;
 
+		preRecalculate();
+
 		//All our childs sizes, and their childrens offsets
 		if (isParentTypeGUI()) {
 			for (auto child : getChildren()) {
@@ -388,6 +390,9 @@ namespace Val {
 			}
 		}
 		
+	}
+
+	void GUIBase::preRecalculate() {
 	}
 	
 	void GUIBase::recalculateComplete() {

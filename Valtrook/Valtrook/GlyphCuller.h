@@ -9,6 +9,36 @@
 namespace Val {
 	class GlyphCuller {
 	public:
+		static std::vector<LineGlyph> cullLines(const std::vector<LineGlyph> lines, const AABB<float>& culler) {
+			std::vector<LineGlyph> linesOut = std::vector<LineGlyph>();
+			linesOut.reserve(lines.size());
+
+			for (auto line : lines) {
+				line = cullLine(line, culler);
+				//Ignore completly culled lines which should have a length of 0 || the exact same x & y positions
+				if (line.vertexes[0].x != line.vertexes[1].x || line.vertexes[0].y != line.vertexes[1].y)
+					linesOut.push_back(line);
+			}
+
+			return linesOut;
+		}
+
+		static LineGlyph cullLine(const LineGlyph& line, const AABB<float>& culler) {
+			Vertex a = line.vertexes[0];
+			Vertex b = line.vertexes[1];
+			
+			if (!culler.containsPoint(a.x, a.y)) {
+				a.x = Max<float>(Min<float>(culler.maxX(), a.x), culler.minX());
+				a.y = Max<float>(Min<float>(culler.maxY(), a.y), culler.minY());
+			}
+			if (!culler.containsPoint(b.x, b.y)) {
+				b.x = Max<float>(Min<float>(culler.maxX(), b.x), culler.minX());
+				b.y = Max<float>(Min<float>(culler.maxY(), b.y), culler.minY());
+			}
+			
+			return LineGlyph(line.textureId, { a, b }, line.blendMode);
+		}
+
 		static RectangleGlyph cullRectangle(const RectangleGlyph& rect, const AABB<float>& culler) {
 			Vertex TL = rect.vertexes[0];
 			Vertex TR = rect.vertexes[1];

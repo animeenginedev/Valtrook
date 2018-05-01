@@ -8,7 +8,7 @@
 #include "RuntimeConstants.h"
 
 namespace Val {
-	Game::Game(InputManager const* const manager, AudioManager * audioManager) : inputManager(manager), audioManager(audioManager), currentState(nullptr) {
+	Game::Game(InputManager const* const manager, AudioManager * audioManager, chaiscript::ChaiScript* scriptingEngine) : inputManager(manager), audioManager(audioManager), scriptingEngine(scriptingEngine), currentState(nullptr) {
 	}
 
 	Game::~Game() {
@@ -62,6 +62,10 @@ namespace Val {
 
 	AudioManager * Game::getAudioManager() const {
 		return audioManager;
+	}
+
+	chaiscript::ChaiScript * Game::getScriptingEngine() {
+		return scriptingEngine;
 	}
 
 	GameState * Game::getState() const {

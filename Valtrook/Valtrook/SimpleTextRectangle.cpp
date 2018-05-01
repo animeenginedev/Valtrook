@@ -18,7 +18,7 @@ namespace Val {
 	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode & blendMode) : SimpleTextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {
 	}
 	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode & blendMode) :
-		textResource(texture), center(center), depth(depth), halfSize(halfSize), cullAABB(0.0f, 0.0f, 0.0f, 0.0f), bHasCullSurface(false), renderColour(colour), blendMode(blendMode), needsReconstructed(true) {
+	    ATexturedRect(TextureResource(nullptr, ResourceLocation("", "", "")), center, halfSize, depth, colour, blendMode), textResource(texture), cullAABB(0.0f, 0.0f, 0.0f, 0.0f), bHasCullSurface(false) {
 	}
 	SimpleTextRectangle::~SimpleTextRectangle() {
 	}
@@ -35,66 +35,6 @@ namespace Val {
 
 	void SimpleTextRectangle::setFont(FontAsset * newFont) {
 		textResource = TextResource(newFont, textResource.getTextString());
-		needsReconstructed = true;
-	}
-
-	void SimpleTextRectangle::setX(float x) {
-		this->center[0] = x;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setY(float y) {
-		this->center[1] = y;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setDepth(float depth) {
-		this->depth = depth;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setCenter(const std::array<float, 2>& center) {
-		this->center = center;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setCenter(float x, float y) {
-		this->center[0] = x;
-		this->center[1] = y;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setHalfWidth(float h_width) {
-		this->halfSize[0] = h_width;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setHalfHeight(float h_height) {
-		this->halfSize[1] = h_height;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setHalfSize(const std::array<float, 2>& halfSize) {
-		this->halfSize = halfSize;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setHalfSize(float h_width, float h_height) {
-		this->halfSize[0] = h_width;
-		this->halfSize[1] = h_height;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setWidth(float width) {
-		this->halfSize[0] = width / 2.0f;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setHeight(float height) {
-		this->halfSize[1] = height / 2.0f;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setSize(float width, float height) {
-		this->halfSize[0] = width / 2.0f;
-		this->halfSize[1] = height / 2.0f;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setColour(const Colour & colour) {
-		this->renderColour = colour;
-		needsReconstructed = true;
-	}
-	void SimpleTextRectangle::setBlendMode(const GLBlendMode & blendMode) {
-		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
 	void SimpleTextRectangle::setScaleTextToHeight(bool scaleTextToHeight) {
@@ -115,33 +55,6 @@ namespace Val {
 	}
 	FontAsset * SimpleTextRectangle::getFont() const {
 		return textResource.getFont();
-	}
-	float SimpleTextRectangle::getX() const {
-		return center[0];
-	}
-	float SimpleTextRectangle::getY() const {
-		return center[1];
-	}
-	float SimpleTextRectangle::getDepth() const {
-		return depth;
-	}
-	std::array<float, 2> SimpleTextRectangle::getCenter() const {
-		return center;
-	}
-	float SimpleTextRectangle::getHalfWidth() const {
-		return halfSize[0];
-	}
-	float SimpleTextRectangle::getHalfHeight() const {
-		return halfSize[1];
-	}
-	std::array<float, 2> SimpleTextRectangle::getHalfSize() const {
-		return halfSize;
-	}
-	Colour SimpleTextRectangle::getColour() const {
-		return renderColour;
-	}
-	GLBlendMode SimpleTextRectangle::getBlendMode() const {
-		return blendMode;
 	}
 	bool SimpleTextRectangle::doesScaleTextToHeight() const {
 		return scaleTextToHeight;
@@ -174,16 +87,16 @@ namespace Val {
 	void SimpleTextRectangle::recalculateVertexes() {
 		needsReconstructed = false;
 
-		auto texture = TextRenderer::getTexture(textResource);
-		Colour renderColour = this->renderColour;
+		texture = TextRenderer::getTexture(textResource);
+		Colour renderColour = this->colour;
 
 		if (texture.getTexture() == nullptr) {
 			Logger::Instance->logMessage(WARNING, "Invalid Texture on Simple Text Rectangle");
 			texture = Texture::errorTexture;
-			renderColour = Colour(255, 255, 255, this->renderColour.a);
+			renderColour = Colour(255, 255, 255, this->colour.a);
 		}
 
-		auto uvBounds = texture.getBounds();
+		uvBounds = texture.getBounds();
 
 		if (scaleTextToHeight) {
 			auto texSize = texture.getTextureSizeInPixel();

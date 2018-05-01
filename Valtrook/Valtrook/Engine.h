@@ -7,10 +7,13 @@
 #include "AudioManager.h"
 #include "Game.h"
 
+#include "RegisterToScript.h"
+#include <chaiscript\chaiscript.hpp>
+
 namespace Val {
 	class RenderingEngine;
 
-	class Engine {
+	class Engine : public RegisterToScript {
 	public:
 		Engine();
 		~Engine();
@@ -21,6 +24,7 @@ namespace Val {
 
 		AudioManager * getAudioManager();
 		InputManager const* const getInputManager() const;
+		chaiscript::ChaiScript* getScriptingEngine();
 
 		RenderingEngine const* getRenderingEngine() const;
 		void setCustomRenderer(RenderingEngine* renderer);
@@ -35,8 +39,12 @@ namespace Val {
 		unsigned int getTargetFrameRate() const;
 		unsigned int getTargetUpdateRate() const;
 		unsigned int getPerformanceOutputRate() const;
+
+		void registerToScript(chaiscript::ChaiScript* script);
 	protected:
 		bool running;
+		
+		chaiscript::ChaiScript scriptingEngine;
 
 		//INPUT MANAGER MUST COME BEFORE GAME, initialization is declartion order and game relies on inputManager
 		InputManager inputManager;
@@ -53,7 +61,7 @@ namespace Val {
 		std::string performanceAverageString;
 		std::string updateExpectedString, renderExpectedString;
 
-
+		
 		void initialise();
 		void run();
 	};

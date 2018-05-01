@@ -9,6 +9,7 @@ freetype26
 SDL2_ttf
 SDL2_image
 Box2D
+ChaiScript
 
 Other Inclusions:
 

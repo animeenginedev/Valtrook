@@ -37,8 +37,10 @@ namespace Val {
 		auto test3 = GUI_Image::Create(image);
 		auto test5 = GUI_Image::Create(image);
 
-		auto textT = SimpleTextRectangle(TextResource("desu", "ralewaymed"), 1, 1, 0.5f, 0.60f, 0.60f, Colour(0, 0, 0, 255));
-		textT.setScaleTextToHeight(true);
+		auto textT = SimpleMultilineTextRectangle(TextResource("Multiline text rendering is implemented im so fucking good, i've been worried about this autisim for ages holy shit. AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "ralewaymed", 128),
+		{ 1, 1 }, 0.5f, 2.0f, 0.35f, Colour(0, 0, 0, 255));
+		textT.setJustification(LEFT);
+		//textT.setScaleTextToHeight(true);
 		auto testLabel = GUI_Label::Create(textT);
 		testLabel->setRecievesInputs(false);
 
@@ -50,7 +52,7 @@ namespace Val {
 											 Colour(230, 230, 230, 255), Colour(200, 200, 200, 255), Colour(150, 150, 150, 255), FrameStyle::getDefault());
 		testButton->addChild(padding);
 
-		auto table = GUI_Table::Create(3,4);
+		auto table = GUI_Table::Create(4,4);
 				
 		table->addChild(test, 0, 0);
 		table->addChild(test4, 2, 3);
@@ -74,7 +76,7 @@ namespace Val {
 		}, GUIEventType::MouseLeft_Up);
 		test5->setEventCallback([=]() { test5->setHidden(!test5->isHidden()); }, GUIEventType::MouseLeft_Up);
 
-		testScroll = GUI_VerticalScroll::Create({ 4, 1 }, 0.1f, TextureAsset::getTexture("gui/scrollbarCircleUp"), TextureAsset::getTexture("gui/scrollbarCircleDown"), TextureAsset::getTexture("gui/scrollbarCircleHover"));
+		testScroll = GUI_VerticalScroll::Create({ 4, 3 }, 0.1f, TextureAsset::getTexture("gui/scrollbarCircleUp"), TextureAsset::getTexture("gui/scrollbarCircleDown"), TextureAsset::getTexture("gui/scrollbarCircleHover"));
 		auto framePadding = GUI_Padding::Create(0.05f, 0.05f);
 
 		testFrame->addChild(framePadding);
@@ -85,12 +87,34 @@ namespace Val {
 		testScroll->addChild(table);
 
 		//testFrame->setCullAABB(AABB<float>(0.0f, 0.0f, 2.0f));
+
+		window.update(0.0f);
+
+		updateScript.set_state(game->getScriptingEngine()->get_state());
+		updateScript.set_locals(game->getScriptingEngine()->get_locals());
+		updateScript.eval_file("assets\\scripting\\update.chai");
+		updateFunc = updateScript.eval<std::function<void()>>("update");
 	}
 	void MenuState::update(const TimingType & deltaTime) {
+		if(updateFunc.operator bool())
+			updateFunc();
+
 		window.update(deltaTime);
 		auto mouseLoc = game->getInputManager()->getMouseLocation();
 		auto center = Camera::Cast<OrthographicCamera>(game->getCamera())->convertScreenToWorld(mouseLoc[0], mouseLoc[1]);
 		//testFrame->setCullAABB(AABB<float>(center[0], center[1], 2.0f));
+
+		if (game->getInputManager()->isKeyJustDown(SDLK_q)) {
+			try {
+				updateScript.set_state(game->getScriptingEngine()->get_state());
+				updateScript.set_locals(game->getScriptingEngine()->get_locals());
+				updateScript.eval_file("assets\\scripting\\update.chai");
+				updateFunc = updateScript.eval<std::function<void()>>("update");
+			
+			} catch (const std::exception &e) {
+
+			}
+		}
 	}
 	void MenuState::render(const TimingType & deltaTime, RenderingEngine * const engine) {
 		window.render(deltaTime, engine);

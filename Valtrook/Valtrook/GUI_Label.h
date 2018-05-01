@@ -2,20 +2,20 @@
 
 #include "GUIBase.h"
 
-#include "SimpleTextRectangle.h"
+#include "SimpleMultilineTextRectangle.h"
 
 namespace Val {
 	class GUI_Label : public GUIBase {
 	public:
 		typedef std::shared_ptr<GUI_Label> Ptr;
-		static GUI_Label::Ptr Create(const SimpleTextRectangle& rectangle);
+		static GUI_Label::Ptr Create(const SimpleMultilineTextRectangle& rectangle);
 
-		GUI_Label(const SimpleTextRectangle& rectangle);
+		GUI_Label(const SimpleMultilineTextRectangle& rectangle);
 		~GUI_Label();
 
 		void setText(const std::string& text);
 		std::string getText() const;
-		SimpleTextRectangle* getTextRect();
+		SimpleMultilineTextRectangle* getTextRect();
 	protected:
 		void internalUpdate(const TimingType& deltaTime) override;
 		void internalRender(const TimingType& deltaTime, RenderingEngine* engine) override;
@@ -25,7 +25,7 @@ namespace Val {
 
 		void onSetCullAABB(const AABB<float>& cullAABB) override;
 
-		SimpleTextRectangle textRect;
+		SimpleMultilineTextRectangle textRect;
 	};
 
 }

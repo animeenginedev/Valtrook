@@ -5,7 +5,7 @@
 int main(int argc, char ** argv) {
 	Val::Random::Instance->setSeed(static_cast<long>(time(NULL)));
 
-	Val::Engine engine = Val::Engine();
+	Val::Engine engine;
 	engine.start();
 
 	return 0;

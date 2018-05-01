@@ -125,7 +125,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ARect.cpp" />
+    <ClCompile Include="ATexturedRect.cpp" />
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="BindingRegister.cpp" />
     <ClCompile Include="CollisionShapeCircle.cpp" />
     <ClCompile Include="CollisionShapePolygon.cpp" />
     <ClCompile Include="FontAsset.cpp" />
@@ -144,7 +147,9 @@
     <ClCompile Include="GUIWindow.cpp" />
     <ClCompile Include="GUI_Button.cpp" />
     <ClCompile Include="GUI_HorizontalBox.cpp" />
+    <ClCompile Include="GUI_HorizontalTabParent.cpp" />
     <ClCompile Include="GUI_Image.cpp" />
+    <ClCompile Include="GUI_InputField.cpp" />
     <ClCompile Include="GUI_Label.cpp" />
     <ClCompile Include="GUI_Padding.cpp" />
     <ClCompile Include="GUI_Table.cpp" />
@@ -152,6 +157,7 @@
     <ClCompile Include="GUI_VerticalScroll.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonReadWriter.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -163,6 +169,7 @@
     <ClCompile Include="ResourceLocation.cpp" />
     <ClCompile Include="RuntimeConstants.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
+    <ClCompile Include="SimpleMultilineTextRectangle.cpp" />
     <ClCompile Include="SimpleRectangle.cpp" />
     <ClCompile Include="SimpleTextRectangle.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
@@ -179,12 +186,16 @@
     <ClCompile Include="VBO.cpp" />
     <ClCompile Include="VBOBatcher.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WordString.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Angle.h" />
+    <ClInclude Include="ARect.h" />
     <ClInclude Include="ArrayMath.h" />
+    <ClInclude Include="ATexturedRect.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="BindingRegister.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionShape2D.h" />
     <ClInclude Include="CollisionShapeCircle.h" />
@@ -212,7 +223,9 @@
     <ClInclude Include="GUIWindow.h" />
     <ClInclude Include="GUI_Button.h" />
     <ClInclude Include="GUI_HorizontalBox.h" />
+    <ClInclude Include="GUI_HorizontalTabParent.h" />
     <ClInclude Include="GUI_Image.h" />
+    <ClInclude Include="GUI_InputField.h" />
     <ClInclude Include="GUI_Label.h" />
     <ClInclude Include="GUI_Padding.h" />
     <ClInclude Include="GUI_Table.h" />
@@ -222,7 +235,9 @@
     <ClInclude Include="InteractionArea.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonReadWriter.h" />
+    <ClInclude Include="Justification.h" />
     <ClInclude Include="Lerp.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Max.h" />
     <ClInclude Include="MenuState.h" />
@@ -236,10 +251,13 @@
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="GlyphCuller.h" />
     <ClInclude Include="Rectangles.hpp" />
+    <ClInclude Include="RegisterToScript.h" />
+    <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderingEngine.h" />
     <ClInclude Include="ResourceLocation.h" />
     <ClInclude Include="RuntimeConstants.h" />
     <ClInclude Include="ShaderObject.h" />
+    <ClInclude Include="SimpleMultilineTextRectangle.h" />
     <ClInclude Include="SimpleRectangle.h" />
     <ClInclude Include="SimpleTextRectangle.h" />
     <ClInclude Include="SimplexNoise.h" />
@@ -259,6 +277,7 @@
     <ClInclude Include="VBOBatcher.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WordString.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

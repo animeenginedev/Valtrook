@@ -172,7 +172,7 @@ namespace Val {
 				break;
 		}
 		if (scrollBarDragging) {
-			verticalPosition = 1.0 - (((mousePos[1] + scrollBarMouseOffset) - pos[1] + halfSize[1]) - scrollBarOffset[1]) / ((halfSize[1] + halfSize[1]) - (scrollBarOffset[1] + scrollBarOffset[1]));
+			verticalPosition = 1.0f - (((mousePos[1] + scrollBarMouseOffset) - pos[1] + halfSize[1]) - scrollBarOffset[1]) / ((halfSize[1] + halfSize[1]) - (scrollBarOffset[1] + scrollBarOffset[1]));
 			currentEventData->inputUsed = true;
 			this->needsReconstructed = true;
 		}

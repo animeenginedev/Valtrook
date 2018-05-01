@@ -15,6 +15,14 @@ namespace Val {
 		FontAsset* getFont() const;
 		std::string getTextString() const;
 
+		std::array<int, 2> getTextTextureSize();
+		float getScaledTextWidth(float textWorldHeight);
+		float getScaledTextHeight(float textWorldWidth);
+
+		std::array<int, 2> getTextTextureSize(const std::string& text);
+		float getScaledTextWidth(const std::string& text, float textWorldHeight);
+		float getScaledTextHeight(const std::string& text,float textWorldWidth);
+
 		bool operator==(const TextResource& rhs) const {
 			return font == rhs.font && data == rhs.data;
 		}

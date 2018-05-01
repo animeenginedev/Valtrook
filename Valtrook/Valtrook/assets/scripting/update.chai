@@ -1,0 +1,6 @@
+
+def update() {
+	if(InputManager.getMouseWheelDelta() > 0) {
+		Logger.logMessage(LogLevel_INFO, "ASS");
+	}
+}

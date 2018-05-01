@@ -125,4 +125,19 @@ namespace Val {
 		SDL_GetMouseState(&x, &y);
 		return{ x, y };
 	}
+	void InputManager::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::fun(&InputManager::isAnyJustUp), "isAnyJustUp");
+		script->add(chaiscript::fun(&InputManager::isAnyJustDown), "isAnyJustDown");
+		script->add(chaiscript::fun(&InputManager::isAnyPressed), "isAnyPressed");
+
+		script->add(chaiscript::fun(&InputManager::isKeyJustUp), "isKeyJustUp");
+		script->add(chaiscript::fun(&InputManager::isKeyJustDown), "isKeyJustDown");
+		script->add(chaiscript::fun(&InputManager::isKeyPressed), "isKeyPressed");
+
+		script->add(chaiscript::fun(&InputManager::getLeftMouseState), "getLeftMouseState");
+		script->add(chaiscript::fun(&InputManager::getRightMouseState), "getRightMouseState");
+		script->add(chaiscript::fun(&InputManager::getMiddleMouseState), "getMiddleMouseState");
+		script->add(chaiscript::fun(&InputManager::getMouseWheelDelta), "getMouseWheelDelta");
+		script->add(chaiscript::fun(&InputManager::getMouseLocation), "getMouseLocation");		
+	}
 }

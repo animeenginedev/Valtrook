@@ -8,13 +8,14 @@
 #include "RuntimeConstants.h"
 
 namespace Val {
-	Game::Game(InputManager const* const manager, AudioManager * audioManager, chaiscript::ChaiScript* scriptingEngine) : inputManager(manager), audioManager(audioManager), scriptingEngine(scriptingEngine), currentState(nullptr) {
+	Game::Game(InputManager const* const manager, AudioManager * audioManager, chaiscript::ChaiScript* scriptingEngine) : inputManager(manager), audioManager(audioManager), scriptingEngine(scriptingEngine), currentState(nullptr), entryPointScript("game.chai", scriptingEngine) {
 	}
 
 	Game::~Game() {
 	}
 
 	void Game::initialise() {
+
 		defaultCamera = new OrthographicCamera();
 		((OrthographicCamera*)defaultCamera)->initialise(PixelToWorld<int, float>(RuntimeConstants::Instance->Window_Size.get().first), PixelToWorld<int, float>(RuntimeConstants::Instance->Window_Size.get().second));
 		((OrthographicCamera*)defaultCamera)->update(0.0f);
@@ -29,6 +30,11 @@ namespace Val {
 
 		currentState = splashState;
 		splashState->onBecomeActive();
+
+		entryPointScript.reload();
+		auto func = entryPointScript.getFunction<std::function<void()>>("initialise");
+		if (func)
+			func();
 	}
 
 	void Game::rawEvent(const SDL_Event & e) {
@@ -89,5 +95,25 @@ namespace Val {
 	}
 	void Game::resetToDefaultCamera() {
 		currentCamera = defaultCamera;
+	}
+	GameState * Game::getNamedState(const std::string name) const {
+		return namedStates.find(name) == namedStates.end() ? nullptr : namedStates.at(name);
+	}
+	void Game::addNamedState(std::string scriptName, std::string name) {
+		namedStates.insert(std::make_pair(name, new GameState(this, scriptName)));
+	}
+	void Game::setNamedState(const std::string name) {
+		auto state = getNamedState(name);
+		if (state != nullptr)
+			setState(state);
+	}
+	void Game::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<Game>(), "Game");
+		script->add_global(chaiscript::var(this), "Game");
+		
+		script->add(chaiscript::fun(&Game::getNamedState), "getNamedState");
+		script->add(chaiscript::fun(&Game::addNamedState), "addNamedState");
+		script->add(chaiscript::fun(&Game::setNamedState), "setNamedState");
+
 	}
 }

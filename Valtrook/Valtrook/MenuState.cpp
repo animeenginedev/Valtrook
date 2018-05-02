@@ -13,9 +13,11 @@
 
 
 namespace Val {
-	MenuState::MenuState(Game * const game) : GameState(game), window(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera())) {
+	MenuState::MenuState(Game * const game) : GameState(game, "mainMenuState.chai"), window(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera())) {
 	}
 	void MenuState::initialise() {
+		GameState::initialise();
+
 		testFrame = GUIFrameR::Create(1, 0.2f, Colour(55, 55, 55, 255), Colour(125, 150, 125, 255));
 		window.addFrame(testFrame);
 
@@ -89,34 +91,19 @@ namespace Val {
 		//testFrame->setCullAABB(AABB<float>(0.0f, 0.0f, 2.0f));
 
 		window.update(0.0f);
-
-		updateScript.set_state(game->getScriptingEngine()->get_state());
-		updateScript.set_locals(game->getScriptingEngine()->get_locals());
-		updateScript.eval_file("assets\\scripting\\update.chai");
-		updateFunc = updateScript.eval<std::function<void()>>("update");
 	}
+
 	void MenuState::update(const TimingType & deltaTime) {
-		if(updateFunc.operator bool())
-			updateFunc();
+		GameState::update(deltaTime);
 
 		window.update(deltaTime);
 		auto mouseLoc = game->getInputManager()->getMouseLocation();
 		auto center = Camera::Cast<OrthographicCamera>(game->getCamera())->convertScreenToWorld(mouseLoc[0], mouseLoc[1]);
 		//testFrame->setCullAABB(AABB<float>(center[0], center[1], 2.0f));
-
-		if (game->getInputManager()->isKeyJustDown(SDLK_q)) {
-			try {
-				updateScript.set_state(game->getScriptingEngine()->get_state());
-				updateScript.set_locals(game->getScriptingEngine()->get_locals());
-				updateScript.eval_file("assets\\scripting\\update.chai");
-				updateFunc = updateScript.eval<std::function<void()>>("update");
-			
-			} catch (const std::exception &e) {
-
-			}
-		}
 	}
 	void MenuState::render(const TimingType & deltaTime, RenderingEngine * const engine) {
+		GameState::render(deltaTime, engine);
+
 		window.render(deltaTime, engine);
 		//overlay->sendRenderInformation(engine);
 		//cullingTest->sendRenderInformation(engine);

@@ -1,0 +1,11 @@
+
+def initialise() {
+	Logger.logMessage(LogLevel_INFO, "Game Initialised");
+	
+	//Game.addNamedState("splashState.chai", "State_Splash");
+	Game.addNamedState("mainMenuState.chai", "State_MainMenu");
+	var menuState = Game.getNamedState("State_MainMenu");
+	menuState.initialise();
+	
+	Game.setNamedState("State_MainMenu");
+}

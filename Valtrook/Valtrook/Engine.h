@@ -24,6 +24,7 @@ namespace Val {
 
 		AudioManager * getAudioManager();
 		InputManager const* const getInputManager() const;
+		Game* getGame();
 		chaiscript::ChaiScript* getScriptingEngine();
 
 		RenderingEngine const* getRenderingEngine() const;

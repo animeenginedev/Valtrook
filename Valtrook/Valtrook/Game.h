@@ -6,6 +6,9 @@
 #include <functional>
 #include <SDL2\SDL.h>
 #include <chaiscript\chaiscript.hpp>
+#include "RegisterToScript.h"
+#include <unordered_map>
+#include "ScriptWrapper.h"
 
 namespace Val {
 	class Camera;
@@ -17,7 +20,7 @@ namespace Val {
 	class SplashState;
 	class MenuState;
 
-	class Game {
+	class Game : public RegisterToScript {
 	public:
 		Game(InputManager const* const manager, AudioManager* audioManager, chaiscript::ChaiScript* scriptingEngine);
 		~Game();
@@ -41,10 +44,17 @@ namespace Val {
 		Camera* getCamera();
 		void resetToDefaultCamera();
 
+		GameState* getNamedState(const std::string name) const;
+		void addNamedState(const std::string scriptName, const std::string name);
+		void setNamedState(const std::string name);
 
 		SplashState* splashState;
 		MenuState* menuState;
+
+		void registerToScript(chaiscript::ChaiScript* script);
 	protected:
+		std::unordered_map<std::string, GameState*> namedStates;
+
 		GameState* currentState;
 		GameState* nextState;
 		std::function<void()> callbackOnStateChange;
@@ -52,6 +62,8 @@ namespace Val {
 		InputManager const* const inputManager;
 		AudioManager * audioManager;
 		chaiscript::ChaiScript* scriptingEngine;
+
+		ScriptWrapper entryPointScript;
 	};
 
 }

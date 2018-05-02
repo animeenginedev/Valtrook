@@ -101,6 +101,8 @@
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DisableSpecificWarnings>4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -134,6 +136,7 @@
     <ClCompile Include="FontAsset.cpp" />
     <ClCompile Include="FrameRender.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GenericShaderObject.cpp" />
     <ClCompile Include="GLBlendMode.cpp" />
@@ -168,12 +171,14 @@
     <ClCompile Include="RenderingEngine.cpp" />
     <ClCompile Include="ResourceLocation.cpp" />
     <ClCompile Include="RuntimeConstants.cpp" />
+    <ClCompile Include="ScriptWrapper.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="SimpleMultilineTextRectangle.cpp" />
     <ClCompile Include="SimpleRectangle.cpp" />
     <ClCompile Include="SimpleTextRectangle.cpp" />
     <ClCompile Include="SimplexNoise.cpp" />
     <ClCompile Include="SplashState.cpp" />
+    <ClCompile Include="StateScriptWrapper.cpp" />
     <ClCompile Include="TaskMaster.cpp" />
     <ClCompile Include="TextRectangle.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
@@ -205,6 +210,7 @@
     <ClInclude Include="FontAsset.h" />
     <ClInclude Include="FrameRender.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GenericShaderObject.h" />
     <ClInclude Include="GLBlendMode.h" />
@@ -256,12 +262,14 @@
     <ClInclude Include="RenderingEngine.h" />
     <ClInclude Include="ResourceLocation.h" />
     <ClInclude Include="RuntimeConstants.h" />
+    <ClInclude Include="ScriptWrapper.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="SimpleMultilineTextRectangle.h" />
     <ClInclude Include="SimpleRectangle.h" />
     <ClInclude Include="SimpleTextRectangle.h" />
     <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="SplashState.h" />
+    <ClInclude Include="StateScriptWrapper.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="TaskMaster.h" />
     <ClInclude Include="TextRectangle.h" />

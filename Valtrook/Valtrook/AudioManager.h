@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RegisterToScript.h"
 #include "ResourceLocation.h"
 #include "Owner.h"
 
@@ -12,13 +13,14 @@
 namespace Val {
 	class AudioDelegate;
 
-	class AudioAsset {
+	class AudioAsset : public RegisterToScript {
 	public:
 		AudioAsset();
 
 		ResourceLocation resource;
 		Mix_Chunk* loadedAsset;
-		
+
+		void registerToScript(chaiscript::ChaiScript* script);
 
 		void load(ResourceLocation res, bool allowAsyncLoad);
 		std::shared_ptr<AudioDelegate> createPlayDelegate();
@@ -29,13 +31,14 @@ namespace Val {
 		void AsyncLoadWav(std::string loc);
 	};
 
-	class AudioDelegate {
+	class AudioDelegate : public RegisterToScript {
 	public:
 		AudioDelegate(AudioAsset* asset);
 		~AudioDelegate();
 
 		bool isLoaded();
 
+		void registerToScript(chaiscript::ChaiScript* script);
 		//Play
 		bool playFadeIn(int milliseconds, std::function<void(AudioDelegate*)> callback = nullptr, int repeats = 0);
 		bool playFadeInTimed(int fadeInMilliseconds, int timedMilliseconds, std::function<void(AudioDelegate*)> callback = nullptr, int repeats = 0);
@@ -70,11 +73,12 @@ namespace Val {
 		static std::unordered_map<int, std::function<void(AudioDelegate*)>> callbacks;
 	};
 
-	class AudioManager {
+	class AudioManager : public RegisterToScript {
 	public:
 		AudioManager();
 		~AudioManager();
-
+		
+		void registerToScript(chaiscript::ChaiScript* script);
 		void initialise();
 
 		void preloadMusic(ResourceLocation resource);

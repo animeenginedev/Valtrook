@@ -5,7 +5,6 @@
 #include "SimpleRectangle.h"
 
 #include "GUI.hpp"
-#include <chaiscript\chaiscript.hpp>
 
 namespace Val {
 	class Game;
@@ -24,9 +23,5 @@ namespace Val {
 
 		GUI_VerticalScroll::Ptr testScroll;
 		GUIFrame::Ptr testFrame;
-
-
-		std::function<void()> updateFunc;
-		chaiscript::ChaiScript updateScript;
 	};
 }

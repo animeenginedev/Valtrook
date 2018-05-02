@@ -52,6 +52,10 @@ namespace Val {
 		return &inputManager;
 	}
 
+	Game * Engine::getGame() {
+		return &game;
+	}
+
 	chaiscript::ChaiScript * Engine::getScriptingEngine() {
 		return &scriptingEngine;
 	}

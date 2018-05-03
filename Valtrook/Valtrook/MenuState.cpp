@@ -13,11 +13,9 @@
 
 
 namespace Val {
-	MenuState::MenuState(Game * const game) : GameState(game, "mainMenuState.chai"), window(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera())) {
+	MenuState::MenuState(Game * const game) : GameState(game), window(game->getInputManager(), Camera::Cast<OrthographicCamera>(game->getCamera())) {
 	}
 	void MenuState::initialise() {
-		GameState::initialise();
-
 		testFrame = GUIFrameR::Create(1, 0.2f, Colour(55, 55, 55, 255), Colour(125, 150, 125, 255));
 		window.addFrame(testFrame);
 
@@ -94,16 +92,12 @@ namespace Val {
 	}
 
 	void MenuState::update(const TimingType & deltaTime) {
-		GameState::update(deltaTime);
-
 		window.update(deltaTime);
 		auto mouseLoc = game->getInputManager()->getMouseLocation();
 		auto center = Camera::Cast<OrthographicCamera>(game->getCamera())->convertScreenToWorld(mouseLoc[0], mouseLoc[1]);
 		//testFrame->setCullAABB(AABB<float>(center[0], center[1], 2.0f));
 	}
 	void MenuState::render(const TimingType & deltaTime, RenderingEngine * const engine) {
-		GameState::render(deltaTime, engine);
-
 		window.render(deltaTime, engine);
 		//overlay->sendRenderInformation(engine);
 		//cullingTest->sendRenderInformation(engine);

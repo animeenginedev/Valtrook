@@ -17,6 +17,9 @@ void Val::GameState::registerToScript(chaiscript::ChaiScript * script) {
 	script->add(chaiscript::fun(&GameState::reset), "reset");
 	script->add(chaiscript::fun(&GameState::reloadScript), "reloadScript");
 
+	script->add(chaiscript::fun(&GameState::getIntStore), "getIntStore");
+	script->add(chaiscript::fun(&GameState::getFloatStore), "getFloatStore");
+
 	script->add(chaiscript::fun(&GameState::setReloadKey), "setReloadKey");
 }
 
@@ -35,6 +38,9 @@ void Val::GameState::initialise() {
 }
 
 void Val::GameState::reset() {
+	reloadKey = -1;
+	intStore.reset();
+	floatStore.reset();
 }
 
 void Val::GameState::onBecomeActive() {
@@ -106,4 +112,12 @@ void Val::GameState::setReloadKey(int reloadKey) {
 
 int Val::GameState::getReloadKey() {
 	return reloadKey;
+}
+
+Val::VariableStore<int>* Val::GameState::getIntStore() {
+	return &intStore;
+}
+
+Val::VariableStore<float>* Val::GameState::getFloatStore() {
+	return &floatStore;
 }

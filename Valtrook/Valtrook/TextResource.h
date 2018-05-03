@@ -3,14 +3,16 @@
 #include "FontAsset.h"
 #include <sdl_ttf.h>
 #include <string>
-
+#include "RegisterToScript.h"
 
 namespace Val {
-	class TextResource {
+	class TextResource : public RegisterToScript {
 	public:
 		TextResource(std::string contents, std::string fontName, unsigned int textSize = 96, std::string fontExtension = ".ttf");
 		TextResource(FontAsset* font, std::string contents);
 		~TextResource();
+
+		void registerToScript(chaiscript::ChaiScript* script);
 
 		FontAsset* getFont() const;
 		std::string getTextString() const;

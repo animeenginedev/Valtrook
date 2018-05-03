@@ -18,6 +18,51 @@ namespace Val {
 	}
 	SimpleMultilineTextRectangle::~SimpleMultilineTextRectangle() {
 	}
+	void SimpleMultilineTextRectangle::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<SimpleMultilineTextRectangle>(), "SimpleMultilineTextRectangle");
+
+		script->add(chaiscript::constructor<SimpleMultilineTextRectangle(TextResource, float, float, float, float, float)>(), "SimpleMultilineTextRectangle");
+		script->add(chaiscript::constructor<SimpleMultilineTextRectangle(TextResource, std::array<float, 2>, float, float, float)>(), "SimpleMultilineTextRectangle");
+		script->add(chaiscript::constructor<SimpleMultilineTextRectangle(TextResource, float, float, float, float, float, Colour, GLBlendMode)>(), "SimpleMultilineTextRectangle");
+		script->add(chaiscript::constructor<SimpleMultilineTextRectangle(TextResource, std::array<float, 2>, float, float, float, Colour, GLBlendMode)>(), "SimpleMultilineTextRectangle");
+
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setTextResource), "setTextResource");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setText), "setText");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setFont), "setFont");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setX), "setX");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setY), "setY");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setDepth), "setDepth");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setHalfWidthPerLine), "setHalfWidthPerLine");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setHalfHeightPerLine), "setHalfHeightPerLine");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setColour), "setColour");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setBlendMode), "setBlendMode");
+
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getTextResource), "getTextResource");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getText), "getText");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getFont), "getFont");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getX), "getX");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getY), "getY");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getDepth), "getDepth");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getCenter), "getCenter");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getHalfWidth), "getHalfWidth");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getHalfHeight), "getHalfHeight");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getHalfSize), "getHalfSize");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getHalfWidthPerLine), "getHalfWidthPerLine");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getHalfHeightPerLine), "getHalfHeightPerLine");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getHalfSizePerLine), "getHalfSizePerLine");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getColour), "getColour");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getBlendMode), "getBlendMode");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::getJustification), "getJustification");
+
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::reconstruct), "reconstruct");
+
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::setSingleLineMode), "setSingleLineMode");
+		script->add(chaiscript::fun(&SimpleMultilineTextRectangle::isSingleLineMode), "isSingleLineMode");
+
+
+		script->add(chaiscript::fun<void, SimpleMultilineTextRectangle, RenderingEngine*>(&SimpleMultilineTextRectangle::sendRenderInformation), "sendRenderInformation");
+		script->add(chaiscript::fun<void, SimpleMultilineTextRectangle, VBOBatcher*>(&SimpleMultilineTextRectangle::sendRenderInformation), "sendRenderInformation");
+	}
 	void SimpleMultilineTextRectangle::setTextResource(const TextResource & text) {
 		textResourceMaster = text;
 		needsReconstructed = true;

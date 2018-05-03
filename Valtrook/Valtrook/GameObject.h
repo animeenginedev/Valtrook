@@ -18,6 +18,13 @@ namespace Val {
 		virtual void update(const TimingType delta);
 		virtual void render(const TimingType delta, RenderingEngine* engine);
 
+		virtual void onCreate();
+		virtual void onInitialise();
+		virtual void onUpdate(float delta);
+		virtual void onRender(float delta);
+		virtual void onDestroy();
+		virtual void onActive();
+
 		bool isActive();
 		void setActive(bool active);
 

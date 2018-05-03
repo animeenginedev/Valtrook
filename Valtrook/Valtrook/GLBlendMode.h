@@ -1,9 +1,12 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <chaiscript\chaiscript.hpp>
 
 namespace Val {
 	struct GLBlendMode {
+		static void registerToScript(chaiscript::ChaiScript * script);
+
 		static GLBlendMode Blend_Default;
 		static GLBlendMode Blend_Additive;
 

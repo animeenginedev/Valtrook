@@ -1,10 +1,13 @@
 #pragma once
 
+#include "RegisterToScript.h"
 #include <vector>
 
 namespace Val {
 	class Colour {
 	public:
+		static void registerToScript(chaiscript::ChaiScript* script);
+
 		Colour();
 		Colour(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
 		~Colour();
@@ -38,6 +41,7 @@ namespace Val {
 		Colour operator/ (const T& right);
 
 		unsigned char& operator[](const std::size_t index);
+
 	};
 
 	template<typename T>

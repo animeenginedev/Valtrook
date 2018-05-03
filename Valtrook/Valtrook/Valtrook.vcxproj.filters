@@ -593,5 +593,8 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VariableStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

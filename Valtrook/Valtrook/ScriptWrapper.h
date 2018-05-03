@@ -15,15 +15,15 @@ namespace Val {
 			try {
 				return scriptingData.eval<T>(funcName);
 			} catch(const chaiscript::exception::bad_boxed_cast& b) {
-				printf(std::string("[INFO] :: Bad Boxed Cast: " + funcName + "\n" + b.what() + "\n").c_str());
+				printf(std::string("[INFO] :: Bad Boxed Cast @" + fileName + "::" + funcName + "\n" + b.what() + "\n").c_str());
 				return T();
 			} catch (const chaiscript::exception::eval_error& e) {
 				//I don't think this actually ever fires, errors on eval<T> only turn up when trying to run the function.
 				//Can't include logger because circular inclusion memes
-				printf(std::string("[INFO] :: Script Function Not Found or Invalid: " + funcName + "\n " + e.pretty_print() + "\n").c_str());
+				printf(std::string("[INFO] :: Script Function Not Found or Invalid @" + fileName + "::" + funcName + "\n " + e.pretty_print() + "\n").c_str());
 				return T();
 			} catch (const std::exception& except) {
-				printf(std::string("[INFO] :: Something Failed: " + funcName + "\n" + except.what() + "\n").c_str());
+				printf(std::string("[INFO] :: Something Failed @" + fileName + "::" + funcName + "\n" + except.what() + "\n").c_str());
 				return T();
 			}
 		}
@@ -35,7 +35,7 @@ namespace Val {
 				return;
 			} catch (const chaiscript::exception::eval_error& e) {
 				//Can't include logger because circular inclusion memes
-				printf(std::string("[INFO] :: Script Function Not Found or Invalid\n" + e.pretty_print() + "\n").c_str());
+				printf(std::string("[INFO] :: Script Function Not Found or Invalid @" + fileName +"\n" + e.pretty_print() + "\n").c_str());
 			}
 			func = nullptr;
 		}

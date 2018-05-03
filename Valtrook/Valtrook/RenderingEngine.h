@@ -2,14 +2,16 @@
 
 #include "VBOBatcher.h"
 #include "Window.h"
-
+#include "RegisterToScript.h"
 #include "GenericShaderObject.h"
 
 namespace Val {
-	class RenderingEngine {
+	class RenderingEngine : public RegisterToScript {
 	public:
 		RenderingEngine();
 		~RenderingEngine();
+
+		void registerToScript(chaiscript::ChaiScript* script);
 
 		static void InitWindow();
 

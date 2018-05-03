@@ -23,6 +23,26 @@ namespace Val {
 	SimpleTextRectangle::~SimpleTextRectangle() {
 	}
 
+	void SimpleTextRectangle::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<SimpleTextRectangle>(), "SimpleTextRectangle");
+		script->add(chaiscript::base_class<ATexturedRect, SimpleTextRectangle>());
+
+		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource)>(), "SimpleTextRectangle");
+		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, float, float, float, float, float)>(), "SimpleTextRectangle");
+		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, std::array<float, 2>, float, std::array<float, 2>)>(), "SimpleTextRectangle");
+		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, float, float, float, float, float, Colour, GLBlendMode)>(), "SimpleTextRectangle");
+		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, std::array<float, 2>, float, std::array<float, 2>, Colour, GLBlendMode)>(), "SimpleTextRectangle");
+
+		script->add(chaiscript::fun(&SimpleTextRectangle::setText), "setText");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setFont), "setFont");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setScaleTextToHeight), "setScaleTextToHeight");
+
+		script->add(chaiscript::fun(&SimpleTextRectangle::getTextResource), "getTextResource");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getText), "getText");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getFont), "getFont");
+		script->add(chaiscript::fun(&SimpleTextRectangle::doesScaleTextToHeight), "doesScaleTextToHeight");
+	}
+
 	void SimpleTextRectangle::setTextResource(const TextResource & text) {
 		textResource = text;
 		needsReconstructed = true;

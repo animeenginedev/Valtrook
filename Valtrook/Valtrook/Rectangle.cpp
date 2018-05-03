@@ -21,6 +21,42 @@ namespace Val {
 	Rectangle::~Rectangle() {
 	}
 
+	void Rectangle::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<Rectangle>(), "Rectangle");
+
+		script->add(chaiscript::constructor<Rectangle(TextureResource)>(), "Rectangle");
+		script->add(chaiscript::constructor<Rectangle(TextureResource, float, float, float, float, float, float)>(), "Rectangle");
+		script->add(chaiscript::constructor<Rectangle(TextureResource, std::array<float, 2>, float, std::array<float, 2>, float)>(), "Rectangle");
+		script->add(chaiscript::constructor<Rectangle(TextureResource, float, float, float, float, float, float, Colour, GLBlendMode)>(), "Rectangle");
+		script->add(chaiscript::constructor<Rectangle(TextureResource, std::array<float, 2>, float, std::array<float, 2>, float, Colour, GLBlendMode)>(), "Rectangle");
+
+		script->add(chaiscript::fun(&Rectangle::setTexture), "setTexture");
+		script->add(chaiscript::fun(&Rectangle::setX), "setX");
+		script->add(chaiscript::fun(&Rectangle::setY), "setY");
+		script->add(chaiscript::fun(&Rectangle::setDepth), "setDepth");
+		script->add(chaiscript::fun(&Rectangle::setHalfWidth), "setHalfWidth");
+		script->add(chaiscript::fun(&Rectangle::setHalfHeight), "setHalfHeight");
+		script->add(chaiscript::fun(&Rectangle::setColour), "setColour");
+		script->add(chaiscript::fun(&Rectangle::setRotation), "setRotation");
+		script->add(chaiscript::fun(&Rectangle::setBlendMode), "setBlendMode");
+
+		script->add(chaiscript::fun(&Rectangle::getTexture), "getTexture");
+		script->add(chaiscript::fun(&Rectangle::getX), "getX");
+		script->add(chaiscript::fun(&Rectangle::getY), "getY");
+		script->add(chaiscript::fun(&Rectangle::getDepth), "getDepth");
+		script->add(chaiscript::fun(&Rectangle::getCenter), "getCenter");
+		script->add(chaiscript::fun(&Rectangle::getHalfWidth), "getHalfWidth");
+		script->add(chaiscript::fun(&Rectangle::getHalfHeight), "getHalfHeight");
+		script->add(chaiscript::fun(&Rectangle::getHalfSize), "getHalfSize");
+		script->add(chaiscript::fun(&Rectangle::getColour), "getColour");
+		script->add(chaiscript::fun(&Rectangle::getRotation), "getRotation");
+		script->add(chaiscript::fun(&Rectangle::getBlendMode), "getBlendMode");
+
+
+		script->add(chaiscript::fun<void, Rectangle, RenderingEngine*>(&Rectangle::sendRenderInformation), "sendRenderInformation");
+		script->add(chaiscript::fun<void, Rectangle, VBOBatcher*>(&Rectangle::sendRenderInformation), "sendRenderInformation");
+	}
+
 	void Rectangle::setTexture(const TextureResource & texture) {
 		this->texture = texture;
 		this->uvBounds = texture.getBounds();

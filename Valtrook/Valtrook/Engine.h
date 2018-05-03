@@ -27,7 +27,7 @@ namespace Val {
 		Game* getGame();
 		chaiscript::ChaiScript* getScriptingEngine();
 
-		RenderingEngine const* getRenderingEngine() const;
+		RenderingEngine  *  getRenderingEngine() const;
 		void setCustomRenderer(RenderingEngine* renderer);
 		void resetRendererToDefault();
 		bool isRendererDefault() const;

@@ -3,12 +3,13 @@
 #include "ATexturedRect.h"
 #include "TextResource.h"
 #include "Glyph.h"
+#include "RegisterToScript.h"
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
 
-	class SimpleTextRectangle : public ATexturedRect {
+	class SimpleTextRectangle : public ATexturedRect, public RegisterToScript{
 	public:
 		SimpleTextRectangle(const TextResource& texture);
 		SimpleTextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight);
@@ -16,6 +17,8 @@ namespace Val {
 		SimpleTextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		SimpleTextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		~SimpleTextRectangle();
+
+		void registerToScript(chaiscript::ChaiScript* script);
 
 		void setTextResource(const TextResource& text);
 		void setText(const std::string& contents);

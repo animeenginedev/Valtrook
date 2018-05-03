@@ -6,6 +6,8 @@
 namespace Val {
 	class ARect : public Renderable {
 	public:
+
+
 		ARect(std::array<float, 2> center, std::array<float, 2> halfSize, float depth);
 		~ARect();
 

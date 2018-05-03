@@ -9,6 +9,9 @@ Val::ResourceLocation getAudioLocation(std::string name, std::string ext) {
 Val::ResourceLocation getTextureLocation(std::string name, std::string ext) {
 	return Val::ResourceLocation(name, ext, Val::RuntimeConstants::Instance->TexturePath);
 }
+Val::ResourceLocation getFontLocation(std::string name, std::string ext) {
+	return Val::ResourceLocation(name, ext, Val::RuntimeConstants::Instance->FontPath);
+}
 
 void Val::ResourceLocation::registerToScript(chaiscript::ChaiScript * script) {
 	script->add(chaiscript::user_type<ResourceLocation>(), "ResourceLocation");
@@ -22,6 +25,7 @@ void Val::ResourceLocation::registerToScript(chaiscript::ChaiScript * script) {
 
 	script->add(chaiscript::fun(&getAudioLocation), "getAudioLocation");
 	script->add(chaiscript::fun(&getTextureLocation), "getTextureLocation");
+	script->add(chaiscript::fun(&getFontLocation), "getFontLocation");
 }
 
 std::string Val::ResourceLocation::getPath() const {

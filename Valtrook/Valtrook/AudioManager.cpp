@@ -22,7 +22,7 @@ namespace Val {
 	void AudioAsset::registerToScript(chaiscript::ChaiScript * script) {
 		script->add(chaiscript::user_type<AudioAsset>(), "AudioAsset");
 
-		script->add(chaiscript::var(&AudioAsset::resource), "resource");
+		script->add(chaiscript::fun(&AudioAsset::resource), "resource");
 
 		script->add(chaiscript::fun(&AudioAsset::createPlayDelegate), "createPlayDelegate");
 	}

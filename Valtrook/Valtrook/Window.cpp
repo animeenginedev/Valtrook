@@ -12,6 +12,25 @@ namespace Val {
 
 	Window::~Window() {}
 
+	void Window::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<Window>(), "Window");
+
+		script->add(chaiscript::fun(&Window::resizeWindow), "resizeWindow");
+		script->add(chaiscript::fun(&Window::setWindowBrightness), "setWindowBrightness");
+		script->add(chaiscript::fun(&Window::setWindowBordered), "setWindowBordered");
+		script->add(chaiscript::fun(&Window::setWindowFullscreen), "setWindowFullscreen");
+		script->add(chaiscript::fun(&Window::setWindowGrab), "setWindowGrab");
+		script->add(chaiscript::fun(&Window::setWindowIcon), "setWindowIcon");
+		script->add(chaiscript::fun(&Window::setWindowMaximunSize), "setWindowMaximunSize");
+		script->add(chaiscript::fun(&Window::setWindowMinimunSize), "setWindowMinimunSize");
+		script->add(chaiscript::fun(&Window::setWindowPosition), "setWindowPosition");
+		script->add(chaiscript::fun(&Window::setWindowCentered), "setWindowCentered");
+
+		script->add(chaiscript::fun(&Window::setWindowTitle), "setWindowTitle");
+		script->add(chaiscript::fun(&Window::maximiseWindow), "maximiseWindow");
+		script->add(chaiscript::fun(&Window::minimiseWindow), "minimiseWindow");
+	}
+
 	int Window::create( unsigned int currentFlags) {
 
 		RuntimeConstants::Instance->WindowName.addReciever(&WindowName);

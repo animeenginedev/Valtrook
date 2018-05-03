@@ -4,6 +4,7 @@
 #include <SDL2\SDL.h>
 #include "RegisterToScript.h"
 #include "StateScriptWrapper.h"
+#include "VariableStore.h"
 
 namespace Val {
 	class Game;
@@ -31,6 +32,9 @@ namespace Val {
 
 		void setReloadKey(int reloadKey);
 		int getReloadKey();
+
+		VariableStore<int>* getIntStore();
+		VariableStore<float>* getFloatStore();
 	protected:
 		Game *const game;
 		bool bReloadScript;
@@ -41,5 +45,8 @@ namespace Val {
 		std::function<void(float)> updateFunc, renderFunc;
 
 		StateScriptWrapper stateScript;
+
+		VariableStore<int> intStore;
+		VariableStore<float> floatStore;
 	};
 }

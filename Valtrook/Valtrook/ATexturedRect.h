@@ -5,10 +5,13 @@
 #include "GLBlendMode.h"
 #include "TextureAsset.h"
 #include "UV.h"
+#include <chaiscript\chaiscript.hpp>
 
 namespace Val {
 	class ATexturedRect : public ARect {
 	public:
+		static void registerToScript(chaiscript::ChaiScript* script);
+
 		ATexturedRect(const TextureResource& texture, std::array<float, 2> center, std::array<float, 2> halfSize, float depth, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		~ATexturedRect();
 

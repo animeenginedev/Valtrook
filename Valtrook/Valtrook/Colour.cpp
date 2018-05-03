@@ -3,6 +3,20 @@
 #include <assert.h>
 
 namespace Val {
+	void Colour::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<Colour>(), "Colour");
+
+		script->add(chaiscript::constructor<Colour()>(), "Colour");
+		script->add(chaiscript::constructor<Colour(unsigned char, unsigned char, unsigned char, unsigned char)>(), "Colour");
+
+		script->add(chaiscript::fun(&Colour::r), "r");
+		script->add(chaiscript::fun(&Colour::g), "g");
+		script->add(chaiscript::fun(&Colour::b), "b");
+		script->add(chaiscript::fun(&Colour::a), "a");
+
+		script->add(chaiscript::fun([](Colour& lhs, const Colour rhs) {return (lhs = rhs); }), "=");
+
+	}
 	Colour::Colour() : r(r), g(g), b(b), a(a) {
 	}
 

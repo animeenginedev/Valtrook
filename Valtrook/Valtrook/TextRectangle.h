@@ -2,12 +2,13 @@
 
 #include "Rectangle.h"
 #include "TextResource.h"
+#include "RegisterToScript.h"
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
 
-	class TextRectangle {
+	class TextRectangle : public RegisterToScript {
 	public:
 		TextRectangle(const TextResource& texture);
 		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation);
@@ -15,6 +16,8 @@ namespace Val {
 		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		TextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		~TextRectangle();
+
+		void registerToScript(chaiscript::ChaiScript* script);
 
 		void setTextResource(const TextResource& text);
 		void setText(const std::string& contents);

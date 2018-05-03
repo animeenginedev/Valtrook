@@ -60,7 +60,7 @@ namespace Val {
 		return &scriptingEngine;
 	}
 
-	RenderingEngine const * Engine::getRenderingEngine() const {
+	RenderingEngine * Engine::getRenderingEngine() const {
 		return renderer;
 	}
 
@@ -120,6 +120,7 @@ namespace Val {
 
 		script->add(chaiscript::fun(&Engine::getAudioManager), "getAudioManager");
 		script->add(chaiscript::fun(&Engine::getInputManager), "getInputManager");
+		script->add(chaiscript::fun(&Engine::getRenderingEngine), "getRenderingEngine");
 
 		script->add(chaiscript::fun(&Engine::setTargetFrameRate), "setTargetFrameRate");
 		script->add(chaiscript::fun(&Engine::setTargetUpdateRate), "setTargetUpdateRate");

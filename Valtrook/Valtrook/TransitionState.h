@@ -19,6 +19,8 @@ namespace Val {
 			delete del;
 		}
 
+		void registerToScript(chaiscript::ChaiScript* script);
+
 		TransitionState(Game * const game) : GameState(game) {};
 
 		void initialise(GameState* nextState, TimingType transitionTime, Colour start, Colour end);

@@ -21,20 +21,19 @@ namespace Val {
 		((OrthographicCamera*)defaultCamera)->update(0.0f);
 		currentCamera = defaultCamera;
 		
-		splashState = new SplashState(this);
-		menuState = new MenuState(this);
-
-		splashState->initialise(menuState);
-		menuState->initialise();
-
-
-		currentState = splashState;
-		splashState->onBecomeActive();
-
 		entryPointScript.reload();
-		auto func = entryPointScript.getFunction<std::function<void()>>("initialise");
-		if (func)
-			func();
+		entryPointScript.safetlyRunFunc(entryPointScript.getFunction<std::function<void()>> ("initialise"));
+
+		if (currentState == nullptr) {
+			if (nextState != nullptr) {
+				if (callbackOnStateChange.operator bool())
+					callbackOnStateChange();
+				currentState = nextState;
+				nextState = nullptr;
+
+				currentState->onBecomeActive();
+			}
+		}
 	}
 
 	void Game::rawEvent(const SDL_Event & e) {

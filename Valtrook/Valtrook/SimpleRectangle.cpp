@@ -21,11 +21,27 @@ namespace Val {
 	}
 	SimpleRectangle::~SimpleRectangle() {
 	}
+	void SimpleRectangle::registerToScript(chaiscript::ChaiScript * script) {
+		script->add(chaiscript::user_type<SimpleRectangle>(), "SimpleRectangle");
+		script->add(chaiscript::base_class<ATexturedRect, SimpleRectangle>());
+
+		script->add(chaiscript::constructor<SimpleRectangle(TextureResource)>(), "SimpleRectangle");
+		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, float, float, float, float, float)>(), "SimpleRectangle");
+		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, std::array<float, 2>, float, std::array<float, 2>)>(), "SimpleRectangle");
+		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, float, float, float, float, float, Colour, GLBlendMode)>(), "SimpleRectangle");
+		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, std::array<float, 2>, float, std::array<float, 2>, Colour, GLBlendMode)>(), "SimpleRectangle");
+
+		script->add(chaiscript::fun(&SimpleRectangle::getTexture), "getTexture");
+
+	}
 	void SimpleRectangle::setCullSurface(AABB<float> cullAABB) {
 		static AABB<float> noCullSurface = { 0.0f, 0.0f, 0.0f, 0.0f };
 		this->cullAABB = cullAABB;
 		bHasCullSurface = !(cullAABB == noCullSurface);
 		needsReconstructed = true;
+	}
+	TextureResource SimpleRectangle::getTexture() const {
+		return texture;
 	}
 	AABB<float> SimpleRectangle::getCullSurface() const {
 		return cullAABB;

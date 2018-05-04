@@ -19,14 +19,6 @@ namespace Val {
 		return FontAsset::getFont(resource, fontSize);
 	}
 
-	void FontAsset::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<FontAsset>(), "FontAsset");
-
-		script->add(chaiscript::fun(&FontAsset::getFontSize), "getFontSize");
-
-		script->add(chaiscript::fun(&CHAIgetFont), "getFont");
-	}
-
 	FontAsset * FontAsset::getFont(ResourceLocation resource, unsigned int fontSize) {
 		std::string fontName = resource.getLocation() + ":" + std::to_string(fontSize);
 

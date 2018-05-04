@@ -106,9 +106,6 @@
     <Filter Include="Source Files\Utility\Structures">
       <UniqueIdentifier>{ec2d48e3-8622-44e3-adc8-679bde307204}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Scripting">
-      <UniqueIdentifier>{114281f2-5fcc-4907-92bd-a29dfc7c2396}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utility\Pointer">
       <UniqueIdentifier>{1c05dca3-1d1e-49b6-9fb0-6545e0dd4ef0}</UniqueIdentifier>
     </Filter>
@@ -290,12 +287,6 @@
     </ClCompile>
     <ClCompile Include="Line.cpp">
       <Filter>Source Files\Engine\Renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="BindingRegister.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptWrapper.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
@@ -554,19 +545,7 @@
     <ClInclude Include="InteractionArea.h">
       <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
-    <ClInclude Include="RegisterToScript.h">
-      <Filter>Header Files\Engine\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="BindingRegister.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VariableStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

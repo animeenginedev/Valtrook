@@ -8,21 +8,18 @@
 #include "Justification.h"
 #include "AABB.h"
 #include "WordString.h"
-#include "RegisterToScript.h"
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
 
-	class SimpleMultilineTextRectangle : public RegisterToScript {
+	class SimpleMultilineTextRectangle {
 	public:
 		SimpleMultilineTextRectangle(const TextResource& texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine);
 		SimpleMultilineTextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine);
 		SimpleMultilineTextRectangle(const TextResource& texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		SimpleMultilineTextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		~SimpleMultilineTextRectangle();
-
-		void registerToScript(chaiscript::ChaiScript* script);
 
 		void setTextResource(const TextResource& text);
 		void setText(const std::string& contents);

@@ -1,5 +1,4 @@
 
-#include "RegisterToScript.h"
 #include <list>
 #include <string>
 
@@ -12,14 +11,12 @@ namespace Val {
 	};
 
 
-	class Logger : public RegisterToScript {
+	class Logger {
 	public:
 		static Logger* Instance;
 
 		Logger();
 		~Logger();
-
-		void registerToScript(chaiscript::ChaiScript* script);
 
 		void logMessage(LogLevel level, std::string message);
 

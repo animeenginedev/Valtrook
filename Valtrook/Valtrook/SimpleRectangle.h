@@ -5,14 +5,13 @@
 #include "UV.h"
 #include "GLBlendMode.h"
 #include "Texture.h"
-#include "RegisterToScript.h"
 #include <array>
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
 
-	class SimpleRectangle : public RegisterToScript{
+	class SimpleRectangle {
 	public:
 		SimpleRectangle(const TextureResource& texture);
 		SimpleRectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight);
@@ -20,8 +19,6 @@ namespace Val {
 		SimpleRectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		SimpleRectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		~SimpleRectangle();
-
-		void registerToScript(chaiscript::ChaiScript* script);
 
 		void setTexture(const TextureResource& texture);
 		void setX(float x);

@@ -2,7 +2,6 @@
 
 #include <string>
 #include <type_traits>
-#include "RegisterToScript.h"
 
 namespace Val {
 	struct ResourceLocation final {
@@ -12,7 +11,6 @@ namespace Val {
 		}
 
 
-		void registerToScript(chaiscript::ChaiScript* script);
 		std::string getPath() const;
 		std::string getName() const;
 		std::string getExtension() const;

@@ -4,13 +4,12 @@
 #include "Glyph.h"
 #include "Colour.h"
 #include "GLBlendMode.h"
-#include "RegisterToScript.h"
 
 namespace Val {
 	class RenderingEngine;
 	class VBOBatcher;
 	
-	class Rectangle : public RegisterToScript {
+	class Rectangle {
 	public:
 		Rectangle(const TextureResource& texture);
 		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation);
@@ -18,9 +17,7 @@ namespace Val {
 		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		Rectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
 		~Rectangle();
-
-		void registerToScript(chaiscript::ChaiScript* script);
-
+		
 		void setTexture(const TextureResource& texture);
 		void setX(float x);
 		void setY(float y);

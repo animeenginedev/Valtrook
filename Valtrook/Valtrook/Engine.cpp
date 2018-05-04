@@ -7,7 +7,6 @@
 #include "Texture.h"
 #include "TextureAsset.h"
 #include "TaskMaster.h"
-#include "BindingRegister.h"
 
 
 #include <sdl_ttf.h>
@@ -21,7 +20,7 @@ static void CreateDirectoryIfItDoesNotExist(std::string directory) {
 
 #include "Angle.h"
 namespace Val {
-	Engine::Engine() : running(false), scriptingEngine(), inputManager(), game(&inputManager, &audioManager, &scriptingEngine) {
+	Engine::Engine() : running(false), inputManager(), game(&inputManager, &audioManager) {
 	}
 
 	Engine::~Engine() {
@@ -54,10 +53,6 @@ namespace Val {
 
 	Game * Engine::getGame() {
 		return &game;
-	}
-
-	chaiscript::ChaiScript * Engine::getScriptingEngine() {
-		return &scriptingEngine;
 	}
 
 	RenderingEngine * Engine::getRenderingEngine() const {
@@ -111,25 +106,6 @@ namespace Val {
 	unsigned int Engine::getPerformanceOutputRate() const {
 		return performanceOutputRate;
 	}
-
-	void Engine::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<Engine>(), "Engine");
-
-		script->add(chaiscript::fun(&Engine::stop), "stop");
-		script->add(chaiscript::fun(&Engine::isRunning), "isRunning");
-
-		script->add(chaiscript::fun(&Engine::getAudioManager), "getAudioManager");
-		script->add(chaiscript::fun(&Engine::getInputManager), "getInputManager");
-		script->add(chaiscript::fun(&Engine::getRenderingEngine), "getRenderingEngine");
-
-		script->add(chaiscript::fun(&Engine::setTargetFrameRate), "setTargetFrameRate");
-		script->add(chaiscript::fun(&Engine::setTargetUpdateRate), "setTargetUpdateRate");
-		script->add(chaiscript::fun(&Engine::setPerformanceOutputRate), "setPerformanceOutputRate");
-
-		script->add(chaiscript::fun(&Engine::getTargetFrameRate), "getTargetFrameRate");
-		script->add(chaiscript::fun(&Engine::getTargetUpdateRate), "getTargetUpdateRate");
-		script->add(chaiscript::fun(&Engine::getPerformanceOutputRate), "getPerformanceOutputRate");
-	}
 	
 	void Engine::initialise() {
 		setTargetFrameRate(240);
@@ -162,8 +138,6 @@ namespace Val {
 		TaskMaster::initialise(std::thread::hardware_concurrency());
 
 		Texture::errorTexture = TextureAsset::getTexture("errorTexture");
-
-		BindingRegister::RegisterBindings(this, scriptingEngine);
 
 		game.initialise();
 	}

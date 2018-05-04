@@ -19,14 +19,6 @@ namespace Val {
 		}
 	}
 
-	void AudioAsset::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<AudioAsset>(), "AudioAsset");
-
-		script->add(chaiscript::fun(&AudioAsset::resource), "resource");
-
-		script->add(chaiscript::fun(&AudioAsset::createPlayDelegate), "createPlayDelegate");
-	}
-
 	//Asset
 	void AudioAsset::load(ResourceLocation res, bool allowAsyncLoad) {
 		auto ext = res.getExtension();
@@ -65,27 +57,6 @@ namespace Val {
 	}
 	bool AudioDelegate::isLoaded() {
 		return asset->loadedAsset != nullptr;
-	}
-	void AudioDelegate::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<AudioDelegate>(), "AudioDelegate");
-
-		script->add(chaiscript::constructor<AudioDelegate(AudioAsset*)>(), "AudioDelegate");
-
-		script->add(chaiscript::fun(&AudioDelegate::isLoaded), "isLoaded");
-		script->add(chaiscript::fun(&AudioDelegate::playFadeIn), "playFadeIn");
-		script->add(chaiscript::fun(&AudioDelegate::playFadeInTimed), "playFadeInTimed");
-		script->add(chaiscript::fun(&AudioDelegate::play), "play");
-		script->add(chaiscript::fun(&AudioDelegate::playTimed), "playTimed");
-		script->add(chaiscript::fun(&AudioDelegate::setVolume), "setVolume");
-		script->add(chaiscript::fun(&AudioDelegate::pause), "pause");
-		script->add(chaiscript::fun(&AudioDelegate::resume), "resume");
-		script->add(chaiscript::fun(&AudioDelegate::fadeOut), "fadeOut");
-		script->add(chaiscript::fun(&AudioDelegate::expire), "expire");
-		script->add(chaiscript::fun(&AudioDelegate::halt), "halt");
-		script->add(chaiscript::fun(&AudioDelegate::getAudioAsset), "getAudioAsset");
-		script->add(chaiscript::fun(&AudioDelegate::getAudioChannel), "getAudioChannel");
-		script->add(chaiscript::fun(&AudioDelegate::isValidDelegate), "isValidDelegate");
-		script->add(chaiscript::fun([](AudioDelegate& lhs, const AudioDelegate rhs) {return (lhs = rhs); }), "=");
 	}
 	bool AudioDelegate::playFadeIn(int milliseconds, std::function<void(AudioDelegate*)> callback, int repeats) {
 		if (!isLoaded())
@@ -234,22 +205,6 @@ namespace Val {
 	AudioManager::~AudioManager() {
 	}
 
-	void AudioManager::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<AudioManager>(), "AudioManager");
-
-		script->add(chaiscript::fun(&AudioManager::preloadMusic), "preloadMusic");
-		script->add(chaiscript::fun(&AudioManager::unloadMusic), "unloadMusic");
-		script->add(chaiscript::fun(&AudioManager::playMusic), "playMusic");
-		script->add(chaiscript::fun(&AudioManager::pauseMusic), "pauseMusic");
-		script->add(chaiscript::fun(&AudioManager::resumeMusic), "resumeMusic");
-		script->add(chaiscript::fun(&AudioManager::haltMusic), "haltMusic");
-		script->add(chaiscript::fun(&AudioManager::setMusicVolume), "setMusicVolume");
-		script->add(chaiscript::fun(&AudioManager::getAudioPlayer), "getAudioPlayer");
-
-		script->add(chaiscript::fun(&AudioManager::allocateChannels), "allocateChannels");
-		script->add(chaiscript::fun(&AudioManager::reserveChannels), "reserveChannels");
-		script->add(chaiscript::fun(&AudioManager::uniqueChannels), "uniqueChannels");
-	}
 
 	void AudioManager::initialise() {
 		if (SDL_Init(SDL_INIT_AUDIO) < 0) {

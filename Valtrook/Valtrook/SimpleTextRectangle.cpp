@@ -23,47 +23,6 @@ namespace Val {
 	SimpleTextRectangle::~SimpleTextRectangle() {
 	}
 
-	void SimpleTextRectangle::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<SimpleTextRectangle>(), "SimpleTextRectangle");
-
-		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource)>(), "SimpleTextRectangle");
-		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, float, float, float, float, float)>(), "SimpleTextRectangle");
-		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, std::array<float, 2>, float, std::array<float, 2>)>(), "SimpleTextRectangle");
-		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, float, float, float, float, float, Colour, GLBlendMode)>(), "SimpleTextRectangle");
-		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, std::array<float, 2>, float, std::array<float, 2>, Colour, GLBlendMode)>(), "SimpleTextRectangle");
-
-		script->add(chaiscript::fun<void, SimpleTextRectangle, RenderingEngine*>(&SimpleTextRectangle::sendRenderInformation), "sendRenderInformation");
-		script->add(chaiscript::fun<void, SimpleTextRectangle, VBOBatcher*>(&SimpleTextRectangle::sendRenderInformation), "sendRenderInformation");
-
-
-		script->add(chaiscript::fun(&SimpleTextRectangle::setX), "setX");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setY), "setY");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setDepth), "setDepth");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getX), "getX");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getY), "getY");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getDepth), "getDepth");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getCenter), "getCenter");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getHalfWidth), "getHalfWidth");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getHalfHeight), "getHalfHeight");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getHalfSize), "getHalfSize");
-
-		script->add(chaiscript::fun(&SimpleTextRectangle::setText), "setText");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setFont), "setFont");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setScaleTextToHeight), "setScaleTextToHeight");
-
-		script->add(chaiscript::fun(&SimpleTextRectangle::getTextResource), "getTextResource");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getText), "getText");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getFont), "getFont");
-		script->add(chaiscript::fun(&SimpleTextRectangle::doesScaleTextToHeight), "doesScaleTextToHeight");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setHalfWidth), "setHalfWidth");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setHalfHeight), "setHalfHeight");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setColour), "setColour");
-		script->add(chaiscript::fun(&SimpleTextRectangle::setBlendMode), "setBlendMode");
-
-		script->add(chaiscript::fun(&SimpleTextRectangle::getColour), "getColour");
-		script->add(chaiscript::fun(&SimpleTextRectangle::getBlendMode), "getBlendMode");
-	}
-
 	void SimpleTextRectangle::setHalfWidth(float h_width) {
 		halfSize[0] = h_width;
 		needsReconstructed = true;

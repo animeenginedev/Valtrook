@@ -5,22 +5,12 @@
 #include <GL\GL.h>
 
 namespace Val {
-	void createAndTransition(Game* game, std::string newStateName, float transitionTime, Colour start, Colour end) {
-		auto TState = new TransitionState(game);
-		TState->initialise(game->getNamedState(newStateName), transitionTime, start, end);
-
-		game->setState(TState);
-	}
-
 	void TransitionState::onBecomeActive() {
 	}
 
 	void TransitionState::onBecomeInactive() {
 	}
-
-	void TransitionState::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::fun(&createAndTransition), "createAndTransition");
-	}
+	
 	void TransitionState::initialise(GameState * nextState, TimingType transitionTime, Colour start, Colour end) {
 		this->nextState = nextState;
 		timeTillNextState.setLength(transitionTime);

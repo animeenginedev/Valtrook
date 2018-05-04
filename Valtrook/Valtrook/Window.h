@@ -5,7 +5,6 @@
 
 #include <SDL2/SDL.h> 
 #include <string>
-#include "RegisterToScript.h"
 
 namespace Val {
 	enum WindowFlags : Uint32 {
@@ -23,13 +22,11 @@ namespace Val {
 							   //MOUSE_CAPTURE      = 2048  //< NOT CURRENTLY SUPPORTED (Not built with SDL 2.0.4) Window has mouse captured
 	};
 
-	class Window : public RegisterToScript {
+	class Window {
 	public:
 		Window();
 		~Window();
-
-		void registerToScript(chaiscript::ChaiScript* script);
-
+		
 		int create(unsigned int currentFlags);
 
 		void swapBuffer();

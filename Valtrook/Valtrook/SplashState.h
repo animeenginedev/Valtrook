@@ -8,6 +8,7 @@
 #include "GateTimer.h"
 #include "AudioManager.h"
 #include <memory>
+
 namespace Val {
 	class Game;
 

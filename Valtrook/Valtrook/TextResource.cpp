@@ -12,18 +12,6 @@ namespace Val {
 	TextResource::~TextResource() {
 	}
 
-	void TextResource::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<TextResource>(), "TextResource");
-
-		script->add(chaiscript::constructor<TextResource(FontAsset*, std::string)>(), "TextResource");
-
-		script->add(chaiscript::fun(&TextResource::getFont), "getFont");
-		script->add(chaiscript::fun(&TextResource::getTextString), "getTextString");
-
-		script->add(chaiscript::fun([](const TextResource lhs, const TextResource rhs) {return (lhs == rhs); }), "==");
-		script->add(chaiscript::fun([](const TextResource lhs, const TextResource rhs) {return (lhs != rhs); }), "!=");
-		script->add(chaiscript::fun([](TextResource& lhs, const TextResource rhs) {return (lhs = rhs); }), "=");
-	}
 
 	FontAsset * TextResource::getFont() const {
 		return font;

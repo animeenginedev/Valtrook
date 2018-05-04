@@ -1,8 +1,6 @@
 #pragma once
 
-#include "RegisterToScript.h"
 #include "TimingType.h"
-#include "ScriptWrapper.h"
 
 #include <array>
 
@@ -10,9 +8,9 @@ namespace Val {
 	class RenderingEngine;
 	class GameState;
 
-	class GameObject : public RegisterToScript {
+	class GameObject {
 	public:
-		GameObject(ScriptWrapper script, GameState* state);
+		GameObject(GameState* state);
 		~GameObject();
 		
 		void create();
@@ -48,22 +46,11 @@ namespace Val {
 		float getX() const;
 		float getY() const;
 		std::array<float, 2> getPosition() const;
-
-		std::string getScriptName();
-		ScriptWrapper* getScriptWrapper();
-
-		void registerToScript(chaiscript::ChaiScript* script) override;
 	protected:
 		GameState* owningState;
-		ScriptWrapper script;
 		std::string objectName;
 		bool bisValid;
 		bool bIsActive;
-
-		bool isUpdateFuncSafe;
-		std::function<void(float)> updateFunc;
-		bool isRenderFuncSafe;
-		std::function<void(float, RenderingEngine*)> renderFunc;
 
 		std::array<float, 2> position;
 	};

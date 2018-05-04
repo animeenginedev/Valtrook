@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
-    <ClCompile Include="BindingRegister.cpp" />
     <ClCompile Include="CollisionShapeCircle.cpp" />
     <ClCompile Include="CollisionShapePolygon.cpp" />
     <ClCompile Include="FontAsset.cpp" />
@@ -169,7 +168,6 @@
     <ClCompile Include="RenderingEngine.cpp" />
     <ClCompile Include="ResourceLocation.cpp" />
     <ClCompile Include="RuntimeConstants.cpp" />
-    <ClCompile Include="ScriptWrapper.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="SimpleMultilineTextRectangle.cpp" />
     <ClCompile Include="SimpleRectangle.cpp" />
@@ -195,7 +193,6 @@
     <ClInclude Include="Angle.h" />
     <ClInclude Include="ArrayMath.h" />
     <ClInclude Include="AudioManager.h" />
-    <ClInclude Include="BindingRegister.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionShape2D.h" />
     <ClInclude Include="CollisionShapeCircle.h" />
@@ -252,11 +249,9 @@
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="GlyphCuller.h" />
     <ClInclude Include="Rectangles.hpp" />
-    <ClInclude Include="RegisterToScript.h" />
     <ClInclude Include="RenderingEngine.h" />
     <ClInclude Include="ResourceLocation.h" />
     <ClInclude Include="RuntimeConstants.h" />
-    <ClInclude Include="ScriptWrapper.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="SimpleMultilineTextRectangle.h" />
     <ClInclude Include="SimpleRectangle.h" />
@@ -274,7 +269,6 @@
     <ClInclude Include="TimingType.h" />
     <ClInclude Include="TransitionState.h" />
     <ClInclude Include="UV.h" />
-    <ClInclude Include="VariableStore.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBOBatcher.h" />
     <ClInclude Include="Vertex.h" />

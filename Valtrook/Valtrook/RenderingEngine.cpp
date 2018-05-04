@@ -13,14 +13,6 @@ namespace Val {
 	RenderingEngine::~RenderingEngine() {
 	}
 
-	void RenderingEngine::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<RenderingEngine>(), "RenderingEngine");
-
-		script->add(chaiscript::fun(&RenderingEngine::getRenderer), "getRenderer");
-		script->add(chaiscript::fun(&RenderingEngine::getGUIRenderer), "getGUIRenderer");
-		script->add(chaiscript::fun(&RenderingEngine::getWindow), "getWindow");
-	}
-
 	void RenderingEngine::InitWindow() {
 		window.create(0);
 

@@ -25,44 +25,6 @@ namespace Val {
 	SimpleRectangle createSimpleRectangle(std::string texturePath, float x, float y, float depth, float hW, float hH) {
 		return SimpleRectangle(TextureAsset::getTexture(texturePath), x, y, depth, hW, hH);
 	}
-
-	void SimpleRectangle::registerToScript(chaiscript::ChaiScript * script) {
-		script->add(chaiscript::user_type<SimpleRectangle>(), "SimpleRectangle");
-
-		script->add(chaiscript::fun(&createSimpleRectangle), "createSimpleRectangle");
-
-		script->add(chaiscript::constructor<SimpleRectangle(TextureResource)>(), "SimpleRectangle");
-		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, float, float, float, float, float)>(), "SimpleRectangle");
-		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, std::array<float, 2>, float, std::array<float, 2>)>(), "SimpleRectangle");
-		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, float, float, float, float, float, Colour, GLBlendMode)>(), "SimpleRectangle");
-		script->add(chaiscript::constructor<SimpleRectangle(TextureResource, std::array<float, 2>, float, std::array<float, 2>, Colour, GLBlendMode)>(), "SimpleRectangle");
-
-		script->add(chaiscript::fun(&SimpleRectangle::getTexture), "getTexture");
-		
-		script->add(chaiscript::fun<void, SimpleRectangle, RenderingEngine*>(&SimpleRectangle::sendRenderInformation), "sendRenderInformation");
-		script->add(chaiscript::fun<void, SimpleRectangle, VBOBatcher*>(&SimpleRectangle::sendRenderInformation), "sendRenderInformation");
-
-
-		script->add(chaiscript::fun(&SimpleRectangle::setX), "setX");
-		script->add(chaiscript::fun(&SimpleRectangle::setY), "setY");
-		script->add(chaiscript::fun(&SimpleRectangle::setDepth), "setDepth");
-		script->add(chaiscript::fun(&SimpleRectangle::getX), "getX");
-		script->add(chaiscript::fun(&SimpleRectangle::getY), "getY");
-		script->add(chaiscript::fun(&SimpleRectangle::getDepth), "getDepth");
-		script->add(chaiscript::fun(&SimpleRectangle::getCenter), "getCenter");
-		script->add(chaiscript::fun(&SimpleRectangle::getHalfWidth), "getHalfWidth");
-		script->add(chaiscript::fun(&SimpleRectangle::getHalfHeight), "getHalfHeight");
-		script->add(chaiscript::fun(&SimpleRectangle::getHalfSize), "getHalfSize");
-
-		script->add(chaiscript::fun(&SimpleRectangle::setTexture), "setTexture");
-		script->add(chaiscript::fun(&SimpleRectangle::setHalfWidth), "setHalfWidth");
-		script->add(chaiscript::fun(&SimpleRectangle::setHalfHeight), "setHalfHeight");
-		script->add(chaiscript::fun(&SimpleRectangle::setColour), "setColour");
-		script->add(chaiscript::fun(&SimpleRectangle::setBlendMode), "setBlendMode");
-
-		script->add(chaiscript::fun(&SimpleRectangle::getColour), "getColour");
-		script->add(chaiscript::fun(&SimpleRectangle::getBlendMode), "getBlendMode");
-	}
 	void SimpleRectangle::setTexture(const TextureResource & texture) {
 		this->texture = texture;
 		this->uvBounds = texture.getBounds();

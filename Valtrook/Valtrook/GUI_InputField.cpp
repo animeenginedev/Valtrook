@@ -1,5 +1,7 @@
 #include "GUI_InputField.h"
 
+#include "Texture.h"
+#include "TextureAsset.h"
 namespace Val {
 	GUI_InputField::Ptr GUI_InputField::Create(TextResource textRes, float textHalfHeight, Colour textColour, float highlightBonusHalfHeight, Colour highlightColour, Colour flickerColour) {
 		return std::make_shared<GUI_InputField>(textRes, textHalfHeight, textColour, highlightBonusHalfHeight, highlightColour, flickerColour);

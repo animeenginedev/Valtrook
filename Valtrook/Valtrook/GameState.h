@@ -3,8 +3,12 @@
 #include "TimingType.h"
 #include <SDL2\SDL.h>
 #include "RegisterToScript.h"
-#include "StateScriptWrapper.h"
+#include "ScriptWrapper.h"
 #include "VariableStore.h"
+#include "GameObject.h"
+#include <vector>
+#include <unordered_map>
+#include <string>
 
 namespace Val {
 	class Game;
@@ -33,20 +37,37 @@ namespace Val {
 		void setReloadKey(int reloadKey);
 		int getReloadKey();
 
+		GameObject* createGameObject(std::string scriptName);
+		GameObject* getFirstGameObjectOfType(std::string scriptName);
+		std::vector<GameObject*> getGameObjectsOfScriptType(std::string scriptName);
+		void destroyGameObject(GameObject* gameObj);
+
+		//Can fail
+		bool addNamedGameObject(std::string name, GameObject* gameObj);
+		//Can't fail
+		void setNamedGameObject(std::string name, GameObject* gameObj);
+		GameObject* getNamedGameObject(std::string name);
+		void removeNamedGameObject(std::string name);
+
 		VariableStore<int>* getIntStore();
 		VariableStore<float>* getFloatStore();
 	protected:
+		std::vector<GameObject> gameObjects;
+		std::unordered_map<std::string, ScriptWrapper> loadedScripts;
+
 		Game *const game;
 		bool bReloadScript;
 		void reloadScriptImpl();
 
 		int reloadKey;
 
-		std::function<void(float)> updateFunc, renderFunc;
+		std::function<void(float)> updateFunc;
+		std::function<void(float, RenderingEngine*)> renderFunc;
 
-		StateScriptWrapper stateScript;
+		ScriptWrapper stateScript;
 
 		VariableStore<int> intStore;
 		VariableStore<float> floatStore;
+		VariableStore<GameObject*> gameObjectStore;
 	};
 }

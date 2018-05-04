@@ -21,11 +21,6 @@
 #include "TextRectangle.h"
 #include "SimpleMultilineTextRectangle.h"
 
-template <typename t>
-std::string to_string(t value) {
-	return std::to_string(value);
-}
-
 void Val::BindingRegister::RegisterBindings(Engine* engine, chaiscript::ChaiScript& scriptingEngine) {
 	//Resource
 	ResourceLocation("", "", "").registerToScript(&scriptingEngine);
@@ -33,17 +28,16 @@ void Val::BindingRegister::RegisterBindings(Engine* engine, chaiscript::ChaiScri
 	VariableStore<int>::registerToScript(&scriptingEngine, "Int");
 	VariableStore<float>::registerToScript(&scriptingEngine, "Float");
 
+	VariableStore<GameObject*>::registerToScript(&scriptingEngine, "GameObject");
+
 	//Timing
 	GateTimer<float>().registerToScript(&scriptingEngine);
+
 
 
 	//Logger
 	Logger::Instance->logMessage(LogLevel::INFO, "Binding Chaiscript");
 	Logger::Instance->outputLog();
-
-	scriptingEngine.add(chaiscript::fun(&to_string<int>), "int_to_string");
-	scriptingEngine.add(chaiscript::fun(&to_string<float>), "float_to_string");
-	scriptingEngine.add(chaiscript::fun(&to_string<double>), "double_to_string");
 
 	engine->registerToScript(&scriptingEngine);
 	scriptingEngine.add_global(chaiscript::var(engine), "Engine");
@@ -53,6 +47,7 @@ void Val::BindingRegister::RegisterBindings(Engine* engine, chaiscript::ChaiScri
 
 	//Game
 	engine->getGame()->registerToScript(&scriptingEngine);
+	GameObject(ScriptWrapper("", nullptr), nullptr).registerToScript(&scriptingEngine);
 	GameState(nullptr).registerToScript(&scriptingEngine);
 	TransitionState(nullptr).registerToScript(&scriptingEngine);
 
@@ -81,7 +76,6 @@ void Val::BindingRegister::RegisterBindings(Engine* engine, chaiscript::ChaiScri
 
 	//Renderables
 
-	ATexturedRect::registerToScript(&scriptingEngine);
 	SimpleRectangle(TextureResource(nullptr, ResourceLocation("", "", ""))).registerToScript(&scriptingEngine);
 	Rectangle(TextureResource(nullptr, ResourceLocation("", "", ""))).registerToScript(&scriptingEngine);
 	SimpleTextRectangle(TextResource(nullptr, "")).registerToScript(&scriptingEngine);

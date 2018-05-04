@@ -12,6 +12,12 @@ namespace Val {
 		game->setState(TState);
 	}
 
+	void TransitionState::onBecomeActive() {
+	}
+
+	void TransitionState::onBecomeInactive() {
+	}
+
 	void TransitionState::registerToScript(chaiscript::ChaiScript * script) {
 		script->add(chaiscript::fun(&createAndTransition), "createAndTransition");
 	}

@@ -18,6 +18,8 @@ namespace Val {
 		static void destroyTransitionStateDelegate(TransitionState* del) {
 			delete del;
 		}
+		virtual void onBecomeActive();
+		virtual void onBecomeInactive();
 
 		void registerToScript(chaiscript::ChaiScript* script);
 

@@ -13,6 +13,7 @@ namespace Val {
 
 			scriptingEngine->add(chaiscript::fun(&VariableStore<Var>::setNamedVariable), "setNamed" + extension);
 			scriptingEngine->add(chaiscript::fun(&VariableStore<Var>::getNamedVariable), "getNamed" + extension);
+			scriptingEngine->add(chaiscript::fun(&VariableStore<Var>::removeNamedVariable), "removeNamed" + extension);
 		}
 
 		void setNamedVariable(std::string name, Var variable) {
@@ -24,6 +25,10 @@ namespace Val {
 			if (namedVariables.find(name) != namedVariables.end())
 				return namedVariables.at(name);
 			return NULL;
+		}
+
+		void removeNamedVariable(std::string name) {
+			namedVariables.erase(name);
 		}
 
 		void reset() {

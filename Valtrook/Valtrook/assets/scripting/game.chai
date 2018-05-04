@@ -1,13 +1,15 @@
-
-def initialise() {
-	Game.addNamedState("splashState.chai", "State_Splash");
-	Game.addNamedState("mainMenuState.chai", "State_MainMenu");
-	
-	Game.getNamedState("State_Splash").initialise();
-	Game.getNamedState("State_MainMenu").initialise();
-	
-	
-	Game.setNamedState("State_Splash");
-	
-	Engine.getRenderingEngine().getWindow().setWindowTitle("I can set the window title in my scripting memes.");
+class game {
+	def initialise() {
+		Game.addNamedState("splashState.chai", "State_Splash");
+		Game.addNamedState("mainMenuState.chai", "State_MainMenu");
+		Game.addNamedState("testGameState.chai", "State_GameTest");
+		
+		Game.getNamedState("State_Splash").initialise();
+		Game.getNamedState("State_MainMenu").initialise();	
+		Game.getNamedState("State_GameTest").initialise();
+		
+		Game.setNamedState("State_Splash");
+		
+		Engine.getRenderingEngine().getWindow().setWindowTitle("I can set the window title in my scripting memes.");
+	}
 }

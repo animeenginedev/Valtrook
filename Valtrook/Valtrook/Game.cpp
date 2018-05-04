@@ -22,7 +22,7 @@ namespace Val {
 		currentCamera = defaultCamera;
 		
 		entryPointScript.reload();
-		entryPointScript.safetlyRunFunc(entryPointScript.getFunction<std::function<void()>> ("initialise"));
+		entryPointScript.safetlyRunFunc(entryPointScript.getFunction<void()> ("game.initialise"));
 
 		if (currentState == nullptr) {
 			if (nextState != nullptr) {

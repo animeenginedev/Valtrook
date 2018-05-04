@@ -18,20 +18,34 @@ namespace Val {
 	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode & blendMode) : SimpleTextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {
 	}
 	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode & blendMode) :
-	    ATexturedRect(TextureResource(nullptr, ResourceLocation("", "", "")), center, halfSize, depth, colour, blendMode), textResource(texture), cullAABB(0.0f, 0.0f, 0.0f, 0.0f), bHasCullSurface(false) {
+		center(center), depth(depth), halfSize(halfSize), needsReconstructed(true), colour(colour), blendMode(blendMode), textResource(texture), cullAABB(0.0f, 0.0f, 0.0f, 0.0f), bHasCullSurface(false) {
 	}
 	SimpleTextRectangle::~SimpleTextRectangle() {
 	}
 
 	void SimpleTextRectangle::registerToScript(chaiscript::ChaiScript * script) {
 		script->add(chaiscript::user_type<SimpleTextRectangle>(), "SimpleTextRectangle");
-		script->add(chaiscript::base_class<ATexturedRect, SimpleTextRectangle>());
 
 		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource)>(), "SimpleTextRectangle");
 		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, float, float, float, float, float)>(), "SimpleTextRectangle");
 		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, std::array<float, 2>, float, std::array<float, 2>)>(), "SimpleTextRectangle");
 		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, float, float, float, float, float, Colour, GLBlendMode)>(), "SimpleTextRectangle");
 		script->add(chaiscript::constructor<SimpleTextRectangle(TextResource, std::array<float, 2>, float, std::array<float, 2>, Colour, GLBlendMode)>(), "SimpleTextRectangle");
+
+		script->add(chaiscript::fun<void, SimpleTextRectangle, RenderingEngine*>(&SimpleTextRectangle::sendRenderInformation), "sendRenderInformation");
+		script->add(chaiscript::fun<void, SimpleTextRectangle, VBOBatcher*>(&SimpleTextRectangle::sendRenderInformation), "sendRenderInformation");
+
+
+		script->add(chaiscript::fun(&SimpleTextRectangle::setX), "setX");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setY), "setY");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setDepth), "setDepth");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getX), "getX");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getY), "getY");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getDepth), "getDepth");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getCenter), "getCenter");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getHalfWidth), "getHalfWidth");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getHalfHeight), "getHalfHeight");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getHalfSize), "getHalfSize");
 
 		script->add(chaiscript::fun(&SimpleTextRectangle::setText), "setText");
 		script->add(chaiscript::fun(&SimpleTextRectangle::setFont), "setFont");
@@ -41,8 +55,95 @@ namespace Val {
 		script->add(chaiscript::fun(&SimpleTextRectangle::getText), "getText");
 		script->add(chaiscript::fun(&SimpleTextRectangle::getFont), "getFont");
 		script->add(chaiscript::fun(&SimpleTextRectangle::doesScaleTextToHeight), "doesScaleTextToHeight");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setHalfWidth), "setHalfWidth");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setHalfHeight), "setHalfHeight");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setColour), "setColour");
+		script->add(chaiscript::fun(&SimpleTextRectangle::setBlendMode), "setBlendMode");
+
+		script->add(chaiscript::fun(&SimpleTextRectangle::getColour), "getColour");
+		script->add(chaiscript::fun(&SimpleTextRectangle::getBlendMode), "getBlendMode");
 	}
 
+	void SimpleTextRectangle::setHalfWidth(float h_width) {
+		halfSize[0] = h_width;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setHalfHeight(float h_height) {
+		halfSize[1] = h_height;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setHalfSize(const std::array<float, 2>& halfSize) {
+		this->halfSize = halfSize;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setHalfSize(float h_width, float h_height) {
+		halfSize[0] = h_width;
+		halfSize[1] = h_height;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setColour(const Colour & colour) {
+		this->colour = colour;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setUV(const UV & uv) {
+		this->uvBounds = uv;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setBlendMode(const GLBlendMode & blendMode) {
+		this->blendMode = blendMode;
+		needsReconstructed = true;
+	}
+	Colour SimpleTextRectangle::getColour() const {
+		return colour;
+	}
+	UV SimpleTextRectangle::getUV() const {
+		return uvBounds;
+	}
+	GLBlendMode SimpleTextRectangle::getBlendMode() const {
+		return blendMode;
+	}
+	void SimpleTextRectangle::setX(float x) {
+		center[0] = x;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setY(float y) {
+		center[1] = y;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setCenter(float x, float y) {
+		center[0] = x;
+		center[1] = y;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setCenter(std::array<float, 2> center) {
+		this->center = center;
+		needsReconstructed = true;
+	}
+	void SimpleTextRectangle::setDepth(float depth) {
+		this->depth = depth;
+		needsReconstructed = true;
+	}
+	float SimpleTextRectangle::getX() const {
+		return center[0];
+	}
+	float SimpleTextRectangle::getY() const {
+		return center[1];
+	}
+	std::array<float, 2> SimpleTextRectangle::getCenter() const {
+		return center;
+	}
+	float SimpleTextRectangle::getDepth() const {
+		return depth;
+	}
+	float SimpleTextRectangle::getHalfWidth() const {
+		return halfSize[0];
+	}
+	float SimpleTextRectangle::getHalfHeight() const {
+		return halfSize[1];
+	}
+	std::array<float, 2> SimpleTextRectangle::getHalfSize() const {
+		return halfSize;
+	}
 	void SimpleTextRectangle::setTextResource(const TextResource & text) {
 		textResource = text;
 		needsReconstructed = true;

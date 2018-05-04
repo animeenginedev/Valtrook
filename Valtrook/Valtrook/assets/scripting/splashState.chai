@@ -1,46 +1,50 @@
 global bakaNoise;
-global splashNoise;
-global splashPersistance = GateTimer();
-global SplashDisplay;
+class splashState {
+	var splashNoise;
+	var splashPersistance = GateTimer();
+	var SplashDisplay;
 
-def initialise() {
-	bakaNoise = AudioManager.getAudioPlayer(getAudioLocation("bakabakabaka", ".ogg"), false);
-	splashNoise = AudioManager.getAudioPlayer(getAudioLocation("splashNoise", ".mp3"), true);
-	
-	SplashDisplay = TextRectangle(TextResource(getFont(getFontLocation("ralewaymed", ".ttf"), 48), "SPLASH TEXT"), 0.0f, 0.0f, 0.5f, 2.0f, 0.24f, 0.0f);
-	SplashDisplay.setScaleTextToHeight(true);
+	def initialise() {
+		bakaNoise = AudioManager.getAudioPlayer(getAudioLocation("bakabakabaka", ".ogg"), false);
+		splashNoise = AudioManager.getAudioPlayer(getAudioLocation("splashNoise", ".mp3"), true);
 		
-	splashPersistance.setLength(5.0f);
-}
-
-def emptyAudioCallback(AudioDelegate del) {
-}
-
-def update(float delta) {
-	if(splashPersistance.update(delta) || InputManager.isAnyJustUp()) {
-		createAndTransition(Game, "State_MainMenu", 0.5f, Colour(255, 255, 255, 255), Colour(0, 0, 0, 255));
+		SplashDisplay = TextRectangle(TextResource(getFont(getFontLocation("ralewaymed", ".ttf"), 48), "SPLASH TEXT"), 0.0f, 0.0f, 0.5f, 2.0f, 0.24f, 0.0f);
+		SplashDisplay.setScaleTextToHeight(true);
+			
+		splashPersistance.setLength(5.0f);
 	}
-}
 
-def render(float delta) {
-	SplashDisplay.setHalfHeight(SplashDisplay.getHalfHeight() + delta * 0.12f);
-	SplashDisplay.setRotation(SplashDisplay.getRotation() - (0.65f * (delta + (1.15f * splashPersistance.getProgress()))));
+	def emptyAudioCallback(AudioDelegate del) {
+	}
 
-	SplashDisplay.sendRenderInformation(Engine.getRenderingEngine());
-}
+	def update(float delta) {
+		if(splashPersistance.update(delta) || InputManager.isAnyJustUp()) {
+			createAndTransition(Game, "State_GameTest", 0.5f, Colour(255, 255, 255, 255), Colour(0, 0, 0, 255));
+		}
+	}
 
-def onBecomeActive() {
-	bakaNoise.playFadeIn(60000, emptyAudioCallback, -1);
-	splashNoise.play(emptyAudioCallback, -1);
-	splashNoise.setVolume(0.5f);
-}
+	def render(float delta, RenderingEngine engine) {
+		SplashDisplay.setHalfHeight(SplashDisplay.getHalfHeight() + delta * 0.12f);
+		SplashDisplay.setRotation(SplashDisplay.getRotation() - (0.65f * (delta + (1.15f * splashPersistance.getProgress()))));
 
-def onBecomeInactive() {
-	bakaNoise.halt();
-	splashNoise.halt();
-}
+		SplashDisplay.sendRenderInformation(engine);
+	}
 
-def onReloadScript() {
-	State.reset();
-	State.initialise();
+	def onBecomeActive() {
+		Logger.logMessage(LogLevel_INFO, "On Become Active SPLASH");
+		bakaNoise.playFadeIn(60000, emptyAudioCallback, -1);
+		splashNoise.play(emptyAudioCallback, -1);
+		splashNoise.setVolume(0.5f);
+	}
+
+	def onBecomeInactive() {
+		Logger.logMessage(LogLevel_INFO, "On Become InActive SPLASH");
+		bakaNoise.halt();
+		splashNoise.halt();
+	}
+
+	def onReloadScript() {
+		State.reset();
+		State.initialise();
+	}
 }

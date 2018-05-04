@@ -215,7 +215,12 @@ namespace Val {
 				updateAccumlation -= accumlateUpdateRate;
 				++updateCounter;
 
-				game.update(accumlateUpdateRate);
+				if (updateAccumlation > accumlateUpdateRate) {
+					game.update(updateAccumlation + accumlateUpdateRate);
+					updateAccumlation = 0.0f;
+				} else {
+					game.update(accumlateUpdateRate);
+				}
 
 				inputManager.update();
 			}
@@ -227,7 +232,13 @@ namespace Val {
 				renderAccumlation -= accumlateFrameRate;
 				++renderCounter;
 
-				game.render(accumlateFrameRate, renderer);
+
+				if (renderAccumlation > accumlateFrameRate) {
+					game.render(renderAccumlation +accumlateFrameRate, renderer);
+					renderAccumlation = 0.0f;
+				} else {
+					game.render(accumlateFrameRate, renderer);
+				}
 				
 				renderer->render();
 			}

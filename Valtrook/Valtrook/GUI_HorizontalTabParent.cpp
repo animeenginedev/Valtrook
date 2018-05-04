@@ -1,5 +1,6 @@
 #include "GUI_HorizontalTabParent.h"
 
+#include "TextureAsset.h"
 #include <array>
 
 namespace Val {

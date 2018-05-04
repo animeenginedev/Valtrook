@@ -1,0 +1,43 @@
+global testRender;
+global dir = false;
+
+def onCreate() {
+	//testRender = SimpleTextRectangle(TextResource(getFont(getFontLocation("ralewaymed", ".ttf"), 48), "Object Test Render"), 0.0f, 0.0f, 0.5f, 2.0f, 0.24f);
+	//testRender.setScaleTextToHeight(true);
+	testRender = createSimpleRectangle("raven", 0.0f, 0.0f, 0.5f, 1.0f, 1.0f);
+}
+
+def onInitialise() {
+}
+
+def onDestroy() {
+}
+
+def update(float delta) {
+	if(dir) {
+		This.setX(This.getX() + delta * 4.0f);
+		if(This.getX() > 5.0f) {
+			dir = false;
+			This.setX(5.0f);
+		}
+	} else {
+		This.setX(This.getX() - delta * 4.0f);
+		if(This.getX() < -5.0f) {
+			dir = true;
+			This.setX(-5.0f);
+		}
+	}
+}
+
+def render(float delta, RenderingEngine engine) {
+	testRender.setX(This.getX());
+	testRender.setY(This.getY());
+	testRender.sendRenderInformation(engine);
+}
+
+def objectNameSet(string newName) {
+	Logger.logMessage(LogLevel_INFO, newName);
+}
+
+def onActive(bool activeState) {
+}

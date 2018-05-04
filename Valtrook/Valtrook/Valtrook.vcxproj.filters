@@ -106,12 +106,6 @@
     <Filter Include="Source Files\Utility\Structures">
       <UniqueIdentifier>{ec2d48e3-8622-44e3-adc8-679bde307204}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Renderables\Interface">
-      <UniqueIdentifier>{e9fff1e2-a5d9-4f7a-80bf-9d192254e538}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine\Renderables\Interface">
-      <UniqueIdentifier>{1ae30332-8ef9-4d7a-87c6-79bc5cd85c2e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Scripting">
       <UniqueIdentifier>{114281f2-5fcc-4907-92bd-a29dfc7c2396}</UniqueIdentifier>
     </Filter>
@@ -297,19 +291,10 @@
     <ClCompile Include="Line.cpp">
       <Filter>Source Files\Engine\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="ARect.cpp">
-      <Filter>Source Files\Engine\Renderables\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="ATexturedRect.cpp">
-      <Filter>Source Files\Engine\Renderables\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="BindingRegister.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ScriptWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StateScriptWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -569,15 +554,6 @@
     <ClInclude Include="InteractionArea.h">
       <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Renderable.h">
-      <Filter>Header Files\Engine\Renderables\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="ARect.h">
-      <Filter>Header Files\Engine\Renderables\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="ATexturedRect.h">
-      <Filter>Header Files\Engine\Renderables\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="RegisterToScript.h">
       <Filter>Header Files\Engine\Scripting</Filter>
     </ClInclude>
@@ -585,9 +561,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScriptWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StateScriptWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">

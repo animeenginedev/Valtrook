@@ -109,6 +109,15 @@
     <Filter Include="Header Files\Utility\Pointer">
       <UniqueIdentifier>{1c05dca3-1d1e-49b6-9fb0-6545e0dd4ef0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Pathfinding">
+      <UniqueIdentifier>{843abeae-f7fa-42ff-a249-55924361fa7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Renderables\Particle">
+      <UniqueIdentifier>{4bc26538-76bd-47d8-adbf-9b5cd4ad46f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Renderables\Particle\Func">
+      <UniqueIdentifier>{c731f312-ad07-4cc0-a973-e5dc05ca223c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -289,6 +298,18 @@
       <Filter>Source Files\Engine\Renderables</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEmitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -546,6 +567,54 @@
       <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareGridGraph.h">
+      <Filter>Header Files\Engine\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphInterface.h">
+      <Filter>Header Files\Engine\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphNode.h">
+      <Filter>Header Files\Engine\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Header Files\Engine\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Header Files\Engine\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="DijkstraMap.h">
+      <Filter>Header Files\Engine\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleFunction.h">
+      <Filter>Header Files\Engine\Renderables\Particle\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticValue.h">
+      <Filter>Header Files\Engine\Renderables\Particle\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearInterp.h">
+      <Filter>Header Files\Engine\Renderables\Particle\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearMechanic.h">
+      <Filter>Header Files\Engine\Renderables\Particle\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierCurve.h">
+      <Filter>Header Files\Engine\Renderables\Particle\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleFunctions.h">
+      <Filter>Header Files\Engine\Renderables\Particle\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleAttribute.h">
+      <Filter>Header Files\Engine\Renderables\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEmitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

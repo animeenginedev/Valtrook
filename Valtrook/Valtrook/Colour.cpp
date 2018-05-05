@@ -8,6 +8,12 @@ namespace Val {
 
 	Colour::Colour(unsigned char r, unsigned char g, unsigned char b, unsigned char a) : r(r), g(g), b(b), a(a) {
 	}
+	Colour::Colour(TrueColour colour) : r(colour.r < 0 ? 0 : colour.r > 255 ? 255 : colour.r),
+		g(colour.g < 0 ? 0 : colour.g > 255 ? 255 : colour.g),
+		b(colour.b < 0 ? 0 : colour.b > 255 ? 255 : colour.b),
+		a(colour.a < 0 ? 0 : colour.a > 255 ? 255 : colour.a) {
+	}
+
 
 
 	Colour::~Colour() {
@@ -100,4 +106,74 @@ namespace Val {
 		}
 		return a;
 	}
+
+	bool operator==(const TrueColour & left, const TrueColour & right) {
+		return (left.r == right.r &&
+				left.g == right.g &&
+				left.b == right.b &&
+				left.a == right.a);
+	}
+
+	bool operator!=(const TrueColour & left, const TrueColour & right) {
+		return (left.r != right.r ||
+				left.g != right.g ||
+				left.b != right.b ||
+				left.a != right.a);
+	}
+
+	TrueColour operator+(const TrueColour & left, const TrueColour & right) {
+		return TrueColour(left.r + right.r,
+						  left.g + right.g,
+						  left.b + right.b,
+						  left.a + right.a);
+	}
+
+	TrueColour operator-(const TrueColour & left, const TrueColour & right) {
+		return TrueColour(left.r - right.r,
+						  left.g - right.g,
+						  left.b - right.b,
+						  left.a - right.a);
+	}
+
+	TrueColour operator*(const TrueColour & left, const TrueColour & right) {
+		return TrueColour(left.r * right.r,
+						  left.g * right.g,
+						  left.b * right.b,
+						  left.a * right.a);
+	}
+
+	TrueColour operator*(const TrueColour & left, const float & right) {
+		return TrueColour(left.r * right,
+						  left.g * right,
+						  left.b * right,
+						  left.a * right);
+	}
+	TrueColour operator/(const TrueColour & left, const float & right) {
+		return TrueColour(left.r / right,
+						  left.g / right,
+						  left.b / right,
+						  left.a / right);
+	}
+
+	TrueColour& operator+=(TrueColour & left, const TrueColour & right) {
+		return left = left + right;
+	}
+
+	TrueColour& operator-=(TrueColour & left, const TrueColour & right) {
+		return left = left - right;
+	}
+
+	TrueColour& operator*=(TrueColour & left, const TrueColour & right) {
+		return left = left * right;
+	}
+
+	TrueColour::TrueColour() : r(0), g(0), b(0), a(0) {
+	}
+
+	TrueColour::TrueColour(int r, int g, int b, int a) : r(r), g(g), b(b), a(a) {
+	}
+
+	TrueColour::TrueColour(Colour c) : r(c.r), g(c.g), b(c.b), a(c.a) {
+	}
+
 }

@@ -4,6 +4,7 @@
 
 #include "SimpleRectangle.h"
 
+#include "ParticleSystem.h"
 #include "GUI.hpp"
 
 namespace Val {
@@ -21,6 +22,7 @@ namespace Val {
 
 		SimpleRectangle* cullingTest, *overlay;
 
+		ParticleSystem TestSystem;
 		GUI_VerticalScroll::Ptr testScroll;
 		GUIFrame::Ptr testFrame;
 	};

@@ -3,9 +3,20 @@
 #include <vector>
 
 namespace Val {
+	class Colour;
+
+	struct TrueColour {
+		TrueColour();
+		TrueColour(int r, int g, int b, int a);
+		TrueColour(Colour c);
+
+		int r, g, b, a;
+	};
+
 	class Colour {
 	public:
 		Colour();
+		Colour(TrueColour colour);
 		Colour(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
 		~Colour();
 
@@ -40,6 +51,17 @@ namespace Val {
 		unsigned char& operator[](const std::size_t index);
 
 	};
+
+	bool operator ==(const TrueColour& left, const TrueColour& right);
+	bool operator !=(const TrueColour& left, const TrueColour& right);
+	TrueColour operator +(const TrueColour& left, const TrueColour& right);
+	TrueColour operator -(const TrueColour& left, const TrueColour& right);
+	TrueColour operator *(const TrueColour& left, const TrueColour& right);
+	TrueColour operator *(const TrueColour& left, const float& right);
+	TrueColour operator /(const TrueColour& left, const float& right);
+	TrueColour& operator +=(TrueColour& left, const TrueColour& right);
+	TrueColour& operator -=(TrueColour& left, const TrueColour& right);
+	TrueColour& operator *=(TrueColour& left, const TrueColour& right);
 
 	template<typename T>
 	inline Colour Colour::operator+(const T & right) {

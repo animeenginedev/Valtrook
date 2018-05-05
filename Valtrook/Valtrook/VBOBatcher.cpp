@@ -1,5 +1,7 @@
 #include "VBOBatcher.h"
 
+#include "GLBlendMode.h"
+
 Val::VBOBatcher::VBOBatcher() : lastBlendMode(0, 0, 0, 0, INT32_MAX) {
 }
 
@@ -93,6 +95,10 @@ void Val::VBOBatcher::add(std::vector<TriangleGlyph> glyph) {
 	}
 }
 
+bool glBlendComp(Val::GLBlendMode* lhs, Val::GLBlendMode* rhs) {
+	return lhs->BlendOrder < rhs->BlendOrder;
+}
+
 void Val::VBOBatcher::prepare() {
 	if (glyphs.size() == 0 && lineGlyphs.glyphs.size() == 0) {
 		bPrepared = true;
@@ -107,10 +113,16 @@ void Val::VBOBatcher::prepare() {
 
 	if (glyphs.size() != 0) {
 		//Get triangle glyphs in
+		std::vector<GLBlendMode*> keyOrder = std::vector<GLBlendMode*>();
 		for (auto cc : glyphs) {
-			for (auto it : cc.second) {
+			keyOrder.push_back(cc.first);
+		}
+		std::sort(keyOrder.begin(), keyOrder.end(), glBlendComp);
+
+		for (auto key : keyOrder) {
+			for (auto it : glyphs.at(key)) {
 				//Vertexes in a triangle = 3
-				batches.push_back(RenderBatch(cc.first, it.first, GL_TRIANGLES, offset, it.second.glyphs.size() * 3));
+				batches.push_back(RenderBatch(key, it.first, GL_TRIANGLES, offset, it.second.glyphs.size() * 3));
 				offset += it.second.glyphs.size() * 3;
 
 				for (auto v = it.second.glyphs.begin(); v != it.second.glyphs.end(); v++) {

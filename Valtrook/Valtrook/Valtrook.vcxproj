@@ -163,6 +163,10 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleEmitter.cpp" />
+    <ClCompile Include="ParticleFunctions.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderingEngine.cpp" />
@@ -192,12 +196,15 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Angle.h" />
     <ClInclude Include="ArrayMath.h" />
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="BezierCurve.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionShape2D.h" />
     <ClInclude Include="CollisionShapeCircle.h" />
     <ClInclude Include="CollisionShapePolygon.h" />
     <ClInclude Include="Conversion.h" />
+    <ClInclude Include="DijkstraMap.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="FontAsset.h" />
     <ClInclude Include="FrameRender.h" />
@@ -215,6 +222,8 @@
     <ClInclude Include="GateTimer.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Glyph.h" />
+    <ClInclude Include="GraphInterface.h" />
+    <ClInclude Include="GraphNode.h" />
     <ClInclude Include="GUIBase.h" />
     <ClInclude Include="GUI.hpp" />
     <ClInclude Include="GUIFrame.h" />
@@ -236,6 +245,8 @@
     <ClInclude Include="Justification.h" />
     <ClInclude Include="Lerp.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="LinearInterp.h" />
+    <ClInclude Include="LinearMechanic.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Max.h" />
     <ClInclude Include="MenuState.h" />
@@ -244,6 +255,13 @@
     <ClInclude Include="Notify.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="Owner.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleAttribute.h" />
+    <ClInclude Include="ParticleEmitter.h" />
+    <ClInclude Include="ParticleFunction.h" />
+    <ClInclude Include="ParticleFunctions.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Path.h" />
     <ClInclude Include="ProportionList.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Rectangle.h" />
@@ -258,6 +276,8 @@
     <ClInclude Include="SimpleTextRectangle.h" />
     <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="SplashState.h" />
+    <ClInclude Include="SquareGridGraph.h" />
+    <ClInclude Include="StaticValue.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="TaskMaster.h" />
     <ClInclude Include="TextRectangle.h" />

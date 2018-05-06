@@ -7,7 +7,7 @@
 
 
 namespace Val {
-	GameState::GameState(Game * const game, std::string scriptName) : game(game), gameObjects() {
+	GameState::GameState(Game * const game) : game(game), gameObjects() {
 	}
 
 	GameState::~GameState() {

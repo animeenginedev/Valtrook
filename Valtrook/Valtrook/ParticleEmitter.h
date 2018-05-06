@@ -19,7 +19,7 @@ namespace Val {
 
 		void update(float deltaTime);
 
-		void giveRenderGlyphs(Rectangle& Renderable, std::vector<TriangleGlyph>* Glyphs, unsigned int offset);
+		void giveRenderGlyphs(Rectangle Renderable, std::vector<TriangleGlyph>* Glyphs, unsigned int offset);
 
 		void SetEmitterPosition(float X, float Y);
 		std::array<float, 2> GetEmitterPosition();

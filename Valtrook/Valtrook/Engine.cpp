@@ -20,6 +20,8 @@ static void CreateDirectoryIfItDoesNotExist(std::string directory) {
 
 #include "Angle.h"
 namespace Val {
+	Engine* Engine::Instance = nullptr;
+
 	Engine::Engine() : running(false), inputManager(), game(&inputManager, &audioManager) {
 	}
 
@@ -205,7 +207,6 @@ namespace Val {
 			if (renderAccumlation >= accumlateFrameRate) {
 				renderAccumlation -= accumlateFrameRate;
 				++renderCounter;
-
 
 				if (renderAccumlation > accumlateFrameRate) {
 					game.render(renderAccumlation +accumlateFrameRate, renderer);

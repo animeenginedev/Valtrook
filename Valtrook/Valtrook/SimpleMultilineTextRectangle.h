@@ -17,8 +17,8 @@ namespace Val {
 	public:
 		SimpleMultilineTextRectangle(const TextResource& texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine);
 		SimpleMultilineTextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine);
-		SimpleMultilineTextRectangle(const TextResource& texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-		SimpleMultilineTextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		SimpleMultilineTextRectangle(const TextResource& texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
+		SimpleMultilineTextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
 		~SimpleMultilineTextRectangle();
 
 		void setTextResource(const TextResource& text);
@@ -34,7 +34,7 @@ namespace Val {
 		void setHalfSizePerLine(const std::array<float, 2>& hspl);
 		void setSize(float width, float height);
 		void setColour(const Colour& colour);
-		void setBlendMode(const GLBlendMode& blendMode);
+		void setBlendMode(GLBlendMode* blendMode);
 		//Honestly, don't ask. It's really used to GUI rendering, setting the center/height/width and the uv dependant on the culling aabb size&position
 		void setCullSurface(AABB<float> cullAABB);
 		void setJustification(HorizontalJustification justification);
@@ -53,7 +53,7 @@ namespace Val {
 		float getHalfHeightPerLine() const;
 		std::array<float, 2> getHalfSizePerLine() const;
 		Colour getColour() const;
-		GLBlendMode getBlendMode() const;
+		GLBlendMode* getBlendMode() const;
 		AABB<float> getCullSurface() const;
 		HorizontalJustification getJustification() const;
 
@@ -82,7 +82,7 @@ namespace Val {
 
 		TextResource textResourceMaster;
 		std::vector<TextResource> textResourcePerLine;
-		GLBlendMode blendMode;
+		GLBlendMode* blendMode;
 		std::vector<std::array<TriangleGlyph, 2>> Glyph;
 		Colour renderColour;
 

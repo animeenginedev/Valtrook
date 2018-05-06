@@ -7,13 +7,13 @@
 #include "Engine.h"
 #include "GlyphCuller.h"
 namespace Val {
-	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine) : SimpleMultilineTextRectangle(texture, { x, y }, depth, maxWidthPerLine, heightPerLine, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine) : SimpleMultilineTextRectangle(texture, { x, y }, depth, maxWidthPerLine, heightPerLine, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine) : SimpleMultilineTextRectangle(texture, center, depth, maxWidthPerLine, heightPerLine, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine) : SimpleMultilineTextRectangle(texture, center, depth, maxWidthPerLine, heightPerLine, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, const GLBlendMode & blendMode) : SimpleMultilineTextRectangle(texture, { x, y }, depth, maxWidthPerLine, heightPerLine, colour, blendMode) {
+	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, float x, float y, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, GLBlendMode* blendMode) : SimpleMultilineTextRectangle(texture, { x, y }, depth, maxWidthPerLine, heightPerLine, colour, blendMode) {
 	}
-	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, const GLBlendMode & blendMode) : 
+	SimpleMultilineTextRectangle::SimpleMultilineTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, float maxWidthPerLine, float heightPerLine, Colour colour, GLBlendMode* blendMode) : 
 	    textResourceMaster(texture), center(center), depth(depth), halfWidthPerLine(maxWidthPerLine), halfHeightPerLine(heightPerLine), singleLineMode(false), justification(hCENTER), renderColour(colour), blendMode(blendMode), needsReconstructed(true), needsTextReconstructed(true) {
 	}
 	SimpleMultilineTextRectangle::~SimpleMultilineTextRectangle() {
@@ -79,7 +79,7 @@ namespace Val {
 		this->renderColour = colour;
 		needsReconstructed = true;
 	}
-	void SimpleMultilineTextRectangle::setBlendMode(const GLBlendMode & blendMode) {
+	void SimpleMultilineTextRectangle::setBlendMode(GLBlendMode* blendMode) {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
@@ -135,7 +135,7 @@ namespace Val {
 	Colour SimpleMultilineTextRectangle::getColour() const {
 		return renderColour;
 	}
-	GLBlendMode SimpleMultilineTextRectangle::getBlendMode() const {
+	GLBlendMode* SimpleMultilineTextRectangle::getBlendMode() const {
 		return blendMode;
 	}
 	AABB<float> SimpleMultilineTextRectangle::getCullSurface() const {
@@ -259,7 +259,7 @@ namespace Val {
 				Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
 				Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
 
-			}), &blendMode);
+			}), blendMode);
 
 			this->Glyph.push_back(bHasCullSurface ? GlyphCuller::cullRectangle(Glyph, cullAABB).dispose() : Glyph.dispose());
 

@@ -9,15 +9,15 @@
 
 
 namespace Val {
-	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture) : SimpleTextRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture) : SimpleTextRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight) : SimpleTextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight) : SimpleTextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize) : SimpleTextRectangle(texture, center, depth, halfSize, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize) : SimpleTextRectangle(texture, center, depth, halfSize, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode & blendMode) : SimpleTextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {
+	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, GLBlendMode* blendMode) : SimpleTextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {
 	}
-	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode & blendMode) :
+	SimpleTextRectangle::SimpleTextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, GLBlendMode* blendMode) :
 		center(center), depth(depth), halfSize(halfSize), needsReconstructed(true), colour(colour), blendMode(blendMode), textResource(texture), cullAABB(0.0f, 0.0f, 0.0f, 0.0f), bHasCullSurface(false) {
 	}
 	SimpleTextRectangle::~SimpleTextRectangle() {
@@ -48,7 +48,7 @@ namespace Val {
 		this->uvBounds = uv;
 		needsReconstructed = true;
 	}
-	void SimpleTextRectangle::setBlendMode(const GLBlendMode & blendMode) {
+	void SimpleTextRectangle::setBlendMode(GLBlendMode* blendMode) {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
@@ -58,7 +58,7 @@ namespace Val {
 	UV SimpleTextRectangle::getUV() const {
 		return uvBounds;
 	}
-	GLBlendMode SimpleTextRectangle::getBlendMode() const {
+	GLBlendMode* SimpleTextRectangle::getBlendMode() const {
 		return blendMode;
 	}
 	void SimpleTextRectangle::setX(float x) {
@@ -193,7 +193,7 @@ namespace Val {
 			Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour),
 			Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour)
 																								  
-		}), &blendMode);
+		}), blendMode);
 
 		this->Glyph = bHasCullSurface ? GlyphCuller::cullRectangle(Glyph, cullAABB).dispose() : Glyph.dispose();
 	}

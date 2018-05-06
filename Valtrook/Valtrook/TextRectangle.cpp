@@ -7,15 +7,15 @@
 #include "VBOBatcher.h"
 
 namespace Val {
-	TextRectangle::TextRectangle(const TextResource & texture) : TextRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, 0.0f, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	TextRectangle::TextRectangle(const TextResource & texture) : TextRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, 0.0f, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	TextRectangle::TextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation) : TextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	TextRectangle::TextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation) : TextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	TextRectangle::TextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation) : TextRectangle(texture, center, depth, halfSize, rotation, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	TextRectangle::TextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation) : TextRectangle(texture, center, depth, halfSize, rotation, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	TextRectangle::TextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode & blendMode) : TextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, colour, blendMode) {
+	TextRectangle::TextRectangle(const TextResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, GLBlendMode* blendMode) : TextRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, colour, blendMode) {
 	}
-	TextRectangle::TextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode & blendMode) :
+	TextRectangle::TextRectangle(const TextResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, GLBlendMode* blendMode) :
 		textResource(texture), center(center), depth(depth), halfSize(halfSize), rotation(rotation), renderColour(colour), blendMode(blendMode), needsReconstructed(true) {
 	}
 	TextRectangle::~TextRectangle() {
@@ -91,7 +91,7 @@ namespace Val {
 		this->renderColour = colour;
 		needsReconstructed = true;
 	}
-	void TextRectangle::setBlendMode(const GLBlendMode & blendMode) {
+	void TextRectangle::setBlendMode(GLBlendMode* blendMode) {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
@@ -136,7 +136,7 @@ namespace Val {
 	Colour TextRectangle::getColour() const {
 		return renderColour;
 	}
-	GLBlendMode TextRectangle::getBlendMode() const {
+	GLBlendMode* TextRectangle::getBlendMode() const {
 		return blendMode;
 	}
 	float Val::TextRectangle::getRotation() const {
@@ -205,6 +205,6 @@ namespace Val {
 																							 Vertex(centerUPixel[0] - wCos - hSin, centerUPixel[1] + hCos - wSin , depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour),
 																							 Vertex(centerUPixel[0] + wCos - hSin, centerUPixel[1] + hCos + wSin, depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour)
 
-		}), &blendMode).dispose();
+		}), blendMode).dispose();
 	}
 }

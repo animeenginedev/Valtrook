@@ -14,6 +14,7 @@ namespace Val {
 		void AddEmitter(ParticleEmitter emitter);
 
 		void update(float deltaSeconds);
+		void sendRenderingInformation(VBOBatcher* renderer);
 		void sendRenderingInformation(RenderingEngine* renderer);
 
 		void SetOffset(float x, float y);

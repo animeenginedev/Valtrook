@@ -9,15 +9,15 @@
 #include "TextureAsset.h"
 
 namespace Val {
-	SimpleRectangle::SimpleRectangle(const TextureResource & texture) : SimpleRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleRectangle::SimpleRectangle(const TextureResource & texture) : SimpleRectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleRectangle::SimpleRectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight) : SimpleRectangle(texture, {x, y}, depth, { halfWidth, halfHeight }, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleRectangle::SimpleRectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight) : SimpleRectangle(texture, {x, y}, depth, { halfWidth, halfHeight }, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleRectangle::SimpleRectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize) : SimpleRectangle(texture, center, depth, halfSize, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	SimpleRectangle::SimpleRectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize) : SimpleRectangle(texture, center, depth, halfSize, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	SimpleRectangle::SimpleRectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode & blendMode) : SimpleRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {
+	SimpleRectangle::SimpleRectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, GLBlendMode* blendMode) : SimpleRectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, colour, blendMode) {	
 	}
-	SimpleRectangle::SimpleRectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode & blendMode) :
+	SimpleRectangle::SimpleRectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, GLBlendMode* blendMode) :
 		center(center), depth(depth), halfSize(halfSize), needsReconstructed(true), texture(texture), uvBounds(texture.getBounds()), colour(colour), blendMode(blendMode), cullAABB({ 0.0f, 0.0f, 0.0f, 0.0f }), bHasCullSurface(false) {
 	}
 	SimpleRectangle::~SimpleRectangle() {
@@ -55,7 +55,7 @@ namespace Val {
 		this->uvBounds = uv;
 		needsReconstructed = true;
 	}
-	void SimpleRectangle::setBlendMode(const GLBlendMode & blendMode) {
+	void SimpleRectangle::setBlendMode(GLBlendMode* blendMode) {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
@@ -65,7 +65,7 @@ namespace Val {
 	UV SimpleRectangle::getUV() const {
 		return uvBounds;
 	}
-	GLBlendMode SimpleRectangle::getBlendMode() const {
+	GLBlendMode* SimpleRectangle::getBlendMode() const {
 		return blendMode;
 	}
 	void SimpleRectangle::setCullSurface(AABB<float> cullAABB) {
@@ -160,7 +160,7 @@ namespace Val {
 			Vertex(centerUPixel[0] - halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, colour),
 			Vertex(centerUPixel[0] + halfSizeUPixel[0], centerUPixel[1] - halfSizeUPixel[1], depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, colour)
 
-		}), &blendMode);
+		}), blendMode);
 
 		if (bHasCullSurface)
 			this->Glyph = (GlyphCuller::cullRectangle(Glyph, cullAABB)).dispose();

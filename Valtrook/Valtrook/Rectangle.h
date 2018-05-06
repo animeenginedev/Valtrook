@@ -14,8 +14,8 @@ namespace Val {
 		Rectangle(const TextureResource& texture);
 		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation);
 		Rectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation);
-		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-		Rectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		Rectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
+		Rectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
 		~Rectangle();
 		
 		void setTexture(const TextureResource& texture);
@@ -33,7 +33,7 @@ namespace Val {
 		void setSize(float width, float height);
 		void setColour(const Colour& colour);
 		void setUV(const UV& uv);
-		void setBlendMode(const GLBlendMode& blendMode);
+		void setBlendMode(GLBlendMode* blendMode);
 		void setRotation(float rotation);
 
 		TextureResource getTexture() const;
@@ -46,7 +46,7 @@ namespace Val {
 		std::array<float, 2> getHalfSize() const;
 		Colour getColour() const;
 		UV getUV() const;
-		GLBlendMode getBlendMode() const;
+		GLBlendMode* getBlendMode() const;
 		float getRotation() const;
 
 
@@ -60,7 +60,7 @@ namespace Val {
 		float rotation;
 
 		TextureResource texture;
-		GLBlendMode blendMode;
+		GLBlendMode* blendMode;
 		UV uvBounds;
 		std::array<TriangleGlyph, 2> Glyph;
 		Colour renderColour;

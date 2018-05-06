@@ -162,6 +162,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Noise.cpp" />
+    <ClCompile Include="OptionScreenState.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="Min.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="Notify.h" />
+    <ClInclude Include="OptionScreenState.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="Owner.h" />
     <ClInclude Include="Particle.h" />

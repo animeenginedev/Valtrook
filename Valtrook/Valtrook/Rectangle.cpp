@@ -7,15 +7,15 @@
 #include "Rectangle.h"
 
 namespace Val {
-	Rectangle::Rectangle(const TextureResource & texture) : Rectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, 0.0f, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	Rectangle::Rectangle(const TextureResource & texture) : Rectangle(texture, { 0.0f, 0.0f }, 0.5f, { 1.0f, 1.0f }, 0.0f, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	Rectangle::Rectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation) : Rectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	Rectangle::Rectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation) : Rectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	Rectangle::Rectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation) : Rectangle(texture, center, depth, halfSize, rotation, Colour(255, 255, 255, 255), GLBlendMode::Blend_Default) {
+	Rectangle::Rectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation) : Rectangle(texture, center, depth, halfSize, rotation, Colour(255, 255, 255, 255), &GLBlendMode::Blend_Default) {
 	}
-	Rectangle::Rectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode & blendMode) : Rectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, colour, blendMode) {
+	Rectangle::Rectangle(const TextureResource & texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, GLBlendMode* blendMode) : Rectangle(texture, { x, y }, depth, { halfWidth, halfHeight }, rotation, colour, blendMode) {
 	}
-	Rectangle::Rectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode & blendMode) :
+	Rectangle::Rectangle(const TextureResource & texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, GLBlendMode* blendMode) :
 		texture(texture), center(center), depth(depth), halfSize(halfSize), rotation(rotation), renderColour(colour), blendMode(blendMode), uvBounds(texture.getBounds()), needsReconstructed(true) {
 	}
 	Rectangle::~Rectangle() {
@@ -85,7 +85,7 @@ namespace Val {
 		this->uvBounds = uv;
 		needsReconstructed = true;
 	}
-	void Rectangle::setBlendMode(const GLBlendMode & blendMode) {
+	void Rectangle::setBlendMode(GLBlendMode* blendMode) {
 		this->blendMode = blendMode;
 		needsReconstructed = true;
 	}
@@ -123,7 +123,7 @@ namespace Val {
 	UV Rectangle::getUV() const {
 		return uvBounds;
 	}
-	GLBlendMode Rectangle::getBlendMode() const {
+	GLBlendMode* Rectangle::getBlendMode() const {
 		return blendMode;
 	}
 	float Rectangle::getRotation() const {
@@ -174,6 +174,6 @@ namespace Val {
 			Vertex(centerUPixel[0] - wCos - hSin, centerUPixel[1] + hCos - wSin , depth, uvBounds.u + uvBounds.uWidth, uvBounds.v + uvBounds.vHeight, renderColour),
 			Vertex(centerUPixel[0] + wCos - hSin, centerUPixel[1] + hCos + wSin, depth, uvBounds.u, uvBounds.v + uvBounds.vHeight, renderColour)
 
-		}), &blendMode).dispose();
+		}), blendMode).dispose();
 	}
 }

@@ -12,8 +12,8 @@ namespace Val {
 		TextRectangle(const TextResource& texture);
 		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation);
 		TextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation);
-		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-		TextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		TextRectangle(const TextResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, float rotation, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
+		TextRectangle(const TextResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, float rotation, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
 		~TextRectangle();
 
 		void setTextResource(const TextResource& text);
@@ -32,7 +32,7 @@ namespace Val {
 		void setHeight(float height);
 		void setSize(float width, float height);
 		void setColour(const Colour& colour);
-		void setBlendMode(const GLBlendMode& blendMode);
+		void setBlendMode(GLBlendMode* blendMode);
 		void setScaleTextToHeight(bool scaleTextToHeight);
 		void setRotation(float rotation);
 
@@ -47,7 +47,7 @@ namespace Val {
 		float getHalfHeight() const;
 		std::array<float, 2> getHalfSize() const;
 		Colour getColour() const;
-		GLBlendMode getBlendMode() const;
+		GLBlendMode* getBlendMode() const;
 		bool doesScaleTextToHeight() const;
 		float getRotation() const;
 
@@ -63,7 +63,7 @@ namespace Val {
 		float rotation;
 
 		TextResource textResource;
-		GLBlendMode blendMode;
+		GLBlendMode* blendMode;
 		std::array<TriangleGlyph, 2> Glyph;
 		Colour renderColour;
 		bool scaleTextToHeight;

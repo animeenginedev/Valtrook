@@ -13,7 +13,7 @@ namespace Val {
 
 	class GameState {
 	public:
-		GameState(Game * const game, std::string scriptName = "");
+		GameState(Game * const game);
 		~GameState();
 
 		virtual void initialise();

@@ -16,8 +16,8 @@ namespace Val {
 		SimpleRectangle(const TextureResource& texture);
 		SimpleRectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight);
 		SimpleRectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize);
-		SimpleRectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
-		SimpleRectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, const GLBlendMode& blendMode = GLBlendMode::Blend_Default);
+		SimpleRectangle(const TextureResource& texture, float x, float y, float depth, float halfWidth, float halfHeight, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
+		SimpleRectangle(const TextureResource& texture, std::array<float, 2> center, float depth, std::array<float, 2> halfSize, Colour colour, GLBlendMode* blendMode = &GLBlendMode::Blend_Default);
 		~SimpleRectangle();
 
 		void setTexture(const TextureResource& texture);
@@ -32,7 +32,7 @@ namespace Val {
 		void setHalfSize(float h_width, float h_height);
 		void setColour(const Colour& colour);
 		void setUV(const UV& uv);
-		void setBlendMode(const GLBlendMode& blendMode);
+		void setBlendMode(GLBlendMode* blendMode);
 		//Honestly, don't ask. It's really used to GUI rendering, setting the center/height/width and the uv dependant on the culling aabb size&position
 		void setCullSurface(AABB<float> cullAABB);
 
@@ -46,7 +46,7 @@ namespace Val {
 		std::array<float, 2> getHalfSize() const;
 		Colour getColour() const;
 		UV getUV() const;
-		GLBlendMode getBlendMode() const;
+		GLBlendMode* getBlendMode() const;
 		AABB<float> getCullSurface() const;
 
 		std::array<TriangleGlyph, 2> getRenderGlyphs();
@@ -59,7 +59,7 @@ namespace Val {
 		float depth;
 		std::array<float, 2> halfSize;
 		TextureResource texture;
-		GLBlendMode blendMode;
+		GLBlendMode* blendMode;
 		UV uvBounds;
 		Colour colour;
 

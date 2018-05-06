@@ -5,6 +5,7 @@
 #include "RenderingEngine.h"
 #include "SplashState.h"
 #include "MenuState.h"
+#include "OptionScreenState.h"
 #include "RuntimeConstants.h"
 
 namespace Val {
@@ -23,9 +24,11 @@ namespace Val {
 		
 		splashState = new SplashState(this);
 		menuState = new MenuState(this);
+		optionScreenState = new OptionScreenState(this);
 
 		splashState->initialise(menuState);
 		menuState->initialise();
+		optionScreenState->initialise();
 
 		currentState = splashState;
 		splashState->onBecomeActive();

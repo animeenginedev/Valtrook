@@ -16,6 +16,7 @@ namespace Val {
 
 	class SplashState;
 	class MenuState;
+	class OptionScreenState;
 
 	class Game {
 	public:
@@ -42,6 +43,7 @@ namespace Val {
 
 		SplashState* splashState;
 		MenuState* menuState;
+		OptionScreenState* optionScreenState;
 	protected:
 		std::unordered_map<std::string, GameState*> namedStates;
 

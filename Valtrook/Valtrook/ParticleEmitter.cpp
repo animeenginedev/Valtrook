@@ -68,9 +68,8 @@ namespace Val {
 		}
 	}
 
-	void ParticleEmitter::giveRenderGlyphs(Rectangle& Renderable, std::vector<TriangleGlyph>* Glyphs, unsigned int offset) {
+	void ParticleEmitter::giveRenderGlyphs(Rectangle Renderable, std::vector<TriangleGlyph>* Glyphs, unsigned int offset) {
 		Renderable.setTexture(Texture);
-		Renderable.setBlendMode(GLBlendMode::Blend_Additive);
 		std::array<TriangleGlyph, 2> Glyph = { TriangleGlyph(Texture.getGLTexture()->getTextureID(), {}, nullptr), TriangleGlyph(Texture.getGLTexture()->getTextureID(), {}, nullptr) };
 		for (unsigned int i = 0; i < Particles.size(); i++) {
 			Renderable.setCenter(Particles[i].Position_X.Values[0], Particles[i].Position_Y.Values[0]);

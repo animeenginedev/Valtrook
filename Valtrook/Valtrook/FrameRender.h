@@ -52,8 +52,8 @@ namespace Val {
 		void setHalfSize(float h_width, float h_height);
 		void setWidth(float width);
 		void setHeight(float height);
-		void setEdgeBlendMode(const GLBlendMode& blendMode);
-		void setCenterBlendMode(const GLBlendMode& blendMode);
+		void setEdgeBlendMode(GLBlendMode* blendMode);
+		void setCenterBlendMode(GLBlendMode* blendMode);
 		void setCullSurface(AABB<float> cullAABB);
 		void setEdgeWidth(float edgeWidth);
 		void setEdgeColour(Colour edgeColour);
@@ -70,8 +70,8 @@ namespace Val {
 		std::array<float, 2> getHalfSize() const;
 		Colour getEdgeColour() const;
 		Colour getCenterColour() const;
-		GLBlendMode getEdgeBlendMode() const;
-		GLBlendMode getCenterBlendMode() const;
+		GLBlendMode* getEdgeBlendMode() const;
+		GLBlendMode* getCenterBlendMode() const;
 		AABB<float> getCullSurface() const;
 		float getEdgeWidth() const;
 
@@ -88,7 +88,7 @@ namespace Val {
 		bool bHasCullSurface;
 
 		FrameStyle frameStyle;
-		GLBlendMode edgeBlendMode, centerBlendMode;
+		GLBlendMode *edgeBlendMode, *centerBlendMode;
 
 		//Corners, Sides, Center
 		std::array<TriangleGlyph, 18> Glyph;

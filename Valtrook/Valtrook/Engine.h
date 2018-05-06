@@ -12,6 +12,8 @@ namespace Val {
 
 	class Engine {
 	public:
+		static Engine* Instance;
+
 		Engine();
 		~Engine();
 

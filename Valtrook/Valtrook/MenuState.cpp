@@ -12,6 +12,7 @@
 #include "Owner.h"
 #include "RenderingEngine.h"
 #include "OptionScreenState.h"
+#include "TDState.h"
 #include "Window.h"
 #include "Particle.h"
 #include "ParticleFunctions.h"
@@ -48,6 +49,8 @@ namespace Val {
 		auto optionsButton = createButton("Options");
 		auto exitButton = createButton("Exit");
 
+		gameButton->setEventCallback([=]() {this->game->setState(game->tdState); }, GUIEventType::MouseLeft_Up);
+		gameButton->setEventCallback([=]() {this->game->setState(game->tdState); }, GUIEventType::MouseRight_Up);
 
 		optionsButton->setEventCallback([=]() {this->game->setState(game->optionScreenState); }, GUIEventType::MouseLeft_Up);
 		optionsButton->setEventCallback([=]() {this->game->setState(game->optionScreenState); }, GUIEventType::MouseRight_Up);
@@ -75,9 +78,9 @@ namespace Val {
 		window.update(0.0f);
 
 		OriginParticle FireParticle = OriginParticle();
-		FireParticle.LifeSpanInitial = 3.8f;
+		FireParticle.LifeSpanInitial = 0.8f;
 		FireParticle.Position_X.SetupVariance(ParticleFunctions::Functions_Float.Function_LinearMechanic, { 0, 0, 0 }, { 11.45f, 0, 0.42f });
-		FireParticle.Position_Y.SetupVariance(ParticleFunctions::Functions_Float.Function_LinearMechanic, { 0, 0.45f, 0.4f }, { 0, 0.1f, 0.02f });
+		FireParticle.Position_Y.SetupVariance(ParticleFunctions::Functions_Float.Function_LinearMechanic, { 0, 3.25f, 0.4f }, { 0, 1.5f, 0.02f });
 		FireParticle.Position_Z.Setup(ParticleFloats.Function_Static, { 0.25f });
 		FireParticle.Width.Setup(ParticleFunctions::Functions_Float.Function_BezierCurve, { 0.7f, 0.20f, 0.33f, 0.2f, 0.50f });
 		FireParticle.Height.Setup(ParticleFunctions::Functions_Float.Function_BezierCurve, { 0.7f, 0.20f, 0.33f, 0.2f, 0.50f });
@@ -85,10 +88,10 @@ namespace Val {
 		FireParticle.ParticleColour.Setup(ParticleFunctions::Functions_TrueColour.Function_LinearInterp, { TrueColour(0, 0, 100, 100), TrueColour(50, 50, 100, 255), TrueColour(25, 25, 50, 0) });
 		
 		FireParticle.ParticleColour.SetupVariance(ParticleFunctions::Functions_TrueColour.Function_BezierCurve, FunctionBuilder::BuildBezierCurve<TrueColour>(TrueColour(),
-		{ TrueColour(150,10, 0, 255), TrueColour(50, 30, 0, 200), TrueColour(100, 60, 0, 100), TrueColour(100, 60, 0, 100), TrueColour(50, 30, 0, 50), TrueColour(-255, -255, -255, -255) }), FunctionBuilder::BuildBezierCurve<TrueColour>(TrueColour(),
+		{ TrueColour(150,20, 0, 255), TrueColour(50, 40, 0, 200), TrueColour(100, 60, 0, 100), TrueColour(100, 60, 0, 100), TrueColour(50, 30, 200, 50), TrueColour(-255, -255, -255, -255) }), FunctionBuilder::BuildBezierCurve<TrueColour>(TrueColour(),
 		{ TrueColour(0,40, 0, 0), TrueColour(20, 0, 0, 0), TrueColour(0, 40, 0, 0), TrueColour(0, 30, 0, 0), TrueColour(0, 10, 0, 0), TrueColour(-255, -255, -255, 0) }));
 
-		ParticleEmitter FireEmitter = ParticleEmitter(FireParticle, 285.0f);
+		ParticleEmitter FireEmitter = ParticleEmitter(FireParticle, 1055.0f);
 		FireEmitter.SetTexture(TextureAsset::getTexture("particle"));
 
 

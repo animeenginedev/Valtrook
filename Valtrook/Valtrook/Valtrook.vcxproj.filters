@@ -318,8 +318,11 @@
     <ClCompile Include="ParticleFunctions.cpp">
       <Filter>Source Files\Engine\Renderables\Particle\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="TDState.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
     <ClCompile Include="OptionScreenState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -626,8 +629,11 @@
     <ClInclude Include="ParticleEmitter.h">
       <Filter>Header Files\Engine\Renderables\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="TDState.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
     <ClInclude Include="OptionScreenState.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

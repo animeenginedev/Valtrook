@@ -6,6 +6,7 @@
 #include "SplashState.h"
 #include "MenuState.h"
 #include "OptionScreenState.h"
+#include "TDState.h"
 #include "RuntimeConstants.h"
 
 namespace Val {
@@ -25,10 +26,12 @@ namespace Val {
 		splashState = new SplashState(this);
 		menuState = new MenuState(this);
 		optionScreenState = new OptionScreenState(this);
+		tdState = new TDState(this);
 
 		splashState->initialise(menuState);
 		menuState->initialise();
 		optionScreenState->initialise();
+		tdState->initialise();
 
 		currentState = splashState;
 		splashState->onBecomeActive();

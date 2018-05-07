@@ -152,8 +152,9 @@ namespace Val {
 		TimingType updateDelta, renderDelta;
 		unsigned int secondCounter = 0u, updateCounter = 0u, renderCounter = 0u, loopCounter = 0u, performanceCounter = performanceOutputRate;
 		SDL_Event e;
+		bool didSomething;
 		while (running) {
-
+			didSomething = false;
 			//Events
 			//A note on inputs; if you manage to hit a key up and down faster than it takes to run an update, then you'll have a keypressed thats missed, but good luck pressing a key down faster then 1/120th of a second.
 			if (SDL_PollEvent(&e) == 1) {
@@ -188,6 +189,7 @@ namespace Val {
 			updateDelta = updateTimer.getCurrentDeltaSecond<TimingType>();
 			updateAccumlation += updateDelta;
 			if (updateAccumlation >= accumlateUpdateRate) {
+				didSomething = true;
 				updateAccumlation -= accumlateUpdateRate;
 				++updateCounter;
 
@@ -205,6 +207,7 @@ namespace Val {
 			renderDelta = renderingTimer.getCurrentDeltaSecond<TimingType>();
 			renderAccumlation += renderDelta;
 			if (renderAccumlation >= accumlateFrameRate) {
+				didSomething = true;
 				renderAccumlation -= accumlateFrameRate;
 				++renderCounter;
 
@@ -242,7 +245,8 @@ namespace Val {
 				Logger::Instance->outputLog();
 			}
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			if(!didSomething)
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			++loopCounter;
 		}
 
